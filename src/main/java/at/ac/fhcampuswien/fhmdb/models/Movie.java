@@ -6,7 +6,15 @@ import java.util.List;
 public class Movie {
     private String title;
     private String description;
+    private List<Genre> Genres; //added
     // TODO add more properties here
+
+    public enum Genre { //Enumeration List? Hab gegooglet - Mal schauen, ob man damit arbeiten kann :)
+        ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
+        CRIME, DRAMA, DOCUMENTARY, FAMILY, FANTASY, HISTORY, HORROR,
+        MUSICAL, MYSTERY, ROMANCE, SCIENCE_FICTION, SPORT, THRILLER, WAR,
+        WESTERN
+    }
 
     public Movie(String title, String description) {
         this.title = title;
