@@ -61,12 +61,19 @@ public class Movie {
                 " family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son," +
                 " Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.");
 
+        Movie antman = new Movie("Ant-Man", "Armed with the astonishing ability to shrink in scale" +
+                " but increase in strength, master thief Scott Lang must embrace his inner-hero and help his mentor," +
+                " Doctor Hank Pym, protect the secret behind his spectacular Ant-Man suit from a new generation of " +
+                "towering threats. Against seemingly insurmountable obstacles, Pym and Lang must plan and pull off a " +
+                "heist that will save the world.");
+
         movies.add(ironMan);
         movies.add(avengers);
         movies.add(thor);
         movies.add(schindler);
         movies.add(godfather1);
         movies.add(godfather2);
+        movies.add(antman);
 
         return movies;
     }
