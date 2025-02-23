@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -48,18 +49,29 @@ public class HomeController implements Initializable {
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
+        /*
+        EventHandlers for EveryButton
+        fx:id="sortBtn"
+        fx:id="searchField"
+        fx:id="genreComboBox"
+        fx:id="searchBtn"
+         */
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
                 // TODO sort observableMovies ascending
+                sortMoviesAscending();
                 sortBtn.setText("Sort (desc)");
             } else {
                 // TODO sort observableMovies descending
                 sortBtn.setText("Sort (asc)");
             }
         });
-
-
     }
+
+    private void sortMoviesAscending(){
+        FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
+    }
+
 }
