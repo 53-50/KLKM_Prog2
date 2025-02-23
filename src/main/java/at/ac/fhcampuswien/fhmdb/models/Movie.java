@@ -21,6 +21,10 @@ public class Movie {
         this.description = description;
         }
 
+    public Movie(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }
