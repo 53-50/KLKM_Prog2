@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +31,11 @@ class HomeControllerTest {
                 new Movie("Ant-Man")
         );
 
-        HomeController HC = new HomeController();
-        HC.sortMoviesAscending();
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.observableMovies = observableMoviesList;
+
+        testHomeController.sortMoviesAscending();
 
         for (int i = 0; i < ExpectedMoviesList.size(); i++) {
             assertEquals(ExpectedMoviesList.get(i).getTitle(),
