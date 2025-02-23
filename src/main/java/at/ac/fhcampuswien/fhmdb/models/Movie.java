@@ -6,7 +6,7 @@ import java.util.List;
 public class Movie {
     private String title;
     private String description;
-    private List<Genre> Genres; //added
+    private List<Genre> genres; //added
     // TODO add more properties here
 
     public enum Genre { //Enumeration List? Hab gegooglet - Mal schauen, ob man damit arbeiten kann :)
@@ -19,7 +19,7 @@ public class Movie {
     public Movie(String title, String description) {
         this.title = title;
         this.description = description;
-    }
+        }
 
     public String getTitle() {
         return title;
