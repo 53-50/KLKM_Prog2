@@ -14,7 +14,7 @@ class HomeControllerTest {
 
     @BeforeAll
     public static void init() {
-        System.out.println("Testing Movies");
+        System.out.println("~~~~~~~~ Testing HomeController ~~~~~~~~");
     }
 
     @Test
@@ -41,15 +41,6 @@ class HomeControllerTest {
             assertEquals(ExpectedMoviesList.get(i).getTitle(),
                     observableMoviesList.get(i).getTitle());
         }
-    }
-
-
-    @Test
-    public void test(){
-        int x = 10;
-        int y = 15;
-
-        assertEquals(x, y);
     }
 
 }

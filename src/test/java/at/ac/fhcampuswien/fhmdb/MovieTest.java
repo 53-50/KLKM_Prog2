@@ -12,7 +12,7 @@ class MovieTest {
 
     @BeforeAll
     public static void init() {
-        System.out.println("Testing Movies");
+        System.out.println("~~~~~~~~ Testing Movies ~~~~~~~~");
     }
 
     @Test
