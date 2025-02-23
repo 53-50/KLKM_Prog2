@@ -121,7 +121,7 @@ public class Movie {
                 " they get married and start families of their own.",
                 List.of(Genre.DRAMA, Genre.ROMANCE, Genre.WESTERN));
 
-        Movie rush = new Movie("rush", "In the 1970s, a rivalry propels race car drivers Niki Lauda " +
+        Movie rush = new Movie("Rush", "In the 1970s, a rivalry propels race car drivers Niki Lauda " +
                 "and James Hunt to fame and glory — until a horrible accident threatens to end it all.",
                 List.of(Genre.DRAMA, Genre.ACTION, Genre.SPORT));
 
