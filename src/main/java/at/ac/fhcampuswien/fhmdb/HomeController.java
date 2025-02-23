@@ -70,7 +70,7 @@ public class HomeController implements Initializable {
         });
     }
 
-    private void sortMoviesAscending(){
+    public void sortMoviesAscending(){
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
     }
 
