@@ -65,7 +65,8 @@ public class HomeController implements Initializable {
                 sortMoviesAscending();
                 sortBtn.setText("Sort (desc)");
             } else {
-                // TODO sort observableMovies descending
+                // TODO sort observableMovies descending - DONE
+                sortMoviesDescending();
                 sortBtn.setText("Sort (asc)");
             }
         });
@@ -73,6 +74,10 @@ public class HomeController implements Initializable {
 
     public void sortMoviesAscending(){
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
+    }
+
+    public void sortMoviesDescending() {
+        FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
     }
 
 }

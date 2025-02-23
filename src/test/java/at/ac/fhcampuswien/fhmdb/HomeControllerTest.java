@@ -43,13 +43,30 @@ class HomeControllerTest {
         }
     }
 
-
     @Test
-    public void test(){
-        int x = 10;
-        int y = 15;
+    public void check_if_sorting_all_movies_descending() {
+        List<Movie> ExpectedMoviesList = Arrays.asList(
+                new Movie("The Godfather"),
+        new Movie("Iron Man"),
+                new Movie("Ant-Man")
+        );
 
-        assertEquals(x, y);
+        ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
+                new Movie("The Godfather"),
+                new Movie("Ant-Man"),
+                new Movie("Iron Man")
+        );
+
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.observableMovies = observableMoviesList;
+
+        testHomeController.sortMoviesDescending();
+
+        for (int i = 0; i < ExpectedMoviesList.size(); i++) {
+            assertEquals(ExpectedMoviesList.get(i).getTitle(),
+                    observableMoviesList.get(i).getTitle());
+        }
     }
 
 }

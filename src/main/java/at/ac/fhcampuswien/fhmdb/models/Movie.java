@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class Movie {
     private String title;
     private String description;
-    private List<Genre> genres; //added
+    private List<Genre> genres = new ArrayList<>();; //added
     // TODO add more properties here - DONE
 
     public enum Genre { //Enumeration List? Hab gegooglet - Mal schauen, ob man damit arbeiten kann :)
@@ -35,7 +35,11 @@ public class Movie {
         return description;
     }
 
-    public String getGenre() {
+    public List<Genre> getGenre() {
+        return genres;
+    }
+
+    public String getGenreString() {
         return genres.stream()
                 .map(Genre::toString) // ruft toString() auf jedem Genre-Element auf
                 .collect(Collectors.joining(", ")); // macht Beistrich dazwischen
@@ -94,7 +98,7 @@ public class Movie {
                 "the development of the atomic bomb during World War II.",
                 List.of(Genre.DRAMA, Genre.BIOGRAPHY, Genre.HISTORY));
 
-        Movie insideOut = new Movie("Oppenheimer", "Teenager Riley's mind headquarters is undergoing a "
+        Movie insideOut = new Movie("Inside Out", "Teenager Riley's mind headquarters is undergoing a "
                 +
                 "sudden demolition to make room for something entirely unexpected: new Emotions! Joy, Sadness, " +
                 "Anger, Fear and Disgust, who’ve long been running a successful operation by all accounts, aren’t" +
@@ -125,6 +129,8 @@ public class Movie {
                 "and James Hunt to fame and glory — until a horrible accident threatens to end it all.",
                 List.of(Genre.DRAMA, Genre.ACTION, Genre.SPORT));
 
+        Movie dummy = new Movie("Dummy");
+
         movies.add(ironMan);
         movies.add(avengers);
         movies.add(thor);
@@ -140,6 +146,7 @@ public class Movie {
         movies.add(maze);
         movies.add(brokeback);
         movies.add(rush);
+        movies.add(dummy);
 
         return movies;
     }
