@@ -33,8 +33,6 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton sortBtn;
 
-
-
     public List<Movie> allMovies = Movie.initializeMovies();
 
     //was private final beforehand
@@ -81,7 +79,7 @@ public class HomeController implements Initializable {
     }
 
     //methode to apply a filter based on search request and/or chosen genre
-    private void applyFilter() {
+    public void applyFilter() {
         String query = searchField.getText().toLowerCase(); //gets text from search request + transforms into lower cases (-> case insensitive)
         Movie.Genre selectedGenre = genreComboBox.getValue(); //saves chosen genre
 
