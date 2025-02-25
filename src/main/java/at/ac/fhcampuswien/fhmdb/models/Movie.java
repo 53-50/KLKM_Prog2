@@ -149,5 +149,7 @@ public class Movie {
         movies.add(dummy);
 
         return movies;
+
+        // Test Harald
     }
 }
