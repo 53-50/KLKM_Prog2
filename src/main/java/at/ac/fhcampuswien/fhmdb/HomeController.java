@@ -100,7 +100,7 @@ public class HomeController implements Initializable {
 
                 .collect(Collectors.toList()); //transforms filtered stream back into List
 
-        observableMovies.setAll(filteredMovies); //
+        observableMovies.setAll(filteredMovies); //adds filtered List
     }
 
     public void sortMoviesAscending(){
