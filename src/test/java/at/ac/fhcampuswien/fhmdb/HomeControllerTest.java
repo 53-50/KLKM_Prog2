@@ -3,12 +3,15 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
 
@@ -69,4 +72,60 @@ class HomeControllerTest {
         }
     }
 
+    @Test
+    void testApplyFilterMethodExists() {
+        try {
+            Method method = HomeController.class.getDeclaredMethod("applyFilter");
+            assertNotNull(method, "The method applyFilter() should exist");
+        } catch (NoSuchMethodException e) {
+            fail("The method applyFilter() does not exist");
+        }
+    }
+
+    @Test
+    public void testApplyFilterForThor() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        testHomeController.searchField = new TextField("Thor");
+
+        testHomeController.applyFilter();
+
+        assertEquals(1, testHomeController.observableMovies.size(), "Es sollte genau ein Film übrig bleiben.");
+        assertEquals("Thor", testHomeController.observableMovies.get(0).getTitle(), "Der gefilterte Film sollte 'Thor' sein.");
+    }
+
+    @Test
+    public void testApplyFilterForTheAvengers() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        testHomeController.searchField = new TextField("The Avengers");
+
+        testHomeController.applyFilter();
+
+        assertEquals(1, testHomeController.observableMovies.size(), "Es sollte genau ein Film übrig bleiben.");
+        assertEquals("The Avengers", testHomeController.observableMovies.get(0).getTitle(), "Der gefilterte Film sollte 'Thor' sein.");
+    }
+
+    @Test
+    public void testApplyFilterIgnoresCaseSensitivity() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        String[] testQueries = {"thor", "THOR", "ThOr", "tHoR"};
+
+        for (String query : testQueries) {
+            testHomeController.searchField = new TextField();
+            testHomeController.searchField.setText(query);
+
+            testHomeController.applyFilter();
+
+            assertEquals("Thor", testHomeController.observableMovies.get(0).getTitle(),
+                    "Search result should be 'Thor' regardless of case sensitivity.");
+        }
+    }
 }
