@@ -103,8 +103,14 @@ public class HomeController implements Initializable {
         updateObservableList(allMovies);
     }
 
-    private String getSearchQuery() {
+    /*private String getSearchQuery() {
         return searchField.getText().trim().toLowerCase();
+    }*/
+
+    private String getSearchQuery() {
+        return (searchField != null && searchField.getText() != null) //stellt sicher, dass searchField und searchField.getText() nicht null sind, bevor .trim() aufgerufen wird.
+                ? searchField.getText().trim().toLowerCase()          // -> notwenidg für unit test mit null
+                : "";
     }
 
     private Movie.Genre getSelectedGenre() {

@@ -91,8 +91,10 @@ class HomeControllerTest {
         }
     }
 
+    //--------------------------------------- Unit tests Query Filter ---------------------------------------//
+
     @Test
-    public void testApplyFilterForThor() {
+    public void test_ApplyFilter_ForThor() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -106,7 +108,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void testApplyFilterForTheAvengers() {
+    public void test_ApplyFilter_For_TheAvengers() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -120,7 +122,38 @@ class HomeControllerTest {
     }
 
     @Test
-    public void testApplyFilterIgnoresCaseSensitivity() {
+    public void test_QueryFilter_Null_unfiltered_List() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+        testHomeController.searchField = new TextField(null);
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(null);
+
+        testHomeController.applyFilter();
+
+        assertEquals(testHomeController.allMovies, testHomeController.observableMovies, "If QueryFilter is null, return should be unfiltered list.");
+    }
+
+    @Test
+    public void test_QueryFilter_Empty_unfiltered_List(){
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies =  Movie.initializeMovies();
+        testHomeController.searchField = new TextField("");
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(null);
+
+        testHomeController.applyFilter();
+
+        assertEquals(testHomeController.allMovies, testHomeController.observableMovies, "If QueryFilter is empty, return should be unfiltered list.");
+
+    }
+
+    @Test
+    public void test_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -138,6 +171,8 @@ class HomeControllerTest {
                     "Search result should be 'Thor' regardless of case sensitivity.");
         }
     }
+
+
 
 
 }
