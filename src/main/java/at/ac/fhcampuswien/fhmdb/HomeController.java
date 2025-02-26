@@ -45,6 +45,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableMovies.addAll(allMovies);         // add dummy data to observable list
+        sortMoviesDescending();
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -56,15 +57,6 @@ public class HomeController implements Initializable {
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
-        /*
-        EventHandlers for EveryButton
-        fx:id="sortBtn"
-        fx:id="searchField"
-        fx:id="genreComboBox"
-        fx:id="searchBtn"
-         */
-
-
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
@@ -113,7 +105,7 @@ public class HomeController implements Initializable {
 
     private List<Movie> filterMovies(String query, Movie.Genre selectedGenre) {
         return allMovies.stream()
-                .filter(movie -> query.isEmpty() || matchesQueryTitle(movie, query))
+                .filter(movie -> query.isEmpty() || matchesQuery(movie, query))
                 .filter(movie -> selectedGenre == null || movie.getGenre().contains(selectedGenre))
                 .collect(Collectors.toList());
     }
@@ -122,20 +114,19 @@ public class HomeController implements Initializable {
         observableMovies.setAll(filteredMovies);
     }
 
-    private boolean matchesQueryTitle(Movie movie, String query) {
-        return movie.getTitle().toLowerCase().contains(query);
-    }
-
-    private boolean matchesQueryDescription(Movie movie, String query) {
-        return movie.getDescription().toLowerCase().contains(query);
+    private boolean matchesQuery(Movie movie, String query) {
+        return movie.getTitle().toLowerCase().contains(query) ||
+                (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(query));
     }
 
     public void sortMoviesAscending(){
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
+        allMovies.sort(Comparator.comparing(Movie::getTitle));
     }
 
     public void sortMoviesDescending() {
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
+        allMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
 
 }
