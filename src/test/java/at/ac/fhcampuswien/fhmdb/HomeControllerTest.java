@@ -92,6 +92,41 @@ class HomeControllerTest {
     }
 
     @Test
+    public void testApplyGenreFilterAction() {
+        HomeController testHomeController = new HomeController();
+        testHomeController.searchField = new TextField("");
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(Movie.Genre.ACTION);
+
+        testHomeController.applyFilter();
+        List<Movie> filteredMovies = testHomeController.observableMovies;
+
+        for (Movie movie : filteredMovies) {
+            assertTrue(movie.getGenre().contains(Movie.Genre.ACTION),
+                    "Movie " + movie.getTitle() + " does not contain genre 'ACTION'");
+        }
+    }
+
+    @Test
+    public void testApplyGenreFilterDrama() {
+        HomeController testHomeController = new HomeController();
+        testHomeController.searchField = new TextField("");
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(Movie.Genre.DRAMA);
+
+        testHomeController.applyFilter();
+        List<Movie> filteredMovies = testHomeController.observableMovies;
+
+        for (Movie movie : filteredMovies) {
+            assertTrue(movie.getGenre().contains(Movie.Genre.DRAMA),
+                    "Movie " + movie.getTitle() + " does not contain genre 'DRAMA'");
+        }
+    }
+
+
+
+
+    @Test
     public void testApplyFilterForThor() {
         HomeController testHomeController = new HomeController();
 
