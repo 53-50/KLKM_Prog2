@@ -1,9 +1,11 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,11 @@ class HomeControllerTest {
     @BeforeAll
     public static void init() {
         System.out.println("~~~~~~~~ Testing HomeController ~~~~~~~~");
+    }
+
+    @BeforeAll
+    static void initJavaFX() {
+        Platform.startup(() -> {}); // Initialisiert JavaFX für Tests
     }
 
     @Test
@@ -76,10 +83,11 @@ class HomeControllerTest {
     @Test
     void testApplyFilterMethodExists() {
         try {
-            Method method = HomeController.class.getDeclaredMethod("applyFilter");
-            assertNotNull(method, "The method applyFilter() should exist");
+            HomeController testHomeController = new HomeController();
+            Method method = testHomeController.getClass().getDeclaredMethod("applyFilter");
+            assertNotNull(method, "The method 'applyFilter' should exist");
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            fail("The Method 'applyFilter' does not exist");
         }
     }
 
@@ -90,6 +98,7 @@ class HomeControllerTest {
         testHomeController.allMovies = Movie.initializeMovies();
 
         testHomeController.searchField = new TextField("Thor");
+        testHomeController.genreComboBox = new JFXComboBox<>();
 
         testHomeController.applyFilter();
 
@@ -103,6 +112,7 @@ class HomeControllerTest {
         testHomeController.allMovies = Movie.initializeMovies();
 
         testHomeController.searchField = new TextField("The Avengers");
+        testHomeController.genreComboBox = new JFXComboBox<>();
 
         testHomeController.applyFilter();
 
@@ -120,6 +130,7 @@ class HomeControllerTest {
         for (String query : testQueries) {
             testHomeController.searchField = new TextField();
             testHomeController.searchField.setText(query);
+            testHomeController.genreComboBox = new JFXComboBox<>();
 
             testHomeController.applyFilter();
 
