@@ -25,7 +25,7 @@ public class HomeController implements Initializable {
     public TextField searchField;
 
     @FXML
-    public JFXListView movieListView;
+    public JFXListView<Movie> movieListView;
 
     @FXML
     public JFXComboBox<Movie.Genre> genreComboBox;
@@ -33,10 +33,14 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton sortBtn;
 
+    @FXML
+    public JFXButton deleteBtn;
+
     public List<Movie> allMovies = Movie.initializeMovies();
 
     //was private final beforehand
     public ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,10 +64,12 @@ public class HomeController implements Initializable {
         fx:id="searchBtn"
          */
 
+
+
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
-                // TODO sort observableMovies ascending
+                // TODO sort observableMovies ascending - Done
                 sortMoviesAscending();
                 sortBtn.setText("Sort (desc)");
             } else {
@@ -76,29 +82,52 @@ public class HomeController implements Initializable {
         // Event handler search button and genreBox dropdown using apply filter methode
         searchBtn.setOnAction(actionEvent -> applyFilter());
         genreComboBox.setOnAction(actionEvent -> applyFilter());
+        deleteBtn.setOnAction(actionEvent -> deleteFilter());
     }
 
     //methode to apply a filter based on search request and/or chosen genre
     public void applyFilter() {
-        String query = searchField.getText().toLowerCase(); //gets text from search request + transforms into lower cases (-> case insensitive)
-        Movie.Genre selectedGenre = genreComboBox.getValue(); //saves chosen genre
+        String query = getSearchQuery();
+        Movie.Genre selectedGenre = getSelectedGenre();
+        List<Movie> filteredMovies = filterMovies(query, selectedGenre);
 
-        List<Movie> filteredMovies = allMovies.stream() //creates stream of movie list
-                //search request:
-                .filter(movie -> (query.isEmpty() || //search request is empty -> no search-filter
+        System.out.println("Gefilterte Filme: " + filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
 
-                        //checks filmtitle and description -> filter by query
-                        movie.getTitle().toLowerCase().contains(query) ||
-                        //movie.getDescription().toLowerCase().contains(query)))
-                        (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(query))))
+        updateObservableList(filteredMovies);
+    }
 
-                //chosen genre:
-                .filter(movie -> (selectedGenre == null || //no selected genre -> no genre-filter
-                        movie.getGenre().contains(selectedGenre))) //checks if film contains genre
+    public void deleteFilter() {
+        searchField.clear();
+        genreComboBox.setValue(null);
 
-                .collect(Collectors.toList()); //transforms filtered stream back into List
+        updateObservableList(allMovies);
+    }
 
-        observableMovies.setAll(filteredMovies); //adds filtered List
+    private String getSearchQuery() {
+        return searchField.getText().trim().toLowerCase();
+    }
+
+    private Movie.Genre getSelectedGenre() {
+        return genreComboBox.getValue();
+    }
+
+    private List<Movie> filterMovies(String query, Movie.Genre selectedGenre) {
+        return allMovies.stream()
+                .filter(movie -> query.isEmpty() || matchesQueryTitle(movie, query))
+                .filter(movie -> selectedGenre == null || movie.getGenre().contains(selectedGenre))
+                .collect(Collectors.toList());
+    }
+
+    private void updateObservableList(List<Movie> filteredMovies) {
+        observableMovies.setAll(filteredMovies);
+    }
+
+    private boolean matchesQueryTitle(Movie movie, String query) {
+        return movie.getTitle().toLowerCase().contains(query);
+    }
+
+    private boolean matchesQueryDescription(Movie movie, String query) {
+        return movie.getDescription().toLowerCase().contains(query);
     }
 
     public void sortMoviesAscending(){
