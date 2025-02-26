@@ -25,7 +25,8 @@ class HomeControllerTest {
 
     @BeforeAll
     static void initJavaFX() {
-        Platform.startup(() -> {}); // Initialisiert JavaFX für Tests
+        Platform.startup(() -> {
+        }); // Initialisiert JavaFX für Tests
     }
 
     @Test
@@ -91,43 +92,10 @@ class HomeControllerTest {
         }
     }
 
-    @Test
-    public void testApplyGenreFilterAction() {
-        HomeController testHomeController = new HomeController();
-        testHomeController.searchField = new TextField("");
-        testHomeController.genreComboBox = new JFXComboBox<>();
-        testHomeController.genreComboBox.setValue(Movie.Genre.ACTION);
-
-        testHomeController.applyFilter();
-        List<Movie> filteredMovies = testHomeController.observableMovies;
-
-        for (Movie movie : filteredMovies) {
-            assertTrue(movie.getGenre().contains(Movie.Genre.ACTION),
-                    "Movie " + movie.getTitle() + " does not contain genre 'ACTION'");
-        }
-    }
+    //--------------------------------------- Unit tests Query Filter ---------------------------------------//
 
     @Test
-    public void testApplyGenreFilterDrama() {
-        HomeController testHomeController = new HomeController();
-        testHomeController.searchField = new TextField("");
-        testHomeController.genreComboBox = new JFXComboBox<>();
-        testHomeController.genreComboBox.setValue(Movie.Genre.DRAMA);
-
-        testHomeController.applyFilter();
-        List<Movie> filteredMovies = testHomeController.observableMovies;
-
-        for (Movie movie : filteredMovies) {
-            assertTrue(movie.getGenre().contains(Movie.Genre.DRAMA),
-                    "Movie " + movie.getTitle() + " does not contain genre 'DRAMA'");
-        }
-    }
-
-
-
-
-    @Test
-    public void testApplyFilterForThor() {
+    public void test_ApplyFilter_ForThor() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -141,7 +109,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void testApplyFilterForTheAvengers() {
+    public void test_ApplyFilter_For_TheAvengers() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -155,7 +123,40 @@ class HomeControllerTest {
     }
 
     @Test
-    public void testApplyFilterIgnoresCaseSensitivity() {
+    public void test_QueryGenreFilter_Null_unfiltered_List() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        testHomeController.searchField = new TextField(null);
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        //testHomeController.genreComboBox.setValue(null); //TODO
+
+        testHomeController.applyFilter();
+
+        assertEquals(testHomeController.allMovies, testHomeController.observableMovies, "If QueryFilter is null, return should be unfiltered list.");
+    }
+
+    @Test
+    public void test_QueryFilter_Empty_unfiltered_List() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        testHomeController.searchField = new TextField("");
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(null);
+
+        testHomeController.applyFilter();
+
+        assertEquals(testHomeController.allMovies, testHomeController.observableMovies, "If QueryFilter is empty, return should be unfiltered list.");
+
+    }
+
+    @Test
+    public void test_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -173,4 +174,43 @@ class HomeControllerTest {
                     "Search result should be 'Thor' regardless of case sensitivity.");
         }
     }
+
+    //--------------------------------------- Unit tests Genre Filter ---------------------------------------//
+
+    @Test
+    public void test_ApplyFilter_SpecificGenre() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        testHomeController.searchField = new TextField(null);
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(Movie.Genre.DRAMA);
+
+        testHomeController.applyFilter();
+
+        assertFalse(testHomeController.observableMovies.isEmpty(), "Filtered list should not be empty.");
+
+        assertTrue(testHomeController.observableMovies.stream()
+                        .allMatch(movie -> movie.getGenre().contains(Movie.Genre.DRAMA)),
+                "All filtered movies should be of genre DRAMA.");
+    }
+
+    @Test
+    public void test_ApplyFilter_QueryAndGenre() {
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = Movie.initializeMovies();
+
+        testHomeController.searchField = new TextField("Iron Man");
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(Movie.Genre.ACTION);
+
+        testHomeController.applyFilter();
+
+        assertEquals("Iron Man", testHomeController.observableMovies.get(0).getTitle(), "The filtered movie should be Iron Man.");
+    }
+
 }
