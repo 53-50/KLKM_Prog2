@@ -165,13 +165,16 @@ class HomeControllerTest {
     public void test_ApplyFilter_ForThor() {
         HomeController testHomeController = new HomeController();
 
-        testHomeController.allMovies = Movie.initializeMovies();
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
 
         testHomeController.searchField = new TextField("Thor");
         testHomeController.genreComboBox = new JFXComboBox<>();
 
         testHomeController.applyFilter();
 
+        assertEquals(1, testHomeController.observableMovies.size(), "Only one movie should be left");
         assertEquals("Thor", testHomeController.observableMovies.get(0).getTitle(), "The filtered movie should be Thor.");
     }
 
@@ -179,13 +182,16 @@ class HomeControllerTest {
     public void test_ApplyFilter_For_TheAvengers() {
         HomeController testHomeController = new HomeController();
 
-        testHomeController.allMovies = Movie.initializeMovies();
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
 
         testHomeController.searchField = new TextField("The Avengers");
         testHomeController.genreComboBox = new JFXComboBox<>();
 
         testHomeController.applyFilter();
 
+        assertEquals(1, testHomeController.observableMovies.size(), "Only one movie should be left");
         assertEquals("The Avengers", testHomeController.observableMovies.get(0).getTitle(), "The filtered movie should be The Avengers.");
     }
 
@@ -226,17 +232,24 @@ class HomeControllerTest {
     public void test_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
 
-        testHomeController.allMovies = Movie.initializeMovies();
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+
+        testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.getItems().addAll(Movie.Genre.ACTION);
+        testHomeController.searchField = new TextField();
 
         String[] testQueries = {"thor", "THOR", "ThOr", "tHoR"};
 
         for (String query : testQueries) {
-            testHomeController.searchField = new TextField();
             testHomeController.searchField.setText(query);
-            testHomeController.genreComboBox = new JFXComboBox<>();
 
             testHomeController.applyFilter();
 
+            assertFalse(testHomeController.observableMovies.isEmpty(), "Filtered list should not be empty for query " + query);
             assertEquals("Thor", testHomeController.observableMovies.get(0).getTitle(),
                     "Search result should be 'Thor' regardless of case sensitivity.");
         }
