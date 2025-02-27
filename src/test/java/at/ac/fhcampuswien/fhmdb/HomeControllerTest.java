@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -79,6 +80,72 @@ class HomeControllerTest {
             assertEquals(ExpectedMoviesList.get(i).getTitle(),
                     observableMoviesList.get(i).getTitle());
         }
+    }
+
+    @Test
+    void check_if_movie_filtered_desc_afterwards_apply_genre() {
+        List<Movie> ExpectedMoviesList = Arrays.asList(
+                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+        );
+
+        ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
+                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("B-Movie", "Whats happening", List.of(Movie.Genre.HISTORY)),
+                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+        );
+
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = new ArrayList<>(observableMoviesList);
+
+        testHomeController.observableMovies = observableMoviesList;
+
+        testHomeController.sortMoviesDescending();
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(Movie.Genre.DRAMA);
+
+        testHomeController.applyFilter();
+
+        for (int i = 0; i < ExpectedMoviesList.size(); i++) {
+            assertEquals(ExpectedMoviesList.get(i).getTitle(),
+                    observableMoviesList.get(i).getTitle());
+        }
+
+    }
+
+    @Test
+    void check_if_movie_filtered_asc_afterwards_apply_genre() {
+        List<Movie> ExpectedMoviesList = Arrays.asList(
+                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+        );
+
+        ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
+                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("B-Movie", "Whats happening", List.of(Movie.Genre.HISTORY))
+        );
+
+        HomeController testHomeController = new HomeController();
+
+        testHomeController.allMovies = new ArrayList<>(observableMoviesList);
+
+        testHomeController.observableMovies = observableMoviesList;
+
+        testHomeController.sortMoviesAscending();
+
+        testHomeController.genreComboBox = new JFXComboBox<>();
+        testHomeController.genreComboBox.setValue(Movie.Genre.COMEDY);
+
+        testHomeController.applyFilter();
+
+        for (int i = 0; i < ExpectedMoviesList.size(); i++) {
+            assertEquals(ExpectedMoviesList.get(i).getTitle(),
+                    observableMoviesList.get(i).getTitle());
+        }
+
     }
 
     @Test
