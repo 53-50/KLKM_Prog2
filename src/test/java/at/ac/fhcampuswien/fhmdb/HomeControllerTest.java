@@ -149,7 +149,7 @@ class HomeControllerTest {
     }
 
     @Test
-    void testApplyFilterMethodExists() {
+    void test_checks_if_ApplyFilter_MethodExists() {
         try {
             HomeController testHomeController = new HomeController();
             Method method = testHomeController.getClass().getDeclaredMethod("applyFilter");
@@ -162,7 +162,7 @@ class HomeControllerTest {
     //--------------------------------------- Unit tests Query Filter ---------------------------------------//
 
     @Test
-    public void test_ApplyFilter_ForThor() {
+    public void test_specific_Search_for_Movie_Thor() {
         HomeController testHomeController = new HomeController();
 
         Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
@@ -179,7 +179,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void test_ApplyFilter_For_TheAvengers() {
+    public void test_specific_Search_for_Movie_TheAvengers() {
         HomeController testHomeController = new HomeController();
 
         Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
@@ -196,7 +196,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void test_QueryGenreFilter_Null_unfiltered_List() {
+    public void test_if_Query_and_Genre_Null_returns_unfiltered_List() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -204,7 +204,6 @@ class HomeControllerTest {
         testHomeController.searchField = new TextField(null);
 
         testHomeController.genreComboBox = new JFXComboBox<>();
-        //testHomeController.genreComboBox.setValue(null); //TODO
 
         testHomeController.applyFilter();
 
@@ -212,7 +211,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void test_QueryFilter_Empty_unfiltered_List() {
+    public void test_if_Query_and_Genre_empty_returns_unfiltered_List() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -229,7 +228,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void test_ApplyFilter_Ignores_CaseSensitivity() {
+    public void test_if_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
 
         Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
@@ -258,7 +257,7 @@ class HomeControllerTest {
     //--------------------------------------- Unit tests Genre Filter ---------------------------------------//
 
     @Test
-    public void test_ApplyFilter_SpecificGenre() {
+    public void test_for_specific_Genre() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();
@@ -278,7 +277,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void test_ApplyFilter_QueryAndGenre() {
+    public void test_for_specific_Query_and_Genre() {
         HomeController testHomeController = new HomeController();
 
         testHomeController.allMovies = Movie.initializeMovies();

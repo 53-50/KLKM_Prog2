@@ -51,11 +51,11 @@ public class HomeController implements Initializable {
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
 
-        // TODO add genre filter items with genreComboBox.getItems().addAll(...)
+        // TODO add genre filter items with genreComboBox.getItems().addAll(...) - Done
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(Movie.Genre.values()); //add Genres to ComboBox
 
-        // TODO add event handlers to buttons and call the regarding methods
+        // TODO add event handlers to buttons and call the regarding methods - Done
         // either set event handlers in the fxml file (onAction) or add them here
 
         // Sort button example:
@@ -65,7 +65,7 @@ public class HomeController implements Initializable {
                 sortMoviesAscending();
                 sortBtn.setText("Sort (desc)");
             } else {
-                // TODO sort observableMovies descending - DONE
+                // TODO sort observableMovies descending - Done
                 sortMoviesDescending();
                 sortBtn.setText("Sort (asc)");
             }
@@ -83,7 +83,8 @@ public class HomeController implements Initializable {
         Movie.Genre selectedGenre = getSelectedGenre();
         List<Movie> filteredMovies = filterMovies(query, selectedGenre);
 
-        System.out.println("Gefilterte Filme: " + filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
+        //Debugging
+        //System.out.println("Debugging - Gefilterte Filme: " + filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
 
         updateObservableList(filteredMovies);
     }
@@ -95,15 +96,12 @@ public class HomeController implements Initializable {
         updateObservableList(allMovies);
     }
 
-    /*private String getSearchQuery() {
-        return searchField.getText().trim().toLowerCase();
-    }*/
 
     private String getSearchQuery() {
         return (searchField != null && searchField.getText() != null) //stellt sicher, dass searchField und searchField.getText() nicht null sind, bevor .trim() aufgerufen wird.
                 ? searchField.getText().trim().toLowerCase()          // -> notwenidg für unit test mit null
-                : "";
-    }
+                : ""; //falls search field nicht existiert oder eingegeber Text leer ist, wird leerer String zurück gegeben
+    } // ? : -> ternärer Operator -> Kurzform für if-else
 
     private Movie.Genre getSelectedGenre() {
         return genreComboBox.getValue();
