@@ -89,6 +89,7 @@ public class HomeController implements Initializable {
         updateObservableList(filteredMovies);
     }
 
+
     public void deleteFilter() {
         searchField.clear();
         genreComboBox.setValue(null);
@@ -103,9 +104,11 @@ public class HomeController implements Initializable {
                 : ""; //falls search field nicht existiert oder eingegeber Text leer ist, wird leerer String zurück gegeben
     } // ? : -> ternärer Operator -> Kurzform für if-else
 
+
     private Movie.Genre getSelectedGenre() {
         return genreComboBox.getValue();
     }
+
 
     private List<Movie> filterMovies(String query, Movie.Genre selectedGenre) {
         return allMovies.stream()
@@ -114,19 +117,23 @@ public class HomeController implements Initializable {
                 .collect(Collectors.toList());
     }
 
+
     private void updateObservableList(List<Movie> filteredMovies) {
         observableMovies.setAll(filteredMovies);
     }
+
 
     private boolean matchesQuery(Movie movie, String query) {
         return movie.getTitle().toLowerCase().contains(query) ||
                 (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(query));
     }
 
+
     public void sortMoviesAscending(){
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
         allMovies.sort(Comparator.comparing(Movie::getTitle));
     }
+
 
     public void sortMoviesDescending() {
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
