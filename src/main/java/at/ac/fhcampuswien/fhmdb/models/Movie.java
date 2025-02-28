@@ -10,7 +10,7 @@ public class Movie {
     private List<Genre> genres = new ArrayList<>();; //added
     // TODO add more properties here - DONE
 
-    public enum Genre { //Enumeration List? Hab gegooglet - Mal schauen, ob man damit arbeiten kann :)
+    public enum Genre {
         ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
         CRIME, DRAMA, DOCUMENTARY, FAMILY, FANTASY, HISTORY, HORROR,
         MUSICAL, MYSTERY, ROMANCE, SCIENCE_FICTION, SPORT, THRILLER, WAR,
@@ -150,6 +150,5 @@ public class Movie {
 
         return movies;
 
-        // Test Harald
     }
 }
