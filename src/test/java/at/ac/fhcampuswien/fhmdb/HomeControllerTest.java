@@ -169,6 +169,8 @@ class HomeControllerTest {
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
 
+        testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
+
         testHomeController.searchField = new TextField("Thor");
         testHomeController.genreComboBox = new JFXComboBox<>();
 
@@ -185,6 +187,8 @@ class HomeControllerTest {
         Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+
+        testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
         testHomeController.searchField = new TextField("The Avengers");
         testHomeController.genreComboBox = new JFXComboBox<>();
@@ -260,7 +264,11 @@ class HomeControllerTest {
     public void test_for_specific_Genre() {
         HomeController testHomeController = new HomeController();
 
-        testHomeController.allMovies = Movie.initializeMovies();
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.DRAMA));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+
+        testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
         testHomeController.searchField = new TextField(null);
 
@@ -280,7 +288,11 @@ class HomeControllerTest {
     public void test_for_specific_Query_and_Genre() {
         HomeController testHomeController = new HomeController();
 
-        testHomeController.allMovies = Movie.initializeMovies();
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+
+        testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
         testHomeController.searchField = new TextField("Iron Man");
 
