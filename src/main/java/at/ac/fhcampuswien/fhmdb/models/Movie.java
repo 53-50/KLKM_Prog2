@@ -129,8 +129,6 @@ public class Movie {
                 "and James Hunt to fame and glory — until a horrible accident threatens to end it all.",
                 List.of(Genre.DRAMA, Genre.ACTION, Genre.SPORT));
 
-        Movie dummy = new Movie("Dummy");
-
         movies.add(ironMan);
         movies.add(avengers);
         movies.add(thor);
@@ -146,7 +144,6 @@ public class Movie {
         movies.add(maze);
         movies.add(brokeback);
         movies.add(rush);
-        movies.add(dummy);
 
         return movies;
 
