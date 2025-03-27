@@ -8,7 +8,6 @@ public class Movie {
     private String title;
     private String description;
     private List<Genre> genres = new ArrayList<>();; //added
-    // TODO add more properties here - DONE
 
     public enum Genre {
         ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
@@ -47,7 +46,6 @@ public class Movie {
 
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
-        // TODO add some dummy data here - DONE
 
         Movie ironMan = new Movie("Iron Man", "After being held captive in an Afghan cave," +
                 "billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
