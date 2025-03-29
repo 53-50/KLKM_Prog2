@@ -132,7 +132,7 @@ public class HomeController implements Initializable {
     }
 
     public String getMostPopularActor (List<Movie> movies) {
-        // Put all actors from movies into a list
+        // Store all actors from movies in list
         List<String> allActors = movies.stream()
                 .flatMap(movie -> movie.getMainCast().stream())
                 .collect(Collectors.toList());
