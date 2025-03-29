@@ -153,4 +153,22 @@ public class HomeController implements Initializable {
         }
     }
 
+    public int getLongestMovieTitle (List<Movie> movies) {
+        // Count length of every movie and store in list
+        List<Integer> titleLengths = movies.stream()
+                .map(movie -> movie.getTitle().length())
+                .collect(Collectors.toList());
+
+        // Find maximum
+        Optional<Integer> maxLength = titleLengths.stream()
+                .max(Integer::compareTo);
+
+        // If present return length, else 0
+        if (maxLength.isPresent()) {
+            return maxLength.get();
+        } else {
+            return 0;
+        }
+    }
+
 }
