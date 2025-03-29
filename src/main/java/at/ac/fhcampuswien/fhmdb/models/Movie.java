@@ -9,6 +9,7 @@ public class Movie {
     private String description;
     private List<Genre> genres = new ArrayList<>();; //added
     private final List<String> mainCast = new ArrayList<>();
+    private final List<String> directors = new ArrayList<>();;
 
     public enum Genre {
         ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
@@ -47,6 +48,10 @@ public class Movie {
 
     public List<String> getMainCast() {
         return mainCast;
+    }
+
+    public List<String> getDirectors() {
+        return directors;
     }
 
     public static List<Movie> initializeMovies(){

@@ -171,4 +171,10 @@ public class HomeController implements Initializable {
         }
     }
 
+    public long countMoviesFrom(List<Movie> movies, String director) {
+        return movies.stream()
+                .filter(movie -> movie.getDirectors().contains(director))
+                .count();
+    }
+
 }
