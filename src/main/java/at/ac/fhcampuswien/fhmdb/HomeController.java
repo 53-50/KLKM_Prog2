@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HomeController implements Initializable {
     @FXML
@@ -175,6 +176,21 @@ public class HomeController implements Initializable {
         return movies.stream()
                 .filter(movie -> movie.getDirectors().contains(director))
                 .count();
+    }
+
+    public List<Movie> getMoviesBetweenYears (List<Movie> movies, int startYear, int endYear) {
+        // Filter all movies to specified year range
+        Stream<Movie> filteredMoviesStream = movies.stream()
+                .filter(movie -> {
+                    int year = movie.getReleaseYear();
+                    return year >= startYear && year <= endYear;
+                });
+
+        // Store filtered movies in list
+        List<Movie> moviesInRange = filteredMoviesStream
+                .collect(Collectors.toList());
+
+        return moviesInRange;
     }
 
 }

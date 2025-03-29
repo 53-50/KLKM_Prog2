@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,15 +32,15 @@ class HomeControllerTest {
     @Test
     public void check_if_sorting_all_movies_ascending() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
-                new Movie("Ant-Man"),
-                new Movie("Iron Man"),
-                new Movie("The Godfather")
+                new Movie("Ant-Man", 2021),
+                new Movie("Iron Man", 2022),
+                new Movie("The Godfather", 2023)
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("The Godfather"),
-                new Movie("Iron Man"),
-                new Movie("Ant-Man")
+                new Movie("The Godfather", 2021),
+                new Movie("Iron Man", 2022),
+                new Movie("Ant-Man", 2023)
         );
 
         HomeController testHomeController = new HomeController();
@@ -59,15 +58,15 @@ class HomeControllerTest {
     @Test
     public void check_if_sorting_all_movies_descending() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
-                new Movie("The Godfather"),
-                new Movie("Iron Man"),
-                new Movie("Ant-Man")
+                new Movie("The Godfather", 2021),
+                new Movie("Iron Man", 2022),
+                new Movie("Ant-Man", 2023)
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("The Godfather"),
-                new Movie("Ant-Man"),
-                new Movie("Iron Man")
+                new Movie("The Godfather", 2021),
+                new Movie("Ant-Man", 2022),
+                new Movie("Iron Man", 2023)
         );
 
         HomeController testHomeController = new HomeController();
@@ -85,14 +84,14 @@ class HomeControllerTest {
     @Test
     void check_if_movie_filtered_desc_afterwards_apply_genre() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
-                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("B-Movie", "Whats happening", List.of(Movie.Genre.HISTORY)),
-                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("B-Movie", "Whats happening", 0, List.of(Movie.Genre.HISTORY)),
+                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
         );
 
         HomeController testHomeController = new HomeController();
@@ -118,14 +117,14 @@ class HomeControllerTest {
     @Test
     void check_if_movie_filtered_asc_afterwards_apply_genre() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
-                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("C-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("A-Movie", "Whats happening", List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("B-Movie", "Whats happening", List.of(Movie.Genre.HISTORY))
+                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("B-Movie", "Whats happening", 0, List.of(Movie.Genre.HISTORY))
         );
 
         HomeController testHomeController = new HomeController();
@@ -165,9 +164,9 @@ class HomeControllerTest {
     public void test_specific_Search_for_Movie_Thor() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
-        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
-        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
         testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
@@ -184,9 +183,9 @@ class HomeControllerTest {
     public void test_specific_Search_for_Movie_TheAvengers() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
-        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
-        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
         testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
@@ -235,9 +234,9 @@ class HomeControllerTest {
     public void test_if_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
-        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
-        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
         testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
@@ -264,9 +263,9 @@ class HomeControllerTest {
     public void test_for_specific_Genre() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.DRAMA));
-        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
-        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.DRAMA));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
         testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
@@ -288,9 +287,9 @@ class HomeControllerTest {
     public void test_for_specific_Query_and_Genre() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", List.of(Movie.Genre.ACTION));
-        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", List.of(Movie.Genre.ACTION));
-        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
+        Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
         testHomeController.allMovies = List.of(thor, ironMan, theAvengers);
 
