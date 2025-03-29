@@ -8,6 +8,7 @@ public class Movie {
     private String title;
     private String description;
     private List<Genre> genres = new ArrayList<>();; //added
+    private final List<String> mainCast = new ArrayList<>();
 
     public enum Genre {
         ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
@@ -42,6 +43,10 @@ public class Movie {
         return genres.stream()
                 .map(Genre::toString) // ruft toString() auf jedem Genre-Element auf
                 .collect(Collectors.joining(", ")); // macht Beistrich dazwischen
+    }
+
+    public List<String> getMainCast() {
+        return mainCast;
     }
 
     public static List<Movie> initializeMovies(){

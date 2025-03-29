@@ -12,9 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HomeController implements Initializable {
@@ -131,6 +129,28 @@ public class HomeController implements Initializable {
     public void sortMoviesDescending() {
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
         allMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+    }
+
+    public String getMostPopularActor (List<Movie> movies) {
+        // Put all actors from movies into a list
+        List<String> allActors = movies.stream()
+                .flatMap(movie -> movie.getMainCast().stream())
+                .collect(Collectors.toList());
+
+        // Count how many times a specific actor is in list
+        Map<String, Long> actorCountMap = allActors.stream()
+        .collect(Collectors.groupingBy(actor -> actor, Collectors.counting()));
+
+        // Find actor with most appearances
+        Optional<Map.Entry<String, Long>> mostPopular = actorCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue());
+
+        // If present return actor, else null
+        if (mostPopular.isPresent()) {
+            return mostPopular.get().getKey();
+        } else {
+            return null;
+        }
     }
 
 }
