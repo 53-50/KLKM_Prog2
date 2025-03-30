@@ -2,16 +2,16 @@ package at.ac.fhcampuswien.fhmdb.api;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import okhttp3.OkHttpClient;    //is loading the main class for http-requests
-import okhttp3.Request;         // to generate HTTP-Requests
-import okhttp3.Response;        // to process the answer
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
 
 // TO-DO
 //- Logik zum Senden und Empfangen von Requests/Responses - DONE
@@ -19,16 +19,17 @@ import java.util.UUID;
 //- MovieAPI soll mit untersch. Parametern und Endpunkten aufgerufen werden
 //- API erwartet gesetzten User-Agent-Header im Request (User-Agent http.agent) - DONE
 
+// Which Endpoints are availabe?
+// query, genre, releaseYear, ratingFrom
+// ? is first symbol when parameters are following
+// = ist after every parameter
+// & is between the parameters
+
 public class MovieAPI {
     // a client object that sends HTTP-Requests
-    private final static OkHttpClient client = new OkHttpClient();
-    private static final String BASE_URL = "https://prog2.fh-campuswien.ac.at/movies";
 
-    // Which Endpoints are availabe?
-    // query, genre, releaseYear, ratingFrom
-    // ? is first symbol when parameters are following
-    // = ist after every parameter
-    // & is between the parameters
+    private static final String BASE_URL = "https://prog2.fh-campuswien.ac.at/movies";
+    private final static OkHttpClient client = new OkHttpClient();
 
     public static String buildURL(String query, Movie.Genre genre, String releaseYear, String ratingFrom) {
         StringBuilder url = new StringBuilder(BASE_URL);
@@ -53,7 +54,6 @@ public class MovieAPI {
             if (ratingFrom != null) {
                 url.append("ratingFrom=").append(ratingFrom).append("&");
             }
-
         }
 
         return url.toString();
@@ -72,7 +72,7 @@ public class MovieAPI {
         return fetchAllMovies(null, null, null, null);
     }
 
-    // Get a URL - This program downloads a URL and prints its contents as List<Movie>
+    // Get an URL - This program downloads a URL and prints its contents as List<Movie>
     // https://square.github.io/okhttp/
     public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) throws IOException {
         // build the link together with different parameters
@@ -92,16 +92,12 @@ public class MovieAPI {
             assert response.body() != null;
             String responseBody = response.body().string();
 
-
-
             // DEBUG: Ausgabe der rohen JSON-Antwort
             //System.out.println("DEBUG API: JSON response: " + responseBody);
 
             // DEBUG: JSON-Struktur inspizieren
             //JsonElement jsonElement = JsonParser.parseString(responseBody);
             //System.out.println("DEBUG API: JSON structure: " + jsonElement.toString());
-
-
 
             // JSON-String gets converted into a Movie-Object
             Gson gson = new Gson();

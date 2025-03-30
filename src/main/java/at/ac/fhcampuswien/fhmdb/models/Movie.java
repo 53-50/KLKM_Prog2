@@ -7,28 +7,6 @@ import java.util.stream.Collectors;
 
 public class Movie {
 
-//    private String title;
-//    private String description;
-//    private List<Genre> genres = new ArrayList<>();
-
-    //Exercise 2 - Erweiterungen Attribute
-//    private UUID id;
-//    private String title;
-//    private List<Genre> genres;
-//    private int releaseYear;
-//    private String description;
-//    private String imgUrl;
-//    private int lengthInMinutes;
-//    private List<String> directors = new ArrayList<>();
-//    private List<String> writers = new ArrayList<>();
-//    private List<String> mainCast = new ArrayList<>();
-//    private double rating;
-
-//    @Override
-  //  public String toString() {
-    //    return this.title;
-    //}
-
     private final String id;
     private final String title;
     private final String description;
@@ -41,17 +19,12 @@ public class Movie {
     private final List<String> mainCast = new ArrayList<>();
     private final double rating; // 0-10
 
- public Movie(String title, String description, List<Genre> genres) {
-     this.id = UUID.randomUUID().toString();
-     this.title = title;
-     this.description = description;
-     this.genres = genres;
-     this.releaseYear = 0;
-     this.imgUrl = "";
-     this.lengthInMinutes = 0;
-     this.rating = 0;
-
-   }
+    public enum Genre {
+        ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
+        CRIME, DRAMA, DOCUMENTARY, FAMILY, FANTASY, HISTORY, HORROR,
+        MUSICAL, MYSTERY, ROMANCE, SCIENCE_FICTION, SPORT, THRILLER, WAR,
+        WESTERN
+    }
 
     @Override
     public String toString() {
@@ -71,167 +44,100 @@ public class Movie {
     }
 
     //full constructor
-    public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
-        if(id == null) {
+
+    public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl,
+                 int lengthInMinutes, double rating) {
+        if (id == null) {
             this.id = UUID.randomUUID().toString();
         } else {
             this.id = id;
-            }
-            this.title = title;
-            this.description = description;
-            this.genres = genres;
-            this.releaseYear = releaseYear;
-            this.imgUrl = imgUrl;
-            this.lengthInMinutes = lengthInMinutes;
-            this.rating = rating;
         }
+        this.title = title;
+        this.description = description;
+        this.genres = genres;
+        this.releaseYear = releaseYear;
+        this.imgUrl = imgUrl;
+        this.lengthInMinutes = lengthInMinutes;
+        this.rating = rating;
+    }
+
+
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null) {
+        if (obj == null) {
             return false;
         }
-        if(obj == this) {
+        if (obj == this) {
             return true;
         }
-        if(!(obj instanceof Movie other)) {
+        if (!(obj instanceof Movie other)) {
             return false;
         }
-        return this.title.equals(other.title) && this.description.equals(other.description) && this.genres.equals(other.genres);
+        return this.title.equals(other.title) && this.description.equals(other.description)
+                && this.genres.equals(other.genres);
     }
 
     public String getTitle() {
-            return title;
+        return title;
     }
 
     public String getDescription() {
-            return description;
+        return description;
     }
 
     public List<Genre> getGenres() {
-            return genres;
+        return genres;
     }
 
     public int getReleaseYear() {
-            return releaseYear;
+        return releaseYear;
     }
 
     public String getImgUrl() {
-            return imgUrl;
+        return imgUrl;
     }
 
     public int getLengthInMinutes() {
-            return lengthInMinutes;
+        return lengthInMinutes;
     }
 
     public List<String> getDirectors() {
-            return directors;
+        return directors;
     }
 
     public List<String> getWriters() {
-            return writers;
+        return writers;
     }
 
     public List<String> getMainCast() {
-            return mainCast;
+        return mainCast;
     }
 
     public double getRating() {
-            return rating;
+        return rating;
     }
 
     public String getId() {
         return id;
     }
 
-    public enum Genre {
-        ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
-        CRIME, DRAMA, DOCUMENTARY, FAMILY, FANTASY, HISTORY, HORROR,
-        MUSICAL, MYSTERY, ROMANCE, SCIENCE_FICTION, SPORT, THRILLER, WAR,
-        WESTERN
-
-    }
-
-//    //CONSTRUCTOR OLD
-//    public Movie(String title, String description, List<Genre> genres) {
-//        this.title = title;
-//        this.description = description;
-//        this.genres = genres;
-//    }
-//
-//    //Exercise 2 - Erweitertes Objekt durch API anstatt Dummy-Daten
-//    public Movie(UUID id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.genres = genres;
-//        this.releaseYear = releaseYear;
-//        this.imgUrl = imgUrl;
-//        this.lengthInMinutes = lengthInMinutes;
-//        this.rating = rating;
-//    }
-//
-//    //equals methode fehlt - unit test hier
-//
-//    public Movie(String title) {
-//        this.title = title;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public List<Genre> getGenre() {
-//        return genres;
-//    }
-//
     public String getGenreString() {
         return genres.stream()
                 .map(Genre::toString) // ruft toString() auf jedem Genre-Element auf
                 .collect(Collectors.joining(", ")); // macht Beistrich dazwischen
     }
-//
-//
-//    //Exercise 2 - Getter von neuen Attributen
-//    public UUID getId(){
-//        return id;
-//    }
-//
-//    public int getReleaseYear() {
-//        return releaseYear;
-//    }
-//
-//    public String getImgUrl(){
-//        return imgUrl;
-//    }
-//
-//    public int getLengthInMinutes(){
-//        return lengthInMinutes;
-//    }
-//
-//    public List<String> getDirectors() {
-//        return directors;
-//    }
-//
-//    public List<String> getWriters() {
-//        return writers;
-//    }
-//
-//    public List<String> getMainCast() {
-//        return mainCast;
-//    }
-//
-//    public double getRating() {
-//        return rating;
-//    }
 
-/*
-  //OBSOLETE
-    public static List<Movie> initializeMovies(){
+    /*    //CONSTRUCTOR OLD
+    public Movie(String title, String description, List<Genre> genres) {
+        this.title = title;
+        this.description = description;
+        this.genres = genres;
+    }
+    */
+
+    /*    //initializeMovies OLD
+    public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
 
         Movie ironMan = new Movie("Iron Man", "After being held captive in an Afghan cave," +
@@ -331,8 +237,6 @@ public class Movie {
         movies.add(rush);
 
         return movies;
-
     }
-
- */
+     */
 }

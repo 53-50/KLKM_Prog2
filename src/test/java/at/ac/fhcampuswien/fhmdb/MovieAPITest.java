@@ -19,7 +19,6 @@ class MovieAPITest {
 
     @Test
     void check_if_ApiCall_Returns_Response() throws IOException {
-        MovieAPI api = new MovieAPI(); //TODO
         List<Movie> response = MovieAPI.fetchAllMovies();
 
         assertNotNull(response, "The API-Response is null.");

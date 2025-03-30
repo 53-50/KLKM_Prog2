@@ -45,18 +45,21 @@ public class HomeController implements Initializable {
 
     public List<Movie> allMovies;
 
-    protected ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
+    protected ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
+    // automatically updates corresponding UI elements when underlying data changes
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //observableMovies.addAll(allMovies); //-> adds dummy data to observable list -> in Exercise2 Data from API
 
-        List<Movie> result = null; //TODO - prüfen ob relevant
+        List<Movie> result;
         try {
             result = MovieAPI.fetchAllMovies();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Fehler beim Laden der Filme: " + e.getMessage());
+            result = new ArrayList<>();
         }
+
         setMovies(result);
         setMovieList(result);
 
@@ -127,33 +130,6 @@ public class HomeController implements Initializable {
         deleteBtn.setOnAction(actionEvent -> deleteFilter());
     }
 
-/*
-
-//was mach ma mit dem? //Todo
-
-
-    public void fetchMoviesFromAPI() throws IOException{
-
-        try {
-            allMovies = MovieAPI.fetchAllMovies();
-
-            // Filme ausgeben
-            if (!allMovies.isEmpty()) {
-                for (Movie movie : allMovies) {
-                    System.out.println("Title: " + movie.getTitle());
-                }
-            } else {
-                System.out.println("No movies found.");
-            }
-
-            observableMovies.setAll(allMovies);
-
-        } catch (IOException e) {
-            System.err.println("Error fetching movies: " + e.getMessage());
-        }
-    }
-
- */
 
     public void setMovies(List<Movie> movies) {
         allMovies = movies;
@@ -192,9 +168,13 @@ public class HomeController implements Initializable {
                 : ""; //falls search field nicht existiert oder eingegeber Text leer ist, wird leerer String zurück gegeben
     }                 // ? : -> ternärer Operator -> Kurzform für if-else
 
+
+
     private Movie.Genre getSelectedGenre() {
         return genreComboBox.getValue();
     }
+
+
 
     public List<Movie> filterMovies(String query, Movie.Genre selectedGenre, Integer selectedYear, Integer selectedRating) {
         if (allMovies == null) {
@@ -215,12 +195,6 @@ public class HomeController implements Initializable {
     }
 
 
-    //Todo brauchen wir?
-    private boolean matchesQuery(Movie movie, String query) {
-        return movie.getTitle().toLowerCase().contains(query) ||
-                (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(query));
-    }
-
     public void sortMoviesAscending(){
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
         allMovies.sort(Comparator.comparing(Movie::getTitle));
@@ -230,6 +204,8 @@ public class HomeController implements Initializable {
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
         allMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
+
+
 
     //Todo tests schreiben für die methoden
     public String getMostPopularActor (List<Movie> movies) {
