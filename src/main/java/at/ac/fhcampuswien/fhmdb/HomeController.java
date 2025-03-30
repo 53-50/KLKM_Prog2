@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //observableMovies.addAll(allMovies); //-> adds dummy data to observable list -> in Exercise2 Data from API
 
-        List<Movie> result = null;
+        List<Movie> result = null; //TODO - prüfen ob relevant
         try {
             result = MovieAPI.fetchAllMovies();
         } catch (IOException e) {
@@ -129,7 +129,8 @@ public class HomeController implements Initializable {
 
 /*
 
-//was mach ma mit dem?
+//was mach ma mit dem? //Todo
+
 
     public void fetchMoviesFromAPI() throws IOException{
 
@@ -199,7 +200,6 @@ public class HomeController implements Initializable {
         if (allMovies == null) {
             throw new NullPointerException("Movie list is null");
         }
-
         return allMovies.stream()
                 .filter(movie -> query == null || query.isBlank() ||
                         movie.getTitle().toLowerCase().contains(query.toLowerCase()) ||
@@ -214,6 +214,8 @@ public class HomeController implements Initializable {
         observableMovies.setAll(filteredMovies);
     }
 
+
+    //Todo brauchen wir?
     private boolean matchesQuery(Movie movie, String query) {
         return movie.getTitle().toLowerCase().contains(query) ||
                 (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(query));
@@ -229,6 +231,7 @@ public class HomeController implements Initializable {
         allMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
 
+    //Todo tests schreiben für die methoden
     public String getMostPopularActor (List<Movie> movies) {
         // Store all actors from movies in list
         List<String> allActors = movies.stream()
@@ -251,6 +254,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    //Todo tests schreiben für die methoden
     public int getLongestMovieTitle (List<Movie> movies) {
         // Count length of every movie and store in list
         List<Integer> titleLengths = movies.stream()
@@ -269,12 +273,14 @@ public class HomeController implements Initializable {
         }
     }
 
+    //Todo tests schreiben für die methoden
     public long countMoviesFrom(List<Movie> movies, String director) {
         return movies.stream()
                 .filter(movie -> movie.getDirectors().contains(director))
                 .count();
     }
 
+    //Todo tests schreiben für die methoden
     public List<Movie> getMoviesBetweenYears (List<Movie> movies, int startYear, int endYear) {
         // Filter all movies to specified year range
         Stream<Movie> filteredMoviesStream = movies.stream()

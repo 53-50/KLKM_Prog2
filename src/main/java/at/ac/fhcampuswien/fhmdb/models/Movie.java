@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import com.google.gson.annotations.SerializedName;
 
 public class Movie {
 
@@ -59,6 +58,7 @@ public class Movie {
         return this.title;
     }
 
+    //empty constructor
     public Movie() {
         this.id = UUID.randomUUID().toString();
         this.title = "";
@@ -70,6 +70,7 @@ public class Movie {
         this.rating = 0.0;
     }
 
+    //full constructor
     public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
         if(id == null) {
             this.id = UUID.randomUUID().toString();
@@ -228,7 +229,7 @@ public class Movie {
 //        return rating;
 //    }
 
-
+/*
   //OBSOLETE
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
@@ -332,4 +333,6 @@ public class Movie {
         return movies;
 
     }
+
+ */
 }
