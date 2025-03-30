@@ -2,48 +2,255 @@ package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import com.google.gson.annotations.SerializedName;
 
 public class Movie {
-    private String title;
-    private String description;
-    private List<Genre> genres = new ArrayList<>();; //added
+
+//    private String title;
+//    private String description;
+//    private List<Genre> genres = new ArrayList<>();
+
+    //Exercise 2 - Erweiterungen Attribute
+//    private UUID id;
+//    private String title;
+//    private List<Genre> genres;
+//    private int releaseYear;
+//    private String description;
+//    private String imgUrl;
+//    private int lengthInMinutes;
+//    private List<String> directors = new ArrayList<>();
+//    private List<String> writers = new ArrayList<>();
+//    private List<String> mainCast = new ArrayList<>();
+//    private double rating;
+
+//    @Override
+  //  public String toString() {
+    //    return this.title;
+    //}
+
+    @SerializedName("id")
+    private final String id;
+
+    @SerializedName("title")
+    private final String title;
+
+    @SerializedName("description")
+    private final String description;
+
+    @SerializedName("genres")
+    private final List<Genre> genres;
+
+    @SerializedName("releaseYear")
+    private final int releaseYear;
+
+    @SerializedName("imgUrl")
+    private final String imgUrl;
+
+    @SerializedName("lengthInMinutes")
+    private final int lengthInMinutes; // in minutes
+
+    @SerializedName("directors")
+    private final List<String> directors = new ArrayList<>();
+
+    @SerializedName("writers")
+    private final List<String> writers = new ArrayList<>();
+
+    @SerializedName("mainCast")
+    private final List<String> mainCast = new ArrayList<>();
+
+    @SerializedName("rating")
+    private final double rating; // 0-10
+
+//    public Movie(String title, String description, List<Genre> genres) {
+//            this.id = UUID.randomUUID().toString();
+//            this.title = title;
+//            this.description = description;
+//            this.genres = genres;
+//            this.releaseYear = 0;
+//            this.imgUrl = "";
+//            this.lengthInMinutes = 0;
+//            this.rating = 0;
+
+//    }
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
+
+    public Movie() {
+        this.id = UUID.randomUUID().toString();
+        this.title = "";
+        this.description = "";
+        this.genres = new ArrayList<>();
+        this.releaseYear = 0;
+        this.imgUrl = "";
+        this.lengthInMinutes = 0;
+        this.rating = 0.0;
+    }
+
+    public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
+        if(id == null) {
+            this.id = UUID.randomUUID().toString();
+        } else {
+            this.id = id;
+            }
+            this.title = title;
+            this.description = description;
+            this.genres = genres;
+            this.releaseYear = releaseYear;
+            this.imgUrl = imgUrl;
+            this.lengthInMinutes = lengthInMinutes;
+            this.rating = rating;
+        }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) {
+            return false;
+        }
+        if(obj == this) {
+            return true;
+        }
+        if(!(obj instanceof Movie other)) {
+            return false;
+        }
+        return this.title.equals(other.title) && this.description.equals(other.description) && this.genres.equals(other.genres);
+    }
+
+    public String getTitle() {
+            return title;
+    }
+
+    public String getDescription() {
+            return description;
+    }
+
+    public List<Genre> getGenres() {
+            return genres;
+    }
+
+    public int getReleaseYear() {
+            return releaseYear;
+    }
+
+    public String getImgUrl() {
+            return imgUrl;
+    }
+
+    public int getLengthInMinutes() {
+            return lengthInMinutes;
+    }
+
+    public List<String> getDirectors() {
+            return directors;
+    }
+
+    public List<String> getWriters() {
+            return writers;
+    }
+
+    public List<String> getMainCast() {
+            return mainCast;
+    }
+
+    public double getRating() {
+            return rating;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public enum Genre {
         ACTION, ADVENTURE, ANIMATION, BIOGRAPHY, COMEDY,
         CRIME, DRAMA, DOCUMENTARY, FAMILY, FANTASY, HISTORY, HORROR,
         MUSICAL, MYSTERY, ROMANCE, SCIENCE_FICTION, SPORT, THRILLER, WAR,
         WESTERN
+
     }
 
-    public Movie(String title, String description, List<Genre> genres) {
-        this.title = title;
-        this.description = description;
-        this.genres = genres;
-    }
-
-    public Movie(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<Genre> getGenre() {
-        return genres;
-    }
-
+//    //CONSTRUCTOR OLD
+//    public Movie(String title, String description, List<Genre> genres) {
+//        this.title = title;
+//        this.description = description;
+//        this.genres = genres;
+//    }
+//
+//    //Exercise 2 - Erweitertes Objekt durch API anstatt Dummy-Daten
+//    public Movie(UUID id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.genres = genres;
+//        this.releaseYear = releaseYear;
+//        this.imgUrl = imgUrl;
+//        this.lengthInMinutes = lengthInMinutes;
+//        this.rating = rating;
+//    }
+//
+//    //equals methode fehlt - unit test hier
+//
+//    public Movie(String title) {
+//        this.title = title;
+//    }
+//
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public List<Genre> getGenre() {
+//        return genres;
+//    }
+//
     public String getGenreString() {
         return genres.stream()
                 .map(Genre::toString) // ruft toString() auf jedem Genre-Element auf
                 .collect(Collectors.joining(", ")); // macht Beistrich dazwischen
     }
+//
+//
+//    //Exercise 2 - Getter von neuen Attributen
+//    public UUID getId(){
+//        return id;
+//    }
+//
+//    public int getReleaseYear() {
+//        return releaseYear;
+//    }
+//
+//    public String getImgUrl(){
+//        return imgUrl;
+//    }
+//
+//    public int getLengthInMinutes(){
+//        return lengthInMinutes;
+//    }
+//
+//    public List<String> getDirectors() {
+//        return directors;
+//    }
+//
+//    public List<String> getWriters() {
+//        return writers;
+//    }
+//
+//    public List<String> getMainCast() {
+//        return mainCast;
+//    }
+//
+//    public double getRating() {
+//        return rating;
+//    }
 
+
+  /*  //OBSOLETE
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
 
@@ -146,4 +353,6 @@ public class Movie {
         return movies;
 
     }
+
+   */
 }

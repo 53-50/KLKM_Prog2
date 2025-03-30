@@ -2,6 +2,8 @@ package at.ac.fhcampuswien.fhmdb.api;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import okhttp3.OkHttpClient;    //is loading the main class for http-requests
 import okhttp3.Request;         // to generate HTTP-Requests
 import okhttp3.Response;        // to process the answer
@@ -19,7 +21,7 @@ import java.util.UUID;
 
 public class MovieAPI {
     // a client object that sends HTTP-Requests
-    private final OkHttpClient client = new OkHttpClient();
+    private final static OkHttpClient client = new OkHttpClient();
     private static final String BASE_URL = "https://prog2.fh-campuswien.ac.at/movies";
 
     // Which Endpoints are availabe?
@@ -61,20 +63,26 @@ public class MovieAPI {
     private static String buildURL(UUID id) {
         StringBuilder url = new StringBuilder(BASE_URL);
         if (id != null) {
-            url.append("/").append("id");
+            url.append("/").append(id);
         }
         return url.toString();
     }
 
+    public static List<Movie> fetchAllMovies() throws IOException {
+        return fetchAllMovies(null, null, null, null);
+    }
+
     // Get a URL - This program downloads a URL and prints its contents as List<Movie>
     // https://square.github.io/okhttp/
-    public List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) throws IOException {
+    public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) throws IOException {
         // build the link together with different parameters
         String URL = buildURL(query,genre, releaseYear, ratingFrom);
 
         // generating a new HTTP-Request
         Request request = new Request.Builder()
                 .url(URL)
+                //Deleting used User Agent
+                .removeHeader("User-Agent")  //stellt sicher, dass kein vorheriger User-Agent existiert -> sonst fügt nur hinzu
                 // Setting User-Agent
                 .addHeader("User-Agent", "http.agent")
                 .build();
@@ -83,8 +91,21 @@ public class MovieAPI {
         try (Response response = client.newCall(request).execute()) {
             assert response.body() != null;
             String responseBody = response.body().string();
+
+
+
+            // DEBUG: Ausgabe der rohen JSON-Antwort
+            //System.out.println("DEBUG API: JSON response: " + responseBody);
+
+            // DEBUG: JSON-Struktur inspizieren
+            //JsonElement jsonElement = JsonParser.parseString(responseBody);
+            //System.out.println("DEBUG API: JSON structure: " + jsonElement.toString());
+
+
+
             // JSON-String gets converted into a Movie-Object
             Gson gson = new Gson();
+
             // It gets converted into an Array of Movie-Objects
             Movie[] movies = gson.fromJson(responseBody, Movie[].class);
             return Arrays.asList(movies);
@@ -96,9 +117,6 @@ public class MovieAPI {
         return new ArrayList<>();
     }
 
-    public List<Movie> fetchAllMovies() throws IOException {
-        return fetchAllMovies(null, null, null, null);
-    }
 
     public Movie fetchMovieByID(UUID id) {
         // build the link together with the ID
