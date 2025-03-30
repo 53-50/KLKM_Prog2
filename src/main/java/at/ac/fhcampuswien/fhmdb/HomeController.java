@@ -51,9 +51,6 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //observableMovies.addAll(allMovies); //-> adds dummy data to observable list -> in Exercise2 Data from API
 
-        //List<Movie> moviesFromAPI = MovieAPI.fetchAllMovies();
-        // observableMovies.addAll(fetchMoviesFromAPI());
-
         List<Movie> result = null;
         try {
             result = MovieAPI.fetchAllMovies();
@@ -130,26 +127,6 @@ public class HomeController implements Initializable {
         deleteBtn.setOnAction(actionEvent -> deleteFilter());
     }
 
-//    public void fetchMoviesFromAPI(String query, Movie.Genre genre, Integer releaseYear, Integer ratingFrom){
-//
-//        MovieAPI movieAPI = new MovieAPI(); //neues Objekt zu API - Verbindung zu Film API
-//
-//        try {
-//            // Da die API Strings erwartet, Integer ggf. in String konvertieren
-//            String year = releaseYear != null ? releaseYear.toString() : null;
-//            String rating = ratingFrom != null ? ratingFrom.toString() : null; //? prüft, ob der Wert nicht null ist.Wenn ja, wird er in einen String umgewandelt, sonst wird null weitergegeben.
-//
-//            allMovies = movieAPI.fetchAllMovies(query, genre, year, rating); //ruft fetchAllMovies Methode in API Klaase auf - sendet HTTP request + bekommt List<Movie> als Antwort
-//                                                                             //wird in Instanvariable allMovies gespeichert
-//            //Debugging - API Ergebnisse (Anzahl der Filme)
-//            System.out.println("Debugging - API Ergebnisse: " + allMovies.size());
-//
-//            observableMovies.setAll(allMovies); //ausgegebene Liste updaten
-//
-//        } catch (IOException e) {
-//            System.err.println("Error loading films from API: " + e.getMessage());
-//        }
-//    }
 
     public void fetchMoviesFromAPI() throws IOException{
 
