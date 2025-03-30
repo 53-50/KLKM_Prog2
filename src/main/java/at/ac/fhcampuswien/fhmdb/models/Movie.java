@@ -1,34 +1,13 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import com.google.gson.annotations.SerializedName;
 
 public class Movie {
-
-//    private String title;
-//    private String description;
-//    private List<Genre> genres = new ArrayList<>();
-
-    //Exercise 2 - Erweiterungen Attribute
-//    private UUID id;
-//    private String title;
-//    private List<Genre> genres;
-//    private int releaseYear;
-//    private String description;
-//    private String imgUrl;
-//    private int lengthInMinutes;
-//    private List<String> directors = new ArrayList<>();
-//    private List<String> writers = new ArrayList<>();
-//    private List<String> mainCast = new ArrayList<>();
-//    private double rating;
-
-//    @Override
-  //  public String toString() {
-    //    return this.title;
-    //}
 
     @SerializedName("id")
     private final String id;
@@ -172,82 +151,11 @@ public class Movie {
 
     }
 
-//    //CONSTRUCTOR OLD
-//    public Movie(String title, String description, List<Genre> genres) {
-//        this.title = title;
-//        this.description = description;
-//        this.genres = genres;
-//    }
-//
-//    //Exercise 2 - Erweitertes Objekt durch API anstatt Dummy-Daten
-//    public Movie(UUID id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, double rating) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.genres = genres;
-//        this.releaseYear = releaseYear;
-//        this.imgUrl = imgUrl;
-//        this.lengthInMinutes = lengthInMinutes;
-//        this.rating = rating;
-//    }
-//
-//    //equals methode fehlt - unit test hier
-//
-//    public Movie(String title) {
-//        this.title = title;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public List<Genre> getGenre() {
-//        return genres;
-//    }
-//
     public String getGenreString() {
         return genres.stream()
                 .map(Genre::toString) // ruft toString() auf jedem Genre-Element auf
                 .collect(Collectors.joining(", ")); // macht Beistrich dazwischen
     }
-//
-//
-//    //Exercise 2 - Getter von neuen Attributen
-//    public UUID getId(){
-//        return id;
-//    }
-//
-//    public int getReleaseYear() {
-//        return releaseYear;
-//    }
-//
-//    public String getImgUrl(){
-//        return imgUrl;
-//    }
-//
-//    public int getLengthInMinutes(){
-//        return lengthInMinutes;
-//    }
-//
-//    public List<String> getDirectors() {
-//        return directors;
-//    }
-//
-//    public List<String> getWriters() {
-//        return writers;
-//    }
-//
-//    public List<String> getMainCast() {
-//        return mainCast;
-//    }
-//
-//    public double getRating() {
-//        return rating;
-//    }
 
 
   /*  //OBSOLETE

@@ -44,10 +44,7 @@ public class HomeController implements Initializable {
     public JFXButton deleteBtn;
 
     public List<Movie> allMovies;
-    //= fetchMoviesFromAPI();
-    // public List<Movie> allMovies = fetchMoviesFromAPI();
 
-    //was private final beforehand
     protected ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     @Override
@@ -66,8 +63,9 @@ public class HomeController implements Initializable {
         setMovies(result);
         setMovieList(result);
 
-
         sortMoviesDescending();
+
+
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -204,11 +202,8 @@ public class HomeController implements Initializable {
         genreComboBox.setValue(null);
         releaseYearComboBox.setValue(null);
         ratingComboBox.setValue(null);
-
         updateObservableList(allMovies);
-
     }
-
 
     private String getSearchQuery() {
         return (searchField != null && searchField.getText() != null) //stellt sicher, dass searchField und searchField.getText() nicht null sind, bevor .trim() aufgerufen wird.
