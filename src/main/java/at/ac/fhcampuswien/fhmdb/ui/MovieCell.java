@@ -31,7 +31,7 @@ public class MovieCell extends ListCell<Movie> {
                             : "No description available"
             );
             genre.setText(
-                    !movie.getGenre().isEmpty()
+                    !movie.getGenres().isEmpty()
                     ? movie.getGenreString()
                     : "No genre available"
             );
