@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
 
-    @BeforeAll
+
     public static void init() {
         System.out.println("~~~~~~~~ Testing HomeController ~~~~~~~~");
     }
 
-    @BeforeAll
+
     static void initJavaFX() {
         Platform.startup(() -> {
         }); // Initialisiert JavaFX für Tests
