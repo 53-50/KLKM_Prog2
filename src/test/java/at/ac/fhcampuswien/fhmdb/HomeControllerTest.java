@@ -303,4 +303,7 @@ class HomeControllerTest {
         assertEquals("Iron Man", testHomeController.observableMovies.get(0).getTitle(), "The filtered movie should be Iron Man.");
     }
 
+    //--------------------------------------- Unit tests Exercise 2 ---------------------------------------//
+
+
 }
