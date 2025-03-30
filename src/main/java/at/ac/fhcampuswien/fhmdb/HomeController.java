@@ -197,7 +197,6 @@ public class HomeController implements Initializable {
 
         updateObservableList(filteredMovies); //-> wird ab Exercise 2 von API abgerufen
 
-        //fetchMoviesFromAPI(query, selectedGenre, selectedYear, selectedRating);
     }
 
     public void deleteFilter() {
@@ -206,9 +205,8 @@ public class HomeController implements Initializable {
         releaseYearComboBox.setValue(null);
         ratingComboBox.setValue(null);
 
-        updateObservableList(allMovies); //-> wird jetzt auch aus API gezogen
+        updateObservableList(allMovies);
 
-        //fetchMoviesFromAPI(null, null, null, null);
     }
 
 
