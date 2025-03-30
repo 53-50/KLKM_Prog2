@@ -127,6 +127,9 @@ public class HomeController implements Initializable {
         deleteBtn.setOnAction(actionEvent -> deleteFilter());
     }
 
+/*
+
+//was mach ma mit dem?
 
     public void fetchMoviesFromAPI() throws IOException{
 
@@ -148,6 +151,8 @@ public class HomeController implements Initializable {
             System.err.println("Error fetching movies: " + e.getMessage());
         }
     }
+
+ */
 
     public void setMovies(List<Movie> movies) {
         allMovies = movies;
@@ -190,9 +195,15 @@ public class HomeController implements Initializable {
         return genreComboBox.getValue();
     }
 
-    private List<Movie> filterMovies(String query, Movie.Genre selectedGenre, Integer selectedYear, Integer selectedRating) {
+    public List<Movie> filterMovies(String query, Movie.Genre selectedGenre, Integer selectedYear, Integer selectedRating) {
+        if (allMovies == null) {
+            throw new NullPointerException("Movie list is null");
+        }
+
         return allMovies.stream()
-                .filter(movie -> query.isEmpty() || matchesQuery(movie, query))
+                .filter(movie -> query == null || query.isBlank() ||
+                        movie.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                        (movie.getDescription() != null && movie.getDescription().toLowerCase().contains(query.toLowerCase())))
                 .filter(movie -> selectedGenre == null || movie.getGenres().contains(selectedGenre))
                 .filter(movie -> selectedYear == null || movie.getReleaseYear() == selectedYear)
                 .filter(movie -> selectedRating == null || movie.getRating() >= selectedRating)

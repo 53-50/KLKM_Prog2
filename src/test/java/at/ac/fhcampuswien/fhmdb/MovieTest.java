@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MovieTest {
-
     @BeforeAll
     public static void init() {
         System.out.println("~~~~~~~~ Testing Movies ~~~~~~~~");
@@ -20,5 +19,4 @@ class MovieTest {
         List<Movie> movies = Movie.initializeMovies();
         assertFalse(movies.isEmpty(), "The list shouldn't be empty.");
     }
-
 }

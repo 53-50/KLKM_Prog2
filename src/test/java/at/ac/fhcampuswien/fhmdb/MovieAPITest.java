@@ -4,10 +4,11 @@ import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MovieAPITest {
 
@@ -18,11 +19,11 @@ class MovieAPITest {
 
     @Test
     void check_if_ApiCall_Returns_Response() throws IOException {
-        MovieAPI api = new MovieAPI();
-        List<Movie> response = api.fetchAllMovies();
+        MovieAPI api = new MovieAPI(); //TODO
+        List<Movie> response = MovieAPI.fetchAllMovies();
 
         assertNotNull(response, "The API-Response is null.");
-        assertFalse(response.size() > 0, "The API-Response is empty.");
+        assertFalse(response.isEmpty(), "The API-Response is empty.");
     }
 
     @Test
