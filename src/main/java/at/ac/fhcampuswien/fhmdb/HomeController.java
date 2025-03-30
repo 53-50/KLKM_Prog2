@@ -206,8 +206,6 @@ public class HomeController implements Initializable {
     }
 
 
-
-    //Todo tests schreiben für die methoden
     public String getMostPopularActor (List<Movie> movies) {
         // Store all actors from movies in list
         List<String> allActors = movies.stream()
@@ -230,7 +228,6 @@ public class HomeController implements Initializable {
         }
     }
 
-    //Todo tests schreiben für die methoden
     public int getLongestMovieTitle (List<Movie> movies) {
         // Count length of every movie and store in list
         List<Integer> titleLengths = movies.stream()
@@ -249,14 +246,12 @@ public class HomeController implements Initializable {
         }
     }
 
-    //Todo tests schreiben für die methoden
     public long countMoviesFrom(List<Movie> movies, String director) {
         return movies.stream()
                 .filter(movie -> movie.getDirectors().contains(director))
                 .count();
     }
 
-    //Todo tests schreiben für die methoden
     public List<Movie> getMoviesBetweenYears (List<Movie> movies, int startYear, int endYear) {
         // Filter all movies to specified year range
         Stream<Movie> filteredMoviesStream = movies.stream()
