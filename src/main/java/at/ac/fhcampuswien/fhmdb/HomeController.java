@@ -12,10 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HomeController implements Initializable {
     @FXML
@@ -138,6 +137,67 @@ public class HomeController implements Initializable {
     public void sortMoviesDescending() {
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
         allMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+    }
+
+    public String getMostPopularActor (List<Movie> movies) {
+        // Store all actors from movies in list
+        List<String> allActors = movies.stream()
+                .flatMap(movie -> movie.getMainCast().stream())
+                .collect(Collectors.toList());
+
+        // Count how many times a specific actor is in list
+        Map<String, Long> actorCountMap = allActors.stream()
+        .collect(Collectors.groupingBy(actor -> actor, Collectors.counting()));
+
+        // Find actor with most appearances
+        Optional<Map.Entry<String, Long>> mostPopular = actorCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue());
+
+        // If present return actor, else null
+        if (mostPopular.isPresent()) {
+            return mostPopular.get().getKey();
+        } else {
+            return null;
+        }
+    }
+
+    public int getLongestMovieTitle (List<Movie> movies) {
+        // Count length of every movie and store in list
+        List<Integer> titleLengths = movies.stream()
+                .map(movie -> movie.getTitle().length())
+                .collect(Collectors.toList());
+
+        // Find maximum
+        Optional<Integer> maxLength = titleLengths.stream()
+                .max(Integer::compareTo);
+
+        // If present return length, else 0
+        if (maxLength.isPresent()) {
+            return maxLength.get();
+        } else {
+            return 0;
+        }
+    }
+
+    public long countMoviesFrom(List<Movie> movies, String director) {
+        return movies.stream()
+                .filter(movie -> movie.getDirectors().contains(director))
+                .count();
+    }
+
+    public List<Movie> getMoviesBetweenYears (List<Movie> movies, int startYear, int endYear) {
+        // Filter all movies to specified year range
+        Stream<Movie> filteredMoviesStream = movies.stream()
+                .filter(movie -> {
+                    int year = movie.getReleaseYear();
+                    return year >= startYear && year <= endYear;
+                });
+
+        // Store filtered movies in list
+        List<Movie> moviesInRange = filteredMoviesStream
+                .collect(Collectors.toList());
+
+        return moviesInRange;
     }
 
 }
