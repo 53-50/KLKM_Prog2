@@ -8,9 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -148,7 +148,7 @@ class HomeControllerTest {
     }
 
     @Test
-    void test_checks_if_ApplyFilter_MethodExists() {
+    void test_checks_if_ApplyFilter_MethodExists() { //test generally not needed - method already implemented - usage was only for the exercise
         try {
             HomeController testHomeController = new HomeController();
             Method method = testHomeController.getClass().getDeclaredMethod("applyFilter");
@@ -302,5 +302,8 @@ class HomeControllerTest {
 
         assertEquals("Iron Man", testHomeController.observableMovies.get(0).getTitle(), "The filtered movie should be Iron Man.");
     }
+
+    //--------------------------------------- Unit tests Exercise 2 ---------------------------------------//
+
 
 }
