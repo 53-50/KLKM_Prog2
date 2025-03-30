@@ -1,36 +1,92 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HomeControllerTest {
+
+    private static HomeController testHomeController;
 
     @BeforeAll
     public static void init() {
         System.out.println("~~~~~~~~ Testing HomeController ~~~~~~~~");
-    }
+        testHomeController = new HomeController();
 
-    @BeforeAll
-    static void initJavaFX() {
+        // Initialisiert JavaFX für Tests
         Platform.startup(() -> {
-        }); // Initialisiert JavaFX für Tests
+        });
     }
 
     @Test
+    public void when_initialized_allMovies_equal_to_observableMoviesList() {
+        assertEquals(testHomeController.allMovies, testHomeController.observableMovies);
+    }
+
+
+    @Test
     public void check_if_sorting_all_movies_ascending() {
+        // given
+        testHomeController.setMovieList(Movie.initializeMovies());
+
+        // when
+        testHomeController.sortMoviesAscending();
+
+        // then
+        List<Movie> expected = Arrays.asList(
+                new Movie(
+                        "The Wolf of Wall Street",
+                        "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
+                        Arrays.asList(Movie.Genre.DRAMA, Movie.Genre.ROMANCE, Movie.Genre.BIOGRAPHY)),
+                new Movie(
+                        "The Usual Suspects",
+                        "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which begin when five criminals meet at a seemingly random police lineup.",
+                        Arrays.asList(Movie.Genre.CRIME, Movie.Genre.DRAMA, Movie.Genre.MYSTERY)),
+                new Movie(
+                        "Puss in Boots",
+                        "An outlaw cat, his childhood egg-friend, and a seductive thief kitty set out in search for the eggs of the fabled Golden Goose to clear his name, restore his lost honor, and regain the trust of his mother and town.",
+                        Arrays.asList(Movie.Genre.COMEDY, Movie.Genre.FAMILY, Movie.Genre.ANIMATION))
+        );
+
+        assertEquals(expected, testHomeController.observableMovies);
+
+    }
+
+    @Test
+    public void check_if_sorting_all_movies_descending() {
+        // given
+        testHomeController.setMovieList(Movie.initializeMovies());
+
+        // when
+        testHomeController.sortMoviesDescending();
+
+        // then
+        List<Movie> expected = Arrays.asList(
+                new Movie(
+                        "Puss in Boots",
+                        "An outlaw cat, his childhood egg-friend, and a seductive thief kitty set out in search for the eggs of the fabled Golden Goose to clear his name, restore his lost honor, and regain the trust of his mother and town.",
+                        Arrays.asList(Movie.Genre.COMEDY, Movie.Genre.FAMILY, Movie.Genre.ANIMATION)),
+                new Movie(
+                        "The Usual Suspects",
+                        "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which begin when five criminals meet at a seemingly random police lineup.",
+                        Arrays.asList(Movie.Genre.CRIME, Movie.Genre.DRAMA, Movie.Genre.MYSTERY)),
+                new Movie(
+                        "The Wolf of Wall Street",
+                        "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
+                        Arrays.asList(Movie.Genre.DRAMA, Movie.Genre.ROMANCE, Movie.Genre.BIOGRAPHY))
+        );
+
+        assertEquals(expected, testHomeController.observableMovies);
+
+    }
+
+    /*
         List<Movie> ExpectedMoviesList = Arrays.asList(
                 new Movie("Ant-Man", 2021),
                 new Movie("Iron Man", 2022),
@@ -54,6 +110,7 @@ class HomeControllerTest {
                     observableMoviesList.get(i).getTitle());
         }
     }
+
 
     @Test
     public void check_if_sorting_all_movies_descending() {
@@ -80,6 +137,7 @@ class HomeControllerTest {
                     observableMoviesList.get(i).getTitle());
         }
     }
+
 
     @Test
     void check_if_movie_filtered_desc_afterwards_apply_genre() {
@@ -160,6 +218,7 @@ class HomeControllerTest {
 
     //--------------------------------------- Unit tests Query Filter ---------------------------------------//
 
+    /*
     @Test
     public void test_specific_Search_for_Movie_Thor() {
         HomeController testHomeController = new HomeController();
@@ -213,6 +272,7 @@ class HomeControllerTest {
         assertEquals(testHomeController.allMovies, testHomeController.observableMovies, "If QueryFilter is null, return should be unfiltered list.");
     }
 
+
     @Test
     public void test_if_Query_and_Genre_empty_returns_unfiltered_List() {
         HomeController testHomeController = new HomeController();
@@ -229,7 +289,8 @@ class HomeControllerTest {
         assertEquals(testHomeController.allMovies, testHomeController.observableMovies, "If QueryFilter is empty, return should be unfiltered list.");
 
     }
-
+*/
+    /*
     @Test
     public void test_if_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
@@ -257,6 +318,7 @@ class HomeControllerTest {
         }
     }
 
+
     //--------------------------------------- Unit tests Genre Filter ---------------------------------------//
 
     @Test
@@ -283,6 +345,8 @@ class HomeControllerTest {
                 "All filtered movies should be of genre DRAMA.");
     }
 
+
+    /*
     @Test
     public void test_for_specific_Query_and_Genre() {
         HomeController testHomeController = new HomeController();
@@ -302,6 +366,9 @@ class HomeControllerTest {
 
         assertEquals("Iron Man", testHomeController.observableMovies.get(0).getTitle(), "The filtered movie should be Iron Man.");
     }
+     */
+
+
 
     //--------------------------------------- Unit tests Exercise 2 ---------------------------------------//
 

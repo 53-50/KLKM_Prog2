@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,17 +40,17 @@ public class Movie {
     @SerializedName("rating")
     private final double rating; // 0-10
 
-//    public Movie(String title, String description, List<Genre> genres) {
-//            this.id = UUID.randomUUID().toString();
-//            this.title = title;
-//            this.description = description;
-//            this.genres = genres;
-//            this.releaseYear = 0;
-//            this.imgUrl = "";
-//            this.lengthInMinutes = 0;
-//            this.rating = 0;
+ public Movie(String title, String description, List<Genre> genres) {
+     this.id = UUID.randomUUID().toString();
+     this.title = title;
+     this.description = description;
+     this.genres = genres;
+     this.releaseYear = 0;
+     this.imgUrl = "";
+     this.lengthInMinutes = 0;
+     this.rating = 0;
 
-//    }
+   }
 
     @Override
     public String toString() {
@@ -158,7 +156,7 @@ public class Movie {
     }
 
 
-  /*  //OBSOLETE
+  //OBSOLETE
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
 
@@ -261,6 +259,4 @@ public class Movie {
         return movies;
 
     }
-
-   */
 }
