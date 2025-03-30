@@ -30,37 +30,16 @@ public class Movie {
     //    return this.title;
     //}
 
-    @SerializedName("id")
     private final String id;
-
-    @SerializedName("title")
     private final String title;
-
-    @SerializedName("description")
     private final String description;
-
-    @SerializedName("genres")
     private final List<Genre> genres;
-
-    @SerializedName("releaseYear")
     private final int releaseYear;
-
-    @SerializedName("imgUrl")
     private final String imgUrl;
-
-    @SerializedName("lengthInMinutes")
     private final int lengthInMinutes; // in minutes
-
-    @SerializedName("directors")
     private final List<String> directors = new ArrayList<>();
-
-    @SerializedName("writers")
     private final List<String> writers = new ArrayList<>();
-
-    @SerializedName("mainCast")
     private final List<String> mainCast = new ArrayList<>();
-
-    @SerializedName("rating")
     private final double rating; // 0-10
 
 //    public Movie(String title, String description, List<Genre> genres) {
