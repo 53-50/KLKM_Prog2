@@ -94,10 +94,6 @@ public class Movie {
         return releaseYear;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
     public int getLengthInMinutes() {
         return lengthInMinutes;
     }
@@ -122,10 +118,14 @@ public class Movie {
         return id;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
     public String getGenreString() {
         return genres.stream()
-                .map(Genre::toString) // ruft toString() auf jedem Genre-Element auf
-                .collect(Collectors.joining(", ")); // macht Beistrich dazwischen
+                .map(Genre::toString) //calls toString() on each Genre element
+                .collect(Collectors.joining(", ")); // puts a comma in between
     }
 
     /*    //CONSTRUCTOR OLD
@@ -134,9 +134,9 @@ public class Movie {
         this.description = description;
         this.genres = genres;
     }
-    */
 
-    /*    //initializeMovies OLD
+
+     //initializeMovies OLD
     public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
 
@@ -164,7 +164,7 @@ public class Movie {
                 List.of(Genre.DRAMA, Genre.HISTORY, Genre.WAR));
 
         Movie godfather2 = new Movie("The Godfather Part II", "In the continuing saga of the Corleone " +
-                "crime family, a young Vito Corleone grows up in Sicily and in 1910s New York. In the 1950s, Michael " +
+                "crime family, a young Vito Corleone grows up in Sicily and in the 1910s New York. In the 1950s, Michael " +
                 "Corleone attempts to expand the family business into Las Vegas, Hollywood and Cuba.",
                 List.of(Genre.DRAMA, Genre.CRIME));
 
@@ -174,15 +174,15 @@ public class Movie {
                 " Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
                 List.of(Genre.DRAMA, Genre.CRIME));
 
-        Movie antman = new Movie("Ant-Man", "Armed with the astonishing ability to shrink in scale" +
+        Movie ant man = new Movie("Ant-Man", "Armed with the astonishing ability to shrink in scale" +
                 " but increase in strength, master thief Scott Lang must embrace his inner-hero and help his mentor," +
                 " Doctor Hank Pym, protect the secret behind his spectacular Ant-Man suit from a new generation of " +
                 "towering threats. Against seemingly insurmountable obstacles, Pym and Lang must plan and pull off a " +
                 "heist that will save the world.",
                 List.of(Genre.ACTION, Genre.SCIENCE_FICTION, Genre.ADVENTURE));
 
-        Movie hellokitty = new Movie("Hello Kitty's Animation Theater", "Recreations of different " +
-                "fairy tales starring Hello Kitty and other Sanrio characters.",
+        Movie hello kitty = new Movie("Hello Kitty's Animation Theater", "Recreations of different " +
+                "fairy tales starring Hello Kitty and other Sangria characters.",
                 List.of(Genre.ANIMATION, Genre.SCIENCE_FICTION, Genre.FANTASY, Genre.FAMILY));
 
         Movie oppenheimer = new Movie("Oppenheimer", "The story of J. Robert Oppenheimer's role in " +
@@ -196,9 +196,9 @@ public class Movie {
                 " sure how to feel when Anxiety shows up. And it looks like she’s not alone.",
                 List.of(Genre.FAMILY, Genre.COMEDY, Genre.ADVENTURE, Genre.ANIMATION));
 
-        Movie chucky = new Movie("Living with Chucky", "A filmmaker who grew up alongside Chucky the " +
+        Movie chuck = new Movie("Living with Chuck", "A filmmaker who grew up alongside Chuck the " +
                 "killer doll seeks out the other families surrounding the Child's Play films as they recount their " +
-                "experiences working on the ongoing franchise and what it means to be a part of the, Chucky family.",
+                "experiences working on the ongoing franchise and what it means to be a part of the Chuck family.",
                 List.of(Genre.DOCUMENTARY, Genre.HORROR));
 
         Movie mamma = new Movie("Mamma Mia!", "A spirited young bride-to-be living with her single " +
@@ -211,7 +211,7 @@ public class Movie {
                 "maze that will require him to join forces with fellow “runners” for a shot at escape.",
                 List.of(Genre.ACTION, Genre.MYSTERY, Genre.SCIENCE_FICTION, Genre.THRILLER));
 
-        Movie brokeback = new Movie("Brokeback Mountain", "In 1960s Wyoming, two men develop a strong " +
+        Movie broke back = new Movie("Broke back Mountain", "In the 1960s Wyoming, two men develop a strong " +
                 "emotional and sexual relationship that endures as a lifelong connection complicating their lives as" +
                 " they get married and start families of their own.",
                 List.of(Genre.DRAMA, Genre.ROMANCE, Genre.WESTERN));
@@ -226,14 +226,14 @@ public class Movie {
         movies.add(schindler);
         movies.add(godfather1);
         movies.add(godfather2);
-        movies.add(antman);
+        movies.add(ant man);
         movies.add(hellokitty);
         movies.add(oppenheimer);
         movies.add(insideOut);
-        movies.add(chucky);
+        movies.add(chuck);
         movies.add(mamma);
         movies.add(maze);
-        movies.add(brokeback);
+        movies.add(broke back);
         movies.add(rush);
 
         return movies;

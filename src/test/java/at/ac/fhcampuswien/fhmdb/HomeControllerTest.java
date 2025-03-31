@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +16,17 @@ class HomeControllerTest {
     private HomeController testHomeController;
     private List<Movie> dummyMovies;
 
+    @BeforeAll
+    public static void init() {
+        System.out.println("~~~~~~~~ Testing MovieAPI ~~~~~~~~");
+    }
+
     @BeforeEach
     public void setUp() {
+        //initialize new home controller before each UT
         testHomeController = new HomeController();
 
+        //Dummy-Set for UT
         dummyMovies = new ArrayList<>();
         dummyMovies.add(new Movie("1", "The Avengers", "Superhero movie",
                 Arrays.asList(Movie.Genre.ACTION, Movie.Genre.ADVENTURE), 2012, "", 143, 8.0));
@@ -31,31 +39,32 @@ class HomeControllerTest {
         dummyMovies.add(new Movie("5", "Inception", "Mind bending thriller",
                 Arrays.asList(Movie.Genre.SCIENCE_FICTION, Movie.Genre.THRILLER), 2010, "", 148, 8.8));
 
+        //Initialize dummy set for each UT
         testHomeController.setMovies(dummyMovies);
         testHomeController.setMovieList(dummyMovies);
     }
 
     //--------------------------------------- Unit tests Exercise 1 ---------------------------------------//
-   /*
-  //  @BeforeAll
-  //  public static void init() {
-  //      HomeController testHomeController = new HomeController();
-  //  }
+ /*
+    @BeforeAll
+    public static void init() {
+        HomeController testHomeController = new HomeController();
+    }
     @Test
     public void check_if_sorting_all_movies_ascending() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
                 new Movie("2", "Thor", "God of Thunder",
                         Arrays.asList(Movie.Genre.ACTION, Movie.Genre.FANTASY), 2011, "", 115, 7.5),
-                new Movie("3", "Batman", "xxxx",
+                new Movie("3", "Batman", "test",
                         Arrays.asList(Movie.Genre.ACTION, Movie.Genre.FANTASY), 2011, "", 115, 7.5),
-                new Movie("4", "Iron Man", "yyyyyy",
+                new Movie("4", "Iron Man", "test",
                         Arrays.asList(Movie.Genre.ACTION, Movie.Genre.FANTASY), 2011, "", 115, 7.5)
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("3", "Batman", "xxxx",
+                new Movie("3", "Batman", "test",
                         Arrays.asList(Movie.Genre.ACTION, Movie.Genre.FANTASY), 2011, "", 115, 7.5),
-                new Movie("4", "Iron Man", "yyyyyy",
+                new Movie("4", "Iron Man", "test",
                         Arrays.asList(Movie.Genre.ACTION, Movie.Genre.FANTASY), 2011, "", 115, 7.5),
                 new Movie("2", "Thor", "God of Thunder",
                         Arrays.asList(Movie.Genre.ACTION, Movie.Genre.FANTASY), 2011, "", 115, 7.5)
@@ -105,14 +114,14 @@ class HomeControllerTest {
     @Test
     void check_if_movie_filtered_desc_afterwards_apply_genre() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
-                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+                new Movie("C-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("A-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("B-Movie", "Whats happening", 0, List.of(Movie.Genre.HISTORY)),
-                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+                new Movie("A-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("B-Movie", "What's happening", 0, List.of(Movie.Genre.HISTORY)),
+                new Movie("C-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
         );
 
         HomeController testHomeController = new HomeController();
@@ -138,14 +147,14 @@ class HomeControllerTest {
     @Test
     void check_if_movie_filtered_asc_afterwards_apply_genre() {
         List<Movie> ExpectedMoviesList = Arrays.asList(
-                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
+                new Movie("A-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("C-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY))
         );
 
         ObservableList<Movie> observableMoviesList = FXCollections.observableArrayList(
-                new Movie("C-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("A-Movie", "Whats happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
-                new Movie("B-Movie", "Whats happening", 0, List.of(Movie.Genre.HISTORY))
+                new Movie("C-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("A-Movie", "What's happening", 0, List.of(Movie.Genre.DRAMA, Movie.Genre.COMEDY)),
+                new Movie("B-Movie", "What's happening", 0, List.of(Movie.Genre.HISTORY))
         );
 
         HomeController testHomeController = new HomeController();
@@ -186,7 +195,7 @@ class HomeControllerTest {
     public void test_specific_Search_for_Movie_Thor() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerful but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
@@ -205,7 +214,7 @@ class HomeControllerTest {
     public void test_specific_Search_for_Movie_TheAvengers() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerful but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
@@ -257,7 +266,7 @@ class HomeControllerTest {
     public void test_if_ApplyFilter_Ignores_CaseSensitivity() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerful but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
@@ -287,7 +296,7 @@ class HomeControllerTest {
     public void test_for_specific_Genre() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.DRAMA));
+        Movie thor = new Movie("Thor", "A powerful but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.DRAMA));
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
@@ -312,7 +321,7 @@ class HomeControllerTest {
     public void test_for_specific_Query_and_Genre() {
         HomeController testHomeController = new HomeController();
 
-        Movie thor = new Movie("Thor", "A powerfull but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
+        Movie thor = new Movie("Thor", "A powerful but arrogant god is cast down to Earth", 0, List.of(Movie.Genre.ACTION));
         Movie ironMan = new Movie("Iron Man", "A billionaire builds a high-tech suit", 0, List.of(Movie.Genre.ACTION));
         Movie theAvengers = new Movie("The Avengers", "Superheros team up to save the world", 0, List.of(Movie.Genre.ACTION));
 
@@ -332,68 +341,89 @@ class HomeControllerTest {
 
     @Test
     void when_initialized_allMovies_equal_to_observableMoviesList() {
+        //given - setup()
+        //when already setup
+        //then
         assertEquals(testHomeController.allMovies, testHomeController.observableMovies);
     }
 
     @Test
     void check_if_sorting_all_movies_ascending() {
 
-        testHomeController.sortMoviesAscending();
-
-        List<String> actTitle = testHomeController.observableMovies.stream()
-                .map(Movie::getTitle)
-                .collect(Collectors.toList());
-
+        //given
         List<String> expTitle = dummyMovies.stream()
                 .map(Movie::getTitle)
                 .sorted()
                 .collect(Collectors.toList());
 
+        //when
+        testHomeController.sortMoviesAscending();
+
+        //then
+        List<String> actTitle = testHomeController.observableMovies.stream()
+                .map(Movie::getTitle)
+                .collect(Collectors.toList());
+
         Assertions.assertEquals(expTitle, actTitle);
+
+        /*
+        System.out.println("Expected: " + expTitle);
+        System.out.println("Actual: " + actTitle);
+        */
     }
 
     @Test
     public void test_sortMoviesDescending() {
-
-        testHomeController.sortMoviesDescending();
-
-        List<String> actTitles = testHomeController.observableMovies.stream()
-                .map(Movie::getTitle)
-                .collect(Collectors.toList());
-
+        //given
         List<String> expTitles = dummyMovies.stream()
                 .map(Movie::getTitle)
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
-        assertEquals(expTitles, actTitles);
-    }
-
-    @Test
-        //TODO
-    void if_last_sort_descending_next_sort_should_be_ascending() {
-        testHomeController.setMovieList(new ArrayList<>(dummyMovies));
-
+        //when
         testHomeController.sortMoviesDescending();
 
-        List<String> descendingTitles = testHomeController.observableMovies.stream()
+        //then
+        List<String> actTitles = testHomeController.observableMovies.stream()
                 .map(Movie::getTitle)
                 .collect(Collectors.toList());
 
-        testHomeController.sortMoviesAscending();
 
+        assertEquals(expTitles, actTitles);
+
+        //System.out.println("Expected: " + expTitles);
+        //System.out.println("Actual: " + actTitles);
+    }
+
+    @Test
+    void if_last_sort_descending_next_sort_should_be_ascending() {
+        //System.out.println("Debug: OG movie list");
+        //dummyMovies.forEach(movie -> System.out.println(movie.getTitle()));
+
+        //given
+        List<String> expectedTitles = dummyMovies.stream()
+                .map(Movie::getTitle)
+                .sorted()
+                .collect(Collectors.toList());
+
+        //when
+        testHomeController.sortMoviesDescending();
+        //System.out.println("\nDebug: Movies descending");
+        //testHomeController.observableMovies.forEach(movie -> System.out.println(movie.getTitle()));
+
+        testHomeController.sortMoviesAscending();
+        //System.out.println("\nDebug: Movies ascending");
+        //testHomeController.observableMovies.forEach(movie -> System.out.println(movie.getTitle()));
+
+        //then
         List<String> actualTitles = testHomeController.observableMovies.stream()
                 .map(Movie::getTitle)
                 .collect(Collectors.toList());
 
-
-        List<String> expectedTitles = dummyMovies.stream()
-                .map(Movie::getTitle)
-                .collect(Collectors.toList());
-        Collections.sort(expectedTitles);
+        //System.out.println("\nExpected: sorted");
+        //expectedTitles.forEach(System.out::println);
 
         assertEquals(expectedTitles, actualTitles);
-
     }
 
 
@@ -402,67 +432,115 @@ class HomeControllerTest {
 
     @Test
     void test_specific_Search_for_Movie_Thor() {
-        List<Movie> filtered = testHomeController.filterMovies("Thor", null, null, null);
-        assertFalse(filtered.isEmpty());
+        //given
+        String query = "Thor";
 
+        //when
+        List<Movie> filtered = testHomeController.filterMovies(query, null, null, null);
+
+        //then
+        assertFalse(filtered.isEmpty(), "There are no movies");
         boolean found = filtered.stream()
                 .anyMatch(m -> m.getTitle().equals("Thor") ||
                         (m.getDescription() != null && m.getDescription().toLowerCase().contains("thor")));
-        assertTrue(found);
+        assertTrue(found, "There are movies");
     }
 
     @Test
     void query_filter_with_null_value_returns_unfiltered_list() {
-        List<Movie> allMovies = new ArrayList<>(dummyMovies);
-        List<Movie> filteredNull = testHomeController.filterMovies(null, null, null, null);
-        assertEquals(allMovies.size(), filteredNull.size());
+        //given
+        List<Movie> expected = new ArrayList<>(dummyMovies);
+
+        //when
+        List<Movie> actual = testHomeController.filterMovies(null, null, null, null);
+
+        //then
+        assertEquals(expected, actual, "If query null it returns unfiltered list");
     }
 
     @Test
-    void genre_filter_with_null_value_returns_unfiltered_list() {
-        List<Movie> allMovies = new ArrayList<>(dummyMovies);
-        List<Movie> filteredNull = testHomeController.filterMovies("", null, null, null);
-        assertEquals(allMovies.size(), filteredNull.size());
+    void query_filter_with_no_input_value_returns_unfiltered_list() {
+        //given
+        List<Movie> expected = new ArrayList<>(dummyMovies);
+        String query = "";
+
+        //when
+        List<Movie> actual = testHomeController.filterMovies(query, null, null, null);
+
+        //then
+        assertEquals(expected, actual, "If genre null it returns unfiltered list");
     }
 
     @Test
     void test_if_ApplyFilter_Ignores_CaseSensitivity() {
-        List<Movie> filtered = testHomeController.filterMovies("tHoR", null, null, null);
+        //given
+        String query = "tHoR";
+
+        //when
+        List<Movie> filtered = testHomeController.filterMovies(query, null, null, null);
+
+        //then
         boolean found = filtered.stream()
                 .anyMatch(m -> m.getTitle().equalsIgnoreCase("Thor"));
-        assertTrue(found);
+        assertTrue(found, "Thor is found");
     }
 
     @Test
     void test_for_specific_Genre() {
-        List<Movie> filtered = testHomeController.filterMovies(null, Movie.Genre.ACTION, null, null);
+        //given
+        Movie.Genre genre = Movie.Genre.ACTION;
+
+        //when
+        List<Movie> filtered = testHomeController.filterMovies(null, genre, null, null);
+
+        //then
+        assertFalse(filtered.isEmpty(), "Genre should not be empty");
         for (Movie m : filtered) {
-            assertTrue(m.getGenres().contains(Movie.Genre.ACTION));
+            assertTrue(m.getGenres().contains(Movie.Genre.ACTION), "Genre is found");
         }
     }
 
     @Test
     void test_for_specific_Year() {
-        List<Movie> filtered = testHomeController.filterMovies(null, null, 2011, null);
-        assertFalse(filtered.isEmpty());
+        //given
+        int year = 2011;
 
+        //when
+        List<Movie> filtered = testHomeController.filterMovies(null, null, year, null);
+
+        //then
+        assertFalse(filtered.isEmpty(), "Year should not be empty");
         for (Movie m : filtered) {
-            assertEquals(2011, m.getReleaseYear());
+            assertEquals(year, m.getReleaseYear(), "Year is found");
         }
     }
 
     @Test
     void test_for_specific_Rating() {
-        List<Movie> filtered = testHomeController.filterMovies(null, null, null, 8);
-        assertFalse(filtered.isEmpty());
+        //given
+        int rating = 8;
+
+        //when
+        List<Movie> filtered = testHomeController.filterMovies(null, null, null, rating);
+
+        //then
+        assertFalse(filtered.isEmpty(), "Rating should not be empty");
         for (Movie m : filtered) {
-            assertTrue(m.getRating() >= 8);
+            assertTrue(m.getRating() >= 8, "Rating is found");
         }
     }
 
     @Test
     void test_for_specific_Query_and_Genre() {
-        List<Movie> filtered = testHomeController.filterMovies("iron", Movie.Genre.ACTION, null, null);
+        //given
+        String query = "iron";
+        Movie.Genre genre = Movie.Genre.ACTION;
+
+        //when
+        List<Movie> filtered = testHomeController.filterMovies(query, genre, null, null);
+
+        //then
+        assertFalse(filtered.isEmpty(), "Query and Genre should not be empty");
         for (Movie m : filtered) {
             assertTrue(m.getTitle().toLowerCase().contains("iron"));
             assertTrue(m.getGenres().contains(Movie.Genre.ACTION));
@@ -471,9 +549,14 @@ class HomeControllerTest {
 
     @Test
     void test_filter_null_list_throws_exception() {
+        //given
         testHomeController.setMovies(null);
+
+        //when
         Exception e = assertThrows(NullPointerException.class, () ->
                 testHomeController.filterMovies("anything", null, null, null));
+
+        //then
         assertNotNull(e);
     }
 
@@ -556,10 +639,10 @@ class HomeControllerTest {
 
         // when
         String popularActor = testHomeController.getMostPopularActor(testMoviesActors);
-        System.out.println("DEBUG - Most popular actor found: " + popularActor);
+        //System.out.println("DEBUG - Most popular actor found: " + popularActor);
 
         // then
         assertEquals("Actor1", popularActor,
-                "Actor1 sollte aufgrund 2 Auftritten am häufigsten vorkommen.");
+                "Actor1 should be the most popular.");
     }
 }

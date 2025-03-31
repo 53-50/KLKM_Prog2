@@ -56,7 +56,7 @@ public class HomeController implements Initializable {
         try {
             result = MovieAPI.fetchAllMovies();
         } catch (IOException e) {
-            System.err.println("Fehler beim Laden der Filme: " + e.getMessage());
+            System.err.println("Error initializing movies " + e.getMessage());
             result = new ArrayList<>();
         }
 
@@ -76,25 +76,25 @@ public class HomeController implements Initializable {
         //releaseYear filter text + data
         releaseYearComboBox.setPromptText("Filter by Release Year");
 
-        //erstellt Array für Jahre von 1900 bis 2025
+        //creates Array for years 1900 to 2025
         Integer[] years = new Integer[126];
         for (int i = 0; i < years.length; i++) {
             years[i] = 1900 + i;
         }
 
-        //gibt die Jahre zur Auswahl in Dropdown
+        //creates dropdown menu
         releaseYearComboBox.getItems().addAll(years);
 
         // rating filter text + data
         ratingComboBox.setPromptText("Filter by Rating");
 
-        //erstellt Array für Bewertungen von 0-10
+        //crates array from 0-10
         Integer[] ratings = new Integer[11];
         for (int i = 0; i < ratings.length; i++) {
             ratings[i] = i;
         }
 
-        //gibt die Bewertungen zur Auswahl in Dropdown
+        //ratings in dropbox
         ratingComboBox.getItems().addAll(ratings);
 
 
@@ -148,9 +148,9 @@ public class HomeController implements Initializable {
         Integer selectedRating = ratingComboBox.getValue();
         List<Movie> filteredMovies = filterMovies(query, selectedGenre, selectedYear, selectedRating);
 
-        //System.out.println("Debugging - Gefilterte Filme: " + filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
+        //System.out.println("Debugging - filtered movies: " + filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
 
-        updateObservableList(filteredMovies); //-> wird ab Exercise 2 von API abgerufen
+        updateObservableList(filteredMovies); //-> API relevant (exercise 2)
 
     }
 
@@ -163,10 +163,10 @@ public class HomeController implements Initializable {
     }
 
     private String getSearchQuery() {
-        return (searchField != null && searchField.getText() != null) //stellt sicher, dass searchField und searchField.getText() nicht null sind, bevor .trim() aufgerufen wird.
-                ? searchField.getText().trim().toLowerCase()          // -> notwenidg für unit test mit null
-                : ""; //falls search field nicht existiert oder eingegeber Text leer ist, wird leerer String zurück gegeben
-    }                 // ? : -> ternärer Operator -> Kurzform für if-else
+        return (searchField != null && searchField.getText() != null) //makes sure that searchField and searchField.getText() are not null before .trim() is called.
+                ? searchField.getText().trim().toLowerCase()          // -> necessary for unit test with null
+                : ""; //if search field does not exist or entered text is empty, empty string is returned
+    }                 // ? : -> ternary operator -> short form for if-else
 
 
 

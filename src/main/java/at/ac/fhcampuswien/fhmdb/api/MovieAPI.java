@@ -14,12 +14,12 @@ import java.util.UUID;
 
 
 // TO-DO
-//- Logik zum Senden und Empfangen von Requests/Responses - DONE
-//- Erstellung von URLs je Endpunktabfrage
-//- MovieAPI soll mit untersch. Parametern und Endpunkten aufgerufen werden
-//- API erwartet gesetzten User-Agent-Header im Request (User-Agent http.agent) - DONE
+//- Logic for sending and receiving requests/responses - DONE
+//- Creation of URLs for each endpoint request
+//- MovieAPI should be called with differ. parameters and endpoints
+//- API expects set User-Agent header in request (User-Agent http.agent) - DONE
 
-// Which Endpoints are availabe?
+// Which Endpoints are available?
 // query, genre, releaseYear, ratingFrom
 // ? is first symbol when parameters are following
 // = ist after every parameter
@@ -72,9 +72,9 @@ public class MovieAPI {
         return fetchAllMovies(null, null, null, null);
     }
 
-    // Get an URL - This program downloads a URL and prints its contents as List<Movie>
+    // Get a URL - This program downloads a URL and prints its contents as List<Movie>
     // https://square.github.io/okhttp/
-    public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) throws IOException {
+    public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) {
         // build the link together with different parameters
         String URL = buildURL(query,genre, releaseYear, ratingFrom);
 
@@ -82,7 +82,7 @@ public class MovieAPI {
         Request request = new Request.Builder()
                 .url(URL)
                 //Deleting used User Agent
-                .removeHeader("User-Agent")  //stellt sicher, dass kein vorheriger User-Agent existiert -> sonst fügt nur hinzu
+                .removeHeader("User-Agent")  //ensures that no previous user agent exists -> otherwise only adds
                 // Setting User-Agent
                 .addHeader("User-Agent", "http.agent")
                 .build();
@@ -92,10 +92,10 @@ public class MovieAPI {
             assert response.body() != null;
             String responseBody = response.body().string();
 
-            // DEBUG: Ausgabe der rohen JSON-Antwort
+            // DEBUG: Output of the raw JSON response
             //System.out.println("DEBUG API: JSON response: " + responseBody);
 
-            // DEBUG: JSON-Struktur inspizieren
+            // DEBUG: Inspect JSON structure
             //JsonElement jsonElement = JsonParser.parseString(responseBody);
             //System.out.println("DEBUG API: JSON structure: " + jsonElement.toString());
 
