@@ -373,7 +373,7 @@ class HomeControllerTest {
     }
 
     @Test
-    public void test_sortMoviesDescending() {
+    public void check_if_sorting_all_movies_descending() {
         //given
         List<String> expTitles = dummyMovies.stream()
                 .map(Movie::getTitle)
@@ -563,23 +563,43 @@ class HomeControllerTest {
 
     //--------------------------------------------------------- UNIT TESTS - Streams -------------------------------------------------------//
     @Test
-    void test_to_get_Movies_Between_Years() {
+    void test_to_get_Movies_Between_Years_from_name() {
+        //given
         List<Movie> filteredMovies = testHomeController.getMoviesBetweenYears(dummyMovies, 2008, 2012);
 
-        assertEquals(4, filteredMovies.size(), "Should return exactly 4 movies within the year range.");
-        assertTrue(filteredMovies.stream().anyMatch(movie -> movie.getTitle().equals("The Avengers")), "Should include 'The Avengers'.");
-        assertTrue(filteredMovies.stream().anyMatch(movie -> movie.getTitle().equals("Thor")), "Should include 'Thor'.");
-        assertTrue(filteredMovies.stream().anyMatch(movie -> movie.getTitle().equals("Iron Man")), "Should include 'Iron Man'.");
-        assertTrue(filteredMovies.stream().anyMatch(movie -> movie.getTitle().equals("Inception")), "Should include 'Inception'.");
+        //when
+        List<String> expectedTitles = List.of("The Avengers", "Thor", "Iron Man", "Inception");
+        List<String> actualTitles = filteredMovies.stream()
+                .map(Movie::getTitle)
+                .toList();
 
-        //no movies in the given range
-        List<Movie> noMovies = testHomeController.getMoviesBetweenYears(dummyMovies, 1990, 2000);
-        assertTrue(noMovies.isEmpty(), "Should return no movies as none are within the range 1990-2000.");
-
-        //all movies included
-        List<Movie> allMoviesInRange = testHomeController.getMoviesBetweenYears(dummyMovies, 2005, 2012);
-        assertEquals(5, allMoviesInRange.size(), "Should return all 5 movies as all fall within the range 2005-2012.");
+        //then
+        assertTrue(actualTitles.containsAll(expectedTitles), "Filtered movies should contain all expected titles.");
     }
+
+    @Test
+    void test_to_get_Movies_Between_Years_from_releaseYear() {
+        //given
+        List<Movie> allMoviesInRange = testHomeController.getMoviesBetweenYears(dummyMovies, 1900, 2100);
+
+        //when
+        List<Integer> expectedYears = List.of(2012, 2011, 2005, 2008, 2010);
+        List<Integer> actualYears = allMoviesInRange.stream()
+                .map(Movie::getReleaseYear).toList();
+
+        //then
+        assertEquals(expectedYears, actualYears, "Should return all 5 movies as all fall within the range 1900-2100.");
+    }
+
+    @Test
+    void test_to_get_no_movies_out_of_range() {
+        //given & when
+        List<Movie> noMovies = testHomeController.getMoviesBetweenYears(dummyMovies, 1990, 2000);
+
+        //then
+        assertTrue(noMovies.isEmpty(), "Should return no movies as none are within the range 1990-2000.");
+    }
+
 
     @Test
     void countMoviesFrom_should_return_correct_number_of_movies_by_director_with_setter() {
@@ -593,39 +613,59 @@ class HomeControllerTest {
         Movie movieC = new Movie("3", "Movie C", "Description", List.of(Movie.Genre.DRAMA), 2022, "", 110, 8.0);
         movieC.getDirectors().add("Director X");
 
-        List<Movie> testMovies = Arrays.asList(movieA, movieB, movieC);
+        List<Movie> testMovies = List.of(
+                movieA,
+                movieB,
+                movieC
+        );
 
-        // when
-        long moviesByDirectorX = testHomeController.countMoviesFrom(testMovies, "Director X");
-        long moviesByDirectorY = testHomeController.countMoviesFrom(testMovies, "Director Y");
-        long moviesByDirectorZ = testHomeController.countMoviesFrom(testMovies, "Director Z");
+        Map<String,Long> expectedCounts = Map.of (
+                "Director X", 2L,
+                "Director Y", 1L,
+                "Director Z", 0L
+        );
 
-        // then
-        assertEquals(2, moviesByDirectorX);
-        assertEquals(1, moviesByDirectorY);
-        assertEquals(0, moviesByDirectorZ);
+        // when & then
+        expectedCounts.forEach((director, expectedCount) ->
+                assertEquals(expectedCount, testHomeController.countMoviesFrom(testMovies, director),
+                        "Movies by " + director + " should be " + expectedCount)
+        );
+
     }
 
     @Test
-    void test_to_get_Longest_Movie_Title() {
-
-        //regular test - longest title
+    void test_to_get_longest_movie_title() {
+        //given & when
         int longestTitleLength = testHomeController.getLongestMovieTitle(dummyMovies);
+
+        //then
         assertEquals("The Avengers".length(), longestTitleLength, "Longest movie title should be 'The Avengers'.");
+    }
 
-        //empty movie list
+    @Test
+    void test_to_get_no_movie_title_if_list_is_empty() {
+        //given & when
         List<Movie> emptyMoviesList = new ArrayList<>();
-        assertEquals(0, testHomeController.getLongestMovieTitle(emptyMoviesList), "Should return 0 for empty movie list.");
 
-        //all titles are the same length
+        //then
+        assertEquals(0, testHomeController.getLongestMovieTitle(emptyMoviesList), "Should return 0 for empty movie list.");
+    }
+
+    @Test
+    void test_to_get_correct_length_when_two_titles_are_at_equal_length() {
+        //given & when
         List<Movie> equalLengthMovies = Arrays.asList(
                 new Movie("6", "ABCD", "Description", List.of(Movie.Genre.ACTION), 2020, "", 120, 7.0),
                 new Movie("7", "WXYZ", "Description", List.of(Movie.Genre.DRAMA), 2021, "", 130, 8.0));
+
+        //then
         assertEquals(4, testHomeController.getLongestMovieTitle(equalLengthMovies), "Should correctly return the length when all titles are equal.");
     }
 
+
     @Test
     void test_to_get_most_popular_actor() {
+        //given
         Movie movieA = new Movie("1", "Movie A", "Description", List.of(Movie.Genre.ACTION), 2020, "", 120, 7.5);
         movieA.getMainCast().add("Actor1");
 
