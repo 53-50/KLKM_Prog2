@@ -18,7 +18,7 @@ class HomeControllerTest {
 
     @BeforeAll
     public static void init() {
-        System.out.println("~~~~~~~~ Testing MovieAPI ~~~~~~~~");
+        System.out.println("~~~~~~~~ Testing HomeControllerAPI ~~~~~~~~");
     }
 
     @BeforeEach
