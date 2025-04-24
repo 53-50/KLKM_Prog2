@@ -44,7 +44,6 @@ public class Movie {
     }
 
     //full constructor
-
     public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imgUrl,
                  int lengthInMinutes, double rating) {
         if (id == null) {

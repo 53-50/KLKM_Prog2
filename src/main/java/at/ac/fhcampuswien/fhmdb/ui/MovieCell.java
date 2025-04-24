@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -15,8 +16,16 @@ public class MovieCell extends ListCell<Movie> {
     private final Label detail = new Label();
     private final Label genre = new Label();
     private final JFXButton detailBtn = new JFXButton("Show Details");
-    private final VBox layout = new VBox(title, detail, genre, detailBtn);
+    private final JFXButton watchlistBtn = new JFXButton("Watchlist");
+    private VBox detailBox;
+    private HBox buttonBox = new HBox(detailBtn, watchlistBtn);
+    private final VBox layout = new VBox(title, detail, genre, buttonBox);
     private boolean collapsedDetails = true;
+
+    { //Initialisierungsblock für Buttons  - von ChatGPT vorgeschlagen für nebeneinander Anordnung - andere Ideen? ansonsten untereinander TODO
+        buttonBox.setSpacing(10); //setzt horizontalen Abstand zwischen den Buttons in der HBox auf 10 Pixel
+    }
+
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -45,6 +54,7 @@ public class MovieCell extends ListCell<Movie> {
             genre.getStyleClass().add("text-white");
             genre.getStyleClass().add("text-italic");
             detailBtn.setStyle("-fx-background-color: #f5c518;");
+            watchlistBtn.setStyle("-fx-background-color: #f5c518;");
             detail.getStyleClass().add("text-white");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
@@ -59,17 +69,19 @@ public class MovieCell extends ListCell<Movie> {
 
             detailBtn.setOnMouseClicked(mouseEvent -> {
                 if (collapsedDetails) {
-                    layout.getChildren().add(getDetails());
+                    detailBox = getDetails();
+                    layout.getChildren().add(detailBox);
                     collapsedDetails = false;
                     detailBtn.setText("Hide Details");
                 } else {
-                    layout.getChildren().remove(4);
+                    layout.getChildren().remove(detailBox);
                     collapsedDetails = true;
                     detailBtn.setText("Show Details");
                 }
                 setGraphic(layout);
             });
         }
+
     }
 
         private VBox getDetails() {

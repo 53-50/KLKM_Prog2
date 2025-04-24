@@ -27,6 +27,7 @@
          <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to FHMDb!" />
       </children>
    </HBox>
+
    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
       <children>
          <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)" />
@@ -44,5 +45,6 @@
          <Insets bottom="20.0" left="10.0" top="20.0" />
       </padding>
    </HBox>
+
    <JFXListView fx:id="movieListView" styleClass="background-black" style="-fx-background-color: black;" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
 </VBox>
