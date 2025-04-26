@@ -90,10 +90,10 @@ public class MovieCell extends ListCell<Movie> {
 
             watchlistBtn.setOnMouseClicked(mouseEvent -> {
                 if (!HomeController.getWatchlist().contains(getItem())) {
-                    HomeController.add(getItem());
+                    HomeController.addToWatchlist(getItem());
                     watchlistBtn.setText("Remove");
                 } else {
-                    HomeController.remove(getItem());
+                    HomeController.removeFromWatchlist(getItem());
                     watchlistBtn.setText("Watchlist");
                 }
 

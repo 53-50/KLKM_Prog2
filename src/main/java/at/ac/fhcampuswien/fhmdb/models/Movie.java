@@ -219,21 +219,21 @@ public class Movie {
                 "and James Hunt to fame and glory — until a horrible accident threatens to end it all.",
                 List.of(Genre.DRAMA, Genre.ACTION, Genre.SPORT));
 
-        movies.add(ironMan);
-        movies.add(avengers);
-        movies.add(thor);
-        movies.add(schindler);
-        movies.add(godfather1);
-        movies.add(godfather2);
-        movies.add(ant man);
-        movies.add(hellokitty);
-        movies.add(oppenheimer);
-        movies.add(insideOut);
-        movies.add(chuck);
-        movies.add(mamma);
-        movies.add(maze);
-        movies.add(broke back);
-        movies.add(rush);
+        movies.addToWatchlist(ironMan);
+        movies.addToWatchlist(avengers);
+        movies.addToWatchlist(thor);
+        movies.addToWatchlist(schindler);
+        movies.addToWatchlist(godfather1);
+        movies.addToWatchlist(godfather2);
+        movies.addToWatchlist(ant man);
+        movies.addToWatchlist(hellokitty);
+        movies.addToWatchlist(oppenheimer);
+        movies.addToWatchlist(insideOut);
+        movies.addToWatchlist(chuck);
+        movies.addToWatchlist(mamma);
+        movies.addToWatchlist(maze);
+        movies.addToWatchlist(broke back);
+        movies.addToWatchlist(rush);
 
         return movies;
     }

@@ -75,7 +75,7 @@ public class HomeController implements Initializable {
 
         // genre filter text + data
         genreComboBox.setPromptText("Filter by Genre");
-        genreComboBox.getItems().addAll(Movie.Genre.values()); //add Genres to ComboBox
+        genreComboBox.getItems().addAll(Movie.Genre.values()); //addToWatchlist Genres to ComboBox
 
         //releaseYear filter text + data
         releaseYearComboBox.setPromptText("Filter by Release Year");
@@ -274,13 +274,13 @@ public class HomeController implements Initializable {
 
     private static final List<Movie> watchlist = new ArrayList<>();
 
-    public static void add(Movie movie) {
+    public static void addToWatchlist(Movie movie) {
         if (!watchlist.contains(movie)) {
             watchlist.add(movie);
         }
     }
 
-    public static void remove(Movie movie) {
+    public static void removeFromWatchlist(Movie movie) {
         watchlist.remove(movie);
     }
 

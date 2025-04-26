@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import javafx.event.ActionEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -685,4 +686,42 @@ class HomeControllerTest {
         assertEquals("Actor1", popularActor,
                 "Actor1 should be the most popular.");
     }
+
+    // ---------------------------------------------------- Watchlist Test -------------------------------------------------------------------//
+
+    @Test
+    void test_onWatchlistClicked_updates_observableMovies_to_watchlist() {
+        // given
+        Movie movie = dummyMovies.get(0);
+        HomeController.addToWatchlist(movie);
+
+        // when
+        testHomeController.onWatchlistClicked(new ActionEvent());
+
+        // then
+        assertTrue(HomeController.observableMovies.contains(movie),
+                "Watchlist should contain the added movie.");
+        assertEquals(HomeController.getWatchlist().size(), HomeController.observableMovies.size(),
+                "ObservableMovies size should match Watchlist size.");
+
+    }
+
+        @Test
+        void test_onHomeClicked_updates_observableMovies_to_allMovies () {
+            // given
+            Movie movieToAdd = dummyMovies.get(0);
+            HomeController.removeFromWatchlist(movieToAdd);
+
+            testHomeController.onWatchlistClicked(new ActionEvent()); // show watchlist
+
+            // when
+            testHomeController.onHomeClicked(new ActionEvent()); // back to home
+
+            // then
+            assertEquals(testHomeController.allMovies.size(), HomeController.observableMovies.size(),
+                    "ObservableMovies size should match allMovies size after returning home.");
+            assertTrue(HomeController.observableMovies.containsAll(testHomeController.allMovies),
+                    "ObservableMovies should contain all movies after returning home.");
+        }
+
 }
