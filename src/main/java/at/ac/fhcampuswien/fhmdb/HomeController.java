@@ -44,9 +44,12 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton deleteBtn;
 
+    @FXML
+    public JFXButton Watchlist;
+
     public List<Movie> allMovies;
 
-    protected ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
+    protected static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
     // automatically updates corresponding UI elements when underlying data changes
 
 
@@ -267,5 +270,46 @@ public class HomeController implements Initializable {
 
         return moviesInRange;
     }
+//-------------------------------------   Watchlist Services -------------------------------------------------------//
 
+    private static final List<Movie> watchlist = new ArrayList<>();
+
+    public static void add(Movie movie) {
+        if (!watchlist.contains(movie)) {
+            watchlist.add(movie);
+        }
+    }
+
+    public static void remove(Movie movie) {
+        watchlist.remove(movie);
+    }
+
+    public static List<Movie> getWatchlist() {
+        return new ArrayList<>(watchlist);
+    }
+
+
+    public void onWatchlistClicked(ActionEvent event) {
+        sortBtn.setVisible(false);
+        deleteBtn.setVisible(false);
+        ratingComboBox.setVisible(false);
+        genreComboBox.setVisible(false);
+        searchField.setVisible(false);
+        searchBtn.setVisible(false);
+        releaseYearComboBox.setVisible(false);
+
+        observableMovies.setAll(getWatchlist());
+    }
+
+    public void onHomeClicked(ActionEvent event) {
+        sortBtn.setVisible(true);
+        deleteBtn.setVisible(true);
+        ratingComboBox.setVisible(true);
+        genreComboBox.setVisible(true);
+        searchField.setVisible(true);
+        searchBtn.setVisible(true);
+        releaseYearComboBox.setVisible(true);
+
+        observableMovies.setAll(allMovies);
+    }
 }

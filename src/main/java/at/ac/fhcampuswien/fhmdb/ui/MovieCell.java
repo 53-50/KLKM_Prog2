@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.ui;
 
+import at.ac.fhcampuswien.fhmdb.HomeController;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
@@ -48,6 +49,12 @@ public class MovieCell extends ListCell<Movie> {
                             : "No genre available"
             );
 
+            if (HomeController.getWatchlist().contains(movie)) {
+                watchlistBtn.setText("Remove");
+            } else {
+                watchlistBtn.setText("Watchlist");
+            }
+
             // color scheme
             title.getStyleClass().add("text-yellow");
             detail.getStyleClass().add("text-white");
@@ -79,6 +86,17 @@ public class MovieCell extends ListCell<Movie> {
                     detailBtn.setText("Show Details");
                 }
                 setGraphic(layout);
+            });
+
+            watchlistBtn.setOnMouseClicked(mouseEvent -> {
+                if (!HomeController.getWatchlist().contains(getItem())) {
+                    HomeController.add(getItem());
+                    watchlistBtn.setText("Remove");
+                } else {
+                    HomeController.remove(getItem());
+                    watchlistBtn.setText("Watchlist");
+                }
+
             });
         }
 
