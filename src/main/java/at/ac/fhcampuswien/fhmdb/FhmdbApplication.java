@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.data.DatabaseException;
+import at.ac.fhcampuswien.fhmdb.data.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,6 +23,16 @@ public class FhmdbApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void stop() {
+        // System.out.println("STOP METHOD WAS CALLED");
+        try {
+            DatabaseManager.closeConnectionSource();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
         }
     }
 

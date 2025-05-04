@@ -79,6 +79,24 @@ public class DatabaseManager {
         }
     }
 
+    public static void closeConnectionSource() throws DatabaseException {
+        if (conn != null) {
+            System.out.println("Trying to close database connection...");
+
+            try {
+                conn.close();
+                System.out.println("Database closed successfully");
+            } catch (Exception e) {
+                System.out.println("An error occurred while closing the connection.");
+                e.printStackTrace();
+
+                throw new DatabaseException("Failed to close database connection: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Database connection is already null. No need to close.");
+        }
+    }
+
 
     // for testing purpose
 //    public static void main(String[] args) {
