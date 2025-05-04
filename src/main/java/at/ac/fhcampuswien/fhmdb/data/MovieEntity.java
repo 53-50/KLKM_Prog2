@@ -85,7 +85,7 @@ public class MovieEntity {
 
      */
 
-    List<Movie.Genre> stringToGenres(String genres) {
+    public List<Movie.Genre> stringToGenres(String genres) {
         if (genres == null || genres.isBlank()) return Collections.emptyList();
 
         return Arrays.stream(genres.split(",\\s*"))  // Komma + beliebig viele Leerzeichen
