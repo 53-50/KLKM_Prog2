@@ -24,6 +24,9 @@ public class MovieRepository {
     }
 
     public void addAllMovies(List<Movie> movies) {
+        // counter for the manually ID
+        int count = 0;
+
         try {
             dao.deleteBuilder().delete();
         } catch (SQLException e) {
@@ -40,8 +43,27 @@ public class MovieRepository {
                     movie.getLengthInMinutes(),
                     movie.getRating()
             );
+
+            //DEBUGGING - still useful can be deleted when finished
+            System.out.println(">>> INSERTING MOVIE <<<");
+            System.out.println("Title: " + movie.getTitle());
+            System.out.println("Description: " + movie.getDescription());
+            System.out.println("Genres: " + movie.getGenres());
+            System.out.println("ReleaseYear: " + movie.getReleaseYear());
+            System.out.println("ImgUrl: " + movie.getImgUrl());
+            System.out.println("Length: " + movie.getLengthInMinutes());
+            System.out.println("Rating: " + movie.getRating());
+            System.out.println("------------------------");
+
             try {
+
+                // Set unique ID, because id = true
+                long generatedId = count;
+                entity.setPrimaryId(generatedId);
+
                 dao.create(entity);  // create statt createOrUpdate, weil immer neu
+                count++;
+
             } catch (SQLException se) {
                 System.err.println("Failed to insert " + movie.getTitle() + ":");
                 se.printStackTrace();  // ganze Ursache sehen!

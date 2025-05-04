@@ -4,16 +4,14 @@ import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @DatabaseTable(tableName = "movies")
 public class MovieEntity {
 
-    @DatabaseField(generatedId = true)
+    //setting the id manually
+    @DatabaseField(id = true)
     long id;
 
     @DatabaseField
@@ -159,8 +157,13 @@ public class MovieEntity {
         this.genres = genresToString(genres);
     }
 
-    public long getId() {
+    public long getPrimaryId() {
         return id;
+    }
+
+    //setter for id - gets used in movierepository to set the id manually
+    public void setPrimaryId(long id) {
+        this.id = id;
     }
 
     public int getReleaseYear() {
