@@ -70,6 +70,4 @@ public class WatchlistRepository {
             throw new DatabaseException("Error removing from watchlist: " + e.getMessage());
         }
     }
-
-
 }

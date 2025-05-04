@@ -26,8 +26,12 @@ public class DatabaseManager {
 
 
     // create connection between this program and the database (movie.db)
-    public static void createConnectionsSource() throws SQLException {
-        conn = new JdbcConnectionSource(DB_URL, username, password);
+    public static void createConnectionsSource() throws DatabaseException {
+        try {
+            conn = new JdbcConnectionSource(DB_URL, username, password);
+        } catch (SQLException e) {
+            throw new DatabaseException("Could not create database connection" + e);
+        }
     }
 
     // getter for the connection
@@ -36,10 +40,15 @@ public class DatabaseManager {
     }
 
     // create tables if not already existing
-    public static void createTables() throws SQLException {
-        TableUtils.createTableIfNotExists(conn, MovieEntity.class);
-        TableUtils.createTableIfNotExists(conn, WatchlistMovieEntity.class);
+    public static void createTables() throws DatabaseException {
+        try {
+            TableUtils.createTableIfNotExists(conn, MovieEntity.class);
+            TableUtils.createTableIfNotExists(conn, WatchlistMovieEntity.class);
+        } catch (SQLException e) {
+            throw new DatabaseException("Could not create database tables or tables already exist" + e);
+        }
     }
+
 
     // DAO (Date Acces Object) - get DAO for movies
     public static Dao<WatchlistMovieEntity, Long> getWatchlistDao() throws SQLException {
@@ -73,7 +82,7 @@ public class DatabaseManager {
             System.out.println("Creating tables...");
             createTables();
             System.out.println("Database initialized successfully");
-        } catch (SQLException e) {
+        } catch (DatabaseException e) {
             System.err.println("Database initialization failed: " + e.getMessage());
             throw new DatabaseException("DB init failed: " + e.getMessage());
         }
