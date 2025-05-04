@@ -23,10 +23,7 @@ public class MovieRepository {
         return dao.queryForAll();
     }
 
-
-    /*
-    Vorschlag für bessere Version zur methode oberhalb da dort nur SQLExceptions abgefangen werden
-
+    /*Verbesserte Fehlerbehandlung: SQLException wird abgefangen und in eine eigene DatabaseException übersetzt um UI Layer vom DB Layer zu trennen
     public List<MovieEntity> getAllMovies() throws DatabaseException {
         try {
             return dao.queryForAll();
