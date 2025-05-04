@@ -34,7 +34,7 @@ public class WatchlistRepository {
     */
 
 
-    // add movie to the watchlist
+    // add movie to the watchlist - used when working with UI or domain model Movie
     public int addToWatchlist(WatchlistMovieEntity movie) throws DatabaseException {
         try {
             // Check if movie already exists
@@ -49,7 +49,11 @@ public class WatchlistRepository {
         }
     }
 
+    // Used when already working with database entity
     public int addToWatchlist(Movie movie) throws DatabaseException {
+        if (movie == null || movie.getId() == null) {
+            throw new DatabaseException("Invalid movie or missing ID");
+        }
         // Movie.getId() liefert die API-ID als String
         return addToWatchlist(new WatchlistMovieEntity(movie.getId()));
     }
