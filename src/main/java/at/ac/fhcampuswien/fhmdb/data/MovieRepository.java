@@ -23,6 +23,19 @@ public class MovieRepository {
         return dao.queryForAll();
     }
 
+
+    /*
+    Vorschlag für bessere Version zur methode oberhalb da dort nur SQLExceptions abgefangen werden
+
+    public List<MovieEntity> getAllMovies() throws DatabaseException {
+        try {
+            return dao.queryForAll();
+        } catch (SQLException e) {
+            throw new DatabaseException("Error while reading movies" + e);
+        }
+    }
+    */
+
     public void addAllMovies(List<Movie> movies) {
         // counter for the manually ID
         int count = 0;
