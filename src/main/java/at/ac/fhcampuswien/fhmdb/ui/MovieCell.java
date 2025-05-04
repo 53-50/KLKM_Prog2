@@ -25,12 +25,12 @@ public class MovieCell extends ListCell<Movie> {
     private final VBox layout = new VBox(title, detail, genre, buttonBox);
     private boolean collapsedDetails = true;
 
-   /*
+
     { //Initialisierungsblock für Buttons  - von ChatGPT vorgeschlagen für nebeneinander Anordnung - andere Ideen? ansonsten untereinander TODO
         buttonBox.setSpacing(10); //setzt horizontalen Abstand zwischen den Buttons in der HBox auf 10 Pixel
     }
 
-    */
+
 
     public MovieCell(ClickEventHandler<Movie> addWatchlistClickHandler) {
         super();
@@ -178,6 +178,7 @@ public class MovieCell extends ListCell<Movie> {
             if (empty || item == null) {
                 setGraphic(null);
                 setText(null);
+                return;
             } else {
                 this.getStyleClass().add("movie-cell");
                 title.setText(item.getTitle());

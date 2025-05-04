@@ -3,17 +3,16 @@ package at.ac.fhcampuswien.fhmdb.data;
 import com.j256.ormlite.field.DatabaseField;
 
 public class WatchlistMovieEntity {
-
     // (is a MovieEntity) - 1:1 Relation
 
-    @DatabaseField(generatedId = true)
-    long id;
+   // @DatabaseField(generatedId = true)
+    //private long id;
 
-    @DatabaseField
-    String apiId;
+    @DatabaseField(id = true, columnName = "apiId")
+    private String apiId;
 
-    @DatabaseField(foreign = true)
-    MovieEntity movie;  // 1:1 Relation?
+    //@DatabaseField(foreign = true)
+    //MovieEntity movie;  // 1:1 Relation?
 
     public WatchlistMovieEntity() {
         // ORMLite needs the empty constructor
@@ -22,9 +21,11 @@ public class WatchlistMovieEntity {
     public WatchlistMovieEntity(String apiId) {
         this.apiId = apiId;
     }
-    public long getId() {
+
+   /* public long getId() {
         return id;
     }
+    */
 
     public String getApiId() {
         return apiId;

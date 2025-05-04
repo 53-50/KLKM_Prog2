@@ -30,8 +30,8 @@
 
    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css" alignment="CENTER">
       <children>
-         <JFXButton fx:id="Home" styleClass="background-yellow" stylesheets="@styles.css" text="Home" />
-         <JFXButton fx:id="Watchlist" styleClass="background-yellow" stylesheets="@styles.css" text="Watchlist" />
+         <JFXButton fx:id="homeButton" styleClass="background-yellow" text="Home" onAction="#onHomeButtonClick"/>
+         <JFXButton fx:id="watchlistButton" styleClass="background-yellow" text="Watchlist" onAction="#onWatchlistButtonClick"/>
       </children>
    </HBox>
 

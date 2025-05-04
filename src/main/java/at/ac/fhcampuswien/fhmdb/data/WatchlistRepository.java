@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.data;
 
+import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -22,35 +23,39 @@ public class WatchlistRepository {
         return dao.queryForAll();
     }
 
+
     // add movie to the watchlist
-    public int addToWatchlist (WatchlistMovieEntity movie) {
+    public int addToWatchlist(WatchlistMovieEntity movie) throws DatabaseException {
         try {
+            // Check if movie already exists
+            List<WatchlistMovieEntity> existing = dao.queryForEq("apiId", movie.getApiId());
+            if (!existing.isEmpty()) {
+                return 0; // already exists
+            }
             dao.create(movie);
             return 1;
         } catch (SQLException se) {
-            System.err.println("Exception during adding one movie to the watchlist:" + se.getMessage());
-            return 0;
+            throw new DatabaseException("Error adding to watchlist: " + se.getMessage());
         }
     }
 
-    public int removeFromWatchlist (String apiId) {
-        try {
-            // the list is to check if there are any movies or more movies and just deletes ONE if there is one
-            List<WatchlistMovieEntity> movies = dao.queryForEq("apiId", apiId);
-            if (movies != null && !movies.isEmpty()) {
-                WatchlistMovieEntity movieToRemove = movies.get(0);
-                dao.delete(movieToRemove);
+    public int addToWatchlist(Movie movie) throws DatabaseException {
+        // Movie.getId() liefert die API-ID als String
+        return addToWatchlist(new WatchlistMovieEntity(movie.getId()));
+    }
 
-                List<WatchlistMovieEntity> checkRemoval = dao.queryForEq("apiId", apiId);
-                if (checkRemoval.isEmpty()) {
-                    return 1;
-                }
+    public int removeFromWatchlist(String apiId) throws DatabaseException {
+        try {
+            List<WatchlistMovieEntity> movies = dao.queryForEq("apiId", apiId);
+            if (!movies.isEmpty()) {
+                dao.delete(movies);
+                return movies.size();
             }
             return 0;
         } catch (SQLException e) {
-            System.err.println("Exception removing movie from watchlist: " + e.getMessage());
-            return 0;
+            throw new DatabaseException("Error removing from watchlist: " + e.getMessage());
         }
     }
+
 
 }

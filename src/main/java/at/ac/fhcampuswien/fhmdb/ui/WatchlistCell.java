@@ -22,7 +22,7 @@ public class WatchlistCell extends ListCell<MovieEntity> {
     private final VBox layout = new VBox(header, description, genre);
     private boolean collapsedDetails = true;
 
-    public WatchlistCell(ClickEventHandler removeFromWatchlistClick) {
+    public WatchlistCell(ClickEventHandler<MovieEntity> removeFromWatchlistClick) {
         super();
         // color scheme
         detailBtn.setStyle("-fx-background-color: #f5c518;");
@@ -61,6 +61,8 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         });
     }
 
+
+
     private VBox getDetails() {
         VBox details = new VBox();
 
@@ -79,13 +81,16 @@ public class WatchlistCell extends ListCell<MovieEntity> {
 
         return details;
     }
-    @Override
+
+
+
     protected void updateItem(MovieEntity movieEntity, boolean empty) {
         super.updateItem(movieEntity, empty);
 
         if (empty || movieEntity == null) {
             setGraphic(null);
             setText(null);
+            return;
         } else {
             this.getStyleClass().add("movie-cell");
 

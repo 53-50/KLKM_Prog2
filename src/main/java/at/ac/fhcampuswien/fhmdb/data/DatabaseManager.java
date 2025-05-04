@@ -23,7 +23,9 @@ public class DatabaseManager {
     private static Dao<WatchlistMovieEntity, Long> watchlistDao;
     private static DatabaseManager instance;
 
-    // create connection between this programm and the database (movie.db)
+
+
+    // create connection between this program and the database (movie.db)
     public static void createConnectionsSource() throws SQLException {
         conn = new JdbcConnectionSource(DB_URL, username, password);
     }
@@ -63,6 +65,20 @@ public class DatabaseManager {
         }
         return instance;
     }
+
+    private DatabaseManager() throws DatabaseException {
+        try {
+            System.out.println("Creating database connection...");
+            createConnectionsSource();
+            System.out.println("Creating tables...");
+            createTables();
+            System.out.println("Database initialized successfully");
+        } catch (SQLException e) {
+            System.err.println("Database initialization failed: " + e.getMessage());
+            throw new DatabaseException("DB init failed: " + e.getMessage());
+        }
+    }
+
 
     // for testing purpose
 //    public static void main(String[] args) {

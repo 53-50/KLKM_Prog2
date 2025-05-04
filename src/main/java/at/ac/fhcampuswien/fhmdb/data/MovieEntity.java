@@ -6,7 +6,9 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @DatabaseTable(tableName = "movies")
 public class MovieEntity {
@@ -65,6 +67,7 @@ public class MovieEntity {
         return !sb.isEmpty() ? sb.substring(0, sb.length() - 2): "";
     }
 
+    /*
     List<Movie.Genre> stringToGenres(String genres) {
         List<Movie.Genre> genreList = new ArrayList<>();
 
@@ -82,7 +85,18 @@ public class MovieEntity {
         return genreList;
     }
 
-    List<MovieEntity> fromMovies (List<Movie> movies) {
+     */
+
+    List<Movie.Genre> stringToGenres(String genres) {
+        if (genres == null || genres.isBlank()) return Collections.emptyList();
+
+        return Arrays.stream(genres.split(",\\s*"))  // Komma + beliebig viele Leerzeichen
+                .map(String::trim)             // ganz sicher alle Ränder abschneiden
+                .map(Movie.Genre::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    public List<MovieEntity> fromMovies (List<Movie> movies) {
         List<MovieEntity> entities = new ArrayList<>();
 
         for (Movie movie : movies)  {
@@ -101,12 +115,12 @@ public class MovieEntity {
         return entities;
     }
 
-    List<Movie> toMovies (List<MovieEntity> movieEntities) {
+    public static List<Movie> toMovies(List<MovieEntity> movieEntities) {
         List<Movie> movies = new ArrayList<>();
 
         for (MovieEntity entity : movieEntities)  {
             Movie movie = new Movie(
-                    entity.getId(),
+                    entity.getApiId(),
                     entity.getTitle(),
                     entity.getDescription(),
                     entity.getGenres(),
@@ -132,19 +146,21 @@ public class MovieEntity {
         return genres;
     }
 
- */
-
     //Getter und Setter für Genre
     public List<Movie.Genre> getGenres() {
         return Arrays.stream(genres.split(",")).map(Movie.Genre::valueOf).toList();
+    }
+*/
+    public List<Movie.Genre> getGenres() {
+        return stringToGenres(this.genres);
     }
 
     public void setGenres(List<Movie.Genre> genres) {
         this.genres = genresToString(genres);
     }
 
-    public String getId() {
-        return apiId;
+    public long getId() {
+        return id;
     }
 
     public int getReleaseYear() {

@@ -23,6 +23,32 @@ public class MovieRepository {
         return dao.queryForAll();
     }
 
+    public void addAllMovies(List<Movie> movies) {
+        try {
+            dao.deleteBuilder().delete();
+        } catch (SQLException e) {
+            System.err.println("Could not clear table: " + e.getMessage());
+        }
+        for (Movie movie : movies) {
+            MovieEntity entity = new MovieEntity(
+                    movie.getTitle(),
+                    movie.getDescription(),
+                    movie.getGenres(),
+                    movie.getId(),
+                    movie.getReleaseYear(),
+                    movie.getImgUrl(),
+                    movie.getLengthInMinutes(),
+                    movie.getRating()
+            );
+            try {
+                dao.create(entity);  // create statt createOrUpdate, weil immer neu
+            } catch (SQLException se) {
+                System.err.println("Failed to insert " + movie.getTitle() + ":");
+                se.printStackTrace();  // ganze Ursache sehen!
+            }
+        }
+    }
+
     // removes all movies and gives back the number of deleted movies
     public int removeAll() {
         try {
@@ -59,31 +85,6 @@ public class MovieRepository {
             System.err.println("Exception during getting movie by API ID:" + se.getMessage());
             return null;
         }
-    }
-
-    public int addAllMovies(List<Movie> movies) {
-        int count = 0;
-
-        try {
-            for (Movie movie : movies) {
-                MovieEntity entity = new MovieEntity (
-                        movie.getTitle(),
-                        movie.getDescription(),
-                        movie.getGenres(),
-                        movie.getId(),
-                        movie.getReleaseYear(),
-                        movie.getImgUrl(),
-                        movie.getLengthInMinutes(),
-                        movie.getRating()
-                );
-                dao.create(entity);
-                count ++;
-            }
-        } catch (SQLException se) {
-            System.err.println("Exception during adding all movies:" + se.getMessage());
-        }
-
-        return count;
     }
 
 }
