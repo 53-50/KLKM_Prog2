@@ -11,8 +11,12 @@ public class MovieRepository {
     // DAO - Data Access Object
     private Dao<MovieEntity, Long> dao;
 
-    public MovieRepository(Dao<MovieEntity, Long> dao) {
-        this.dao = dao;
+    public MovieRepository() throws DatabaseException {
+        try {
+            this.dao = DatabaseManager.getInstance().getMovieDao();
+        } catch (Exception e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public List<MovieEntity> getAllMovies() throws SQLException {
@@ -44,18 +48,18 @@ public class MovieRepository {
     }
 
     // possibility if you want to get by specific id:
-//    public MovieEntity getMovie(String apiId) {
-//        try {
-//            List<MovieEntity> movies = dao.queryForEq("apiId", apiId);
-//            if (!movies.isEmpty()) {
-//                return movies.get(0);
-//            }
-//            return null;
-//        } catch (SQLException se) {
-//            System.err.println("Exception during getting movie by API ID:" + se.getMessage());
-//            return null;
-//        }
-//    }
+    public MovieEntity getMovie(String apiId) {
+        try {
+            List<MovieEntity> movies = dao.queryForEq("apiId", apiId);
+            if (!movies.isEmpty()) {
+                return movies.get(0);
+            }
+            return null;
+        } catch (SQLException se) {
+            System.err.println("Exception during getting movie by API ID:" + se.getMessage());
+            return null;
+        }
+    }
 
     public int addAllMovies(List<Movie> movies) {
         int count = 0;

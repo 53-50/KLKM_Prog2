@@ -19,4 +19,19 @@ public class WatchlistMovieEntity {
         // ORMLite needs the empty constructor
     }
 
+    public WatchlistMovieEntity(String apiId) {
+        this.apiId = apiId;
+    }
+    public long getId() {
+        return id;
+    }
+
+    public String getApiId() {
+        return apiId;
+    }
+
+    public void setApiId(String apiId) {
+        this.apiId = apiId;
+    }
+
 }

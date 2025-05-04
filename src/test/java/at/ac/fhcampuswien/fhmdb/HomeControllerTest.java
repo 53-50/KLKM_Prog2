@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import javafx.event.ActionEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -689,6 +688,7 @@ class HomeControllerTest {
 
     // ---------------------------------------------------- Watchlist Test -------------------------------------------------------------------//
 
+    /*
     @Test
     void test_onWatchlistClicked_updates_observableMovies_to_watchlist() {
         // given
@@ -723,5 +723,7 @@ class HomeControllerTest {
             assertTrue(HomeController.observableMovies.containsAll(testHomeController.allMovies),
                     "ObservableMovies should contain all movies after returning home.");
         }
+
+     */
 
 }

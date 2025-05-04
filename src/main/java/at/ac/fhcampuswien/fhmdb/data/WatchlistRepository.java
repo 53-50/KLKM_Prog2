@@ -9,8 +9,12 @@ public class WatchlistRepository {
 
     Dao<WatchlistMovieEntity, Long> dao;
 
-    public WatchlistRepository(Dao<WatchlistMovieEntity, Long> dao) {
-        this.dao = dao;
+    public WatchlistRepository() throws DatabaseException {
+        try {
+            this.dao = DatabaseManager.getInstance().getWatchlistDao();
+        } catch (Exception e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     // get all movies that are in the watchlist

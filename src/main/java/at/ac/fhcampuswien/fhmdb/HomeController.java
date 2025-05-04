@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -20,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HomeController implements Initializable {
+
     @FXML
     public JFXButton searchBtn;
 
@@ -52,6 +52,8 @@ public class HomeController implements Initializable {
     protected static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
     // automatically updates corresponding UI elements when underlying data changes
 
+    private static ClickEventHandler<Movie> addWatchlistClickHandler;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,7 +73,7 @@ public class HomeController implements Initializable {
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
+        movieListView.setCellFactory(movieListView -> new MovieCell(HomeController.addWatchlistClickHandler)); // use custom cell factory to display data
 
         // genre filter text + data
         genreComboBox.setPromptText("Filter by Genre");
@@ -271,7 +273,7 @@ public class HomeController implements Initializable {
         return moviesInRange;
     }
 //-------------------------------------   Watchlist Services -------------------------------------------------------//
-
+/*
     private static final List<Movie> watchlist = new ArrayList<>();
 
     public static void addToWatchlist(Movie movie) {
@@ -297,8 +299,6 @@ public class HomeController implements Initializable {
         searchField.setVisible(false);
         searchBtn.setVisible(false);
         releaseYearComboBox.setVisible(false);
-
-        observableMovies.setAll(getWatchlist());
     }
 
     public void onHomeClicked(ActionEvent event) {
@@ -312,4 +312,6 @@ public class HomeController implements Initializable {
 
         observableMovies.setAll(allMovies);
     }
+ */
+
 }

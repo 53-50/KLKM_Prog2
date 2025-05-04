@@ -5,8 +5,8 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
 import java.sql.SQLException;
+
 
 public class DatabaseManager {
 
@@ -21,6 +21,7 @@ public class DatabaseManager {
     private static ConnectionSource conn;
     private static Dao<MovieEntity, Long> movieDao;
     private static Dao<WatchlistMovieEntity, Long> watchlistDao;
+    private static DatabaseManager instance;
 
     // create connection between this programm and the database (movie.db)
     public static void createConnectionsSource() throws SQLException {
@@ -54,6 +55,14 @@ public class DatabaseManager {
         return movieDao;
     }
 
+
+    // get singleton database instance
+    public static DatabaseManager getInstance() throws DatabaseException {
+        if (instance == null) {
+            instance = new DatabaseManager();
+        }
+        return instance;
+    }
 
     // for testing purpose
 //    public static void main(String[] args) {

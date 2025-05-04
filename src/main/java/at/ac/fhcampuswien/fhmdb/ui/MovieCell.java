@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.ui;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
+import at.ac.fhcampuswien.fhmdb.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
@@ -11,6 +11,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.util.stream.Collectors;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
@@ -23,11 +25,51 @@ public class MovieCell extends ListCell<Movie> {
     private final VBox layout = new VBox(title, detail, genre, buttonBox);
     private boolean collapsedDetails = true;
 
+   /*
     { //Initialisierungsblock für Buttons  - von ChatGPT vorgeschlagen für nebeneinander Anordnung - andere Ideen? ansonsten untereinander TODO
         buttonBox.setSpacing(10); //setzt horizontalen Abstand zwischen den Buttons in der HBox auf 10 Pixel
     }
 
+    */
 
+    public MovieCell(ClickEventHandler<Movie> addWatchlistClickHandler) {
+        super();
+        detailBtn.setStyle("-fx-background-color: #f5c518;");
+        // set margin of detailBtn
+        HBox.setMargin(detailBtn, new Insets(0, 10, 0, 10));
+        watchlistBtn.setStyle("-fx-background-color: #f5c518;");
+        title.getStyleClass().add("text-yellow");
+        detail.getStyleClass().add("text-white");
+        genre.getStyleClass().add("text-white");
+        genre.setStyle("-fx-font-style: italic");
+        layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
+        title.setMaxWidth(Double.MAX_VALUE);
+        //detailBtn.setMaxWidth(Double.MAX_VALUE);
+
+        // layout
+        title.fontProperty().set(title.getFont().font(20));
+        detail.setWrapText(true);
+        layout.setPadding(new Insets(10));
+
+        detailBtn.setOnMouseClicked(mouseEvent -> {
+            if (collapsedDetails) {
+                layout.getChildren().add(getDetails());
+                collapsedDetails = false;
+                detailBtn.setText("Hide Details");
+            } else {
+                layout.getChildren().remove(3);
+                collapsedDetails = true;
+                detailBtn.setText("Show Details");
+            }
+            setGraphic(layout);
+        });
+
+        watchlistBtn.setOnMouseClicked(mouseEvent -> {
+            addWatchlistClickHandler.onClick(getItem());
+        });
+    }
+
+    /*
     @Override
     protected void updateItem(Movie movie, boolean empty) {
         super.updateItem(movie, empty);
@@ -102,6 +144,8 @@ public class MovieCell extends ListCell<Movie> {
 
     }
 
+     */
+
         private VBox getDetails() {
             VBox details = new VBox();
             Label releaseYear = new Label("Release Year: " + getItem().getReleaseYear());
@@ -126,6 +170,33 @@ public class MovieCell extends ListCell<Movie> {
             details.getChildren().add(writers);
             details.getChildren().add(mainCast);
             return details;
+        }
+
+        protected void updateItem(Movie item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty || item == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                this.getStyleClass().add("movie-cell");
+                title.setText(item.getTitle());
+                detail.setText(
+                        item.getDescription() != null
+                        ? item.getDescription()
+                        : "No Description"
+                );
+            }
+
+            String genres = item.getGenres()
+                    .stream()
+                    .map(Enum::toString)
+                    .collect(Collectors.joining(", "));
+            genre.setText(genres);
+
+            detail.setMaxWidth(this.getScene().getWidth()-30);
+
+            setGraphic(layout);
         }
     }
 
