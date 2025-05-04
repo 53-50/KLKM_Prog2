@@ -195,7 +195,15 @@ public class MovieCell extends ListCell<Movie> {
                     .collect(Collectors.joining(", "));
             genre.setText(genres);
 
-            detail.setMaxWidth(this.getScene().getWidth()-30);
+            if (getScene() == null) {
+                sceneProperty().addListener((obs, oldScene, newScene) -> {
+                    if (newScene != null) {
+                        detail.setMaxWidth(newScene.getWidth() - 30);
+                    }
+                });
+            } else {
+                detail.setMaxWidth(this.getScene().getWidth()-30);
+            }
 
             setGraphic(layout);
         }
