@@ -20,17 +20,9 @@ public class MovieCell extends ListCell<Movie> {
     private final Label genre = new Label();
     private final JFXButton detailBtn = new JFXButton("Show Details");
     private final JFXButton watchlistBtn = new JFXButton("Watchlist");
-    private VBox detailBox;
     private HBox buttonBox = new HBox(detailBtn, watchlistBtn);
     private final VBox layout = new VBox(title, detail, genre, buttonBox);
     private boolean collapsedDetails = true;
-
-
-    { //Initialisierungsblock für Buttons  - von ChatGPT vorgeschlagen für nebeneinander Anordnung - andere Ideen? ansonsten untereinander TODO
-        buttonBox.setSpacing(10); //setzt horizontalen Abstand zwischen den Buttons in der HBox auf 10 Pixel
-    }
-
-
 
     public MovieCell(ClickEventHandler<Movie> addWatchlistClickHandler) {
         super();
@@ -57,7 +49,7 @@ public class MovieCell extends ListCell<Movie> {
                 collapsedDetails = false;
                 detailBtn.setText("Hide Details");
             } else {
-                layout.getChildren().remove(3);
+                layout.getChildren().remove(4);
                 collapsedDetails = true;
                 detailBtn.setText("Show Details");
             }
@@ -69,84 +61,7 @@ public class MovieCell extends ListCell<Movie> {
         });
     }
 
-    /*
-    @Override
-    protected void updateItem(Movie movie, boolean empty) {
-        super.updateItem(movie, empty);
-
-        if (empty || movie == null) {
-            setText(null);
-            setGraphic(null);
-        } else {
-            this.getStyleClass().add("movie-cell");
-            title.setText(movie.getTitle());
-            detail.setText(
-                    movie.getDescription() != null
-                            ? movie.getDescription()
-                            : "No description available"
-            );
-            genre.setText(
-                    !movie.getGenres().isEmpty()
-                            ? movie.getGenreString()
-                            : "No genre available"
-            );
-
-            if (HomeController.getWatchlist().contains(movie)) {
-                watchlistBtn.setText("Remove");
-            } else {
-                watchlistBtn.setText("Watchlist");
-            }
-
-            // color scheme
-            title.getStyleClass().add("text-yellow");
-            detail.getStyleClass().add("text-white");
-            genre.getStyleClass().add("text-white");
-            genre.getStyleClass().add("text-italic");
-            detailBtn.setStyle("-fx-background-color: #f5c518;");
-            watchlistBtn.setStyle("-fx-background-color: #f5c518;");
-            detail.getStyleClass().add("text-white");
-            layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
-
-            // layout
-            title.fontProperty().set(title.getFont().font(20));
-            detail.setMaxWidth(this.getScene().getWidth() - 30);
-            detail.setWrapText(true);
-            layout.setPadding(new Insets(10));
-            layout.spacingProperty().set(10);
-            layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
-            setGraphic(layout);
-
-            detailBtn.setOnMouseClicked(mouseEvent -> {
-                if (collapsedDetails) {
-                    detailBox = getDetails();
-                    layout.getChildren().add(detailBox);
-                    collapsedDetails = false;
-                    detailBtn.setText("Hide Details");
-                } else {
-                    layout.getChildren().remove(detailBox);
-                    collapsedDetails = true;
-                    detailBtn.setText("Show Details");
-                }
-                setGraphic(layout);
-            });
-
-            watchlistBtn.setOnMouseClicked(mouseEvent -> {
-                if (!HomeController.getWatchlist().contains(getItem())) {
-                    HomeController.addToWatchlist(getItem());
-                    watchlistBtn.setText("Remove");
-                } else {
-                    HomeController.removeFromWatchlist(getItem());
-                    watchlistBtn.setText("Watchlist");
-                }
-
-            });
-        }
-
-    }
-
-     */
-
-        private VBox getDetails() {
+    private VBox getDetails() {
             VBox details = new VBox();
             Label releaseYear = new Label("Release Year: " + getItem().getReleaseYear());
             Label length = new Label("Length: " + getItem().getLengthInMinutes() + " minutes");
