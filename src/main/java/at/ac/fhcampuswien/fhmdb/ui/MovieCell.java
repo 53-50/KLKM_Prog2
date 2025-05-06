@@ -57,7 +57,7 @@ public class MovieCell extends ListCell<Movie> {
                 collapsedDetails = false;
                 detailBtn.setText("Hide Details");
             } else {
-                layout.getChildren().remove(3);
+                layout.getChildren().remove(4);
                 collapsedDetails = true;
                 detailBtn.setText("Show Details");
             }
@@ -66,6 +66,7 @@ public class MovieCell extends ListCell<Movie> {
 
         watchlistBtn.setOnMouseClicked(mouseEvent -> {
             addWatchlistClickHandler.onClick(getItem());
+            watchlistBtn.setText("Added to Watchlist");
         });
     }
 
@@ -133,7 +134,7 @@ public class MovieCell extends ListCell<Movie> {
             watchlistBtn.setOnMouseClicked(mouseEvent -> {
                 if (!HomeController.getWatchlist().contains(getItem())) {
                     HomeController.addToWatchlist(getItem());
-                    watchlistBtn.setText("Remove");
+                    watchlistBtn.setText("Added to Watchlist");
                 } else {
                     HomeController.removeFromWatchlist(getItem());
                     watchlistBtn.setText("Watchlist");

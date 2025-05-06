@@ -40,6 +40,9 @@ public class HomeController implements Initializable {
     @FXML private JFXListView<Movie> movieListView;
     @FXML private JFXButton watchlistButton;  // passend zum neuen fx:id TODO
 
+    @FXML
+    public JFXListView Listview;
+
     public List<Movie> allMovies;
 
     protected static ObservableList<Movie> observableMovies = FXCollections.observableArrayList();

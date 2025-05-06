@@ -5,23 +5,56 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="at.ac.fhcampuswien.fhmdb.controllers.WatchlistController">
+
+
     <top>
-        <HBox spacing="10">
+        <VBox>
+        <!-- Logo & Welcome Text -->
+        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: black;">
+            <padding>
+                <Insets bottom="7.0" left="10.0" top="7.0" />
+            </padding>
+            <children>
+                <Label style="-fx-background-color: F5C518;" text="FHMDb">
+                    <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                    </font>
+                    <padding>
+                        <Insets left="2.0" right="2.0" />
+                    </padding>
+                </Label>
+                <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to FHMDb!" />
+            </children>
+        </HBox>
+
+        <HBox spacing="10"
+              styleClass="background-black"
+              stylesheets="@styles.css"
+              alignment="CENTER">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <JFXButton fx:id="homeButton"
+                       styleClass="background-yellow"
                        text="Home"
                        onAction="#onHomeButtonClick"/>
             <JFXButton fx:id="watchlistButton"
+                       styleClass="background-yellow"
                        text="Watchlist"
                        disable="true"/>
         </HBox>
+        </VBox>
     </top>
     <center>
-        <JFXListView fx:id="watchlistListView"/>
+        <JFXListView fx:id="watchlistListView"
+                     styleClass="background-black"
+                     style="-fx-background-color: black;"
+                     stylesheets="@styles.css"/>
     </center>
 </BorderPane>
