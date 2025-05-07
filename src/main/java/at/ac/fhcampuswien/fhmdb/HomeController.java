@@ -56,7 +56,6 @@ public class HomeController implements Initializable {
 
 
     @Override
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // in initialize():
         watchlistRepo = new WatchlistRepository();
@@ -440,7 +439,7 @@ public class HomeController implements Initializable {
         return moviesInRange;
     }
 //-------------------------------------   Info Services -------------------------------------------------------//
-private void showError(String message) {
+private void showError(String message) { //TODO do not need
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Error");
     alert.setHeaderText(null);
@@ -448,7 +447,7 @@ private void showError(String message) {
     alert.showAndWait();
 }
 
-    private void showInfo(String message) {
+    private void showInfo(String message) { //TODO do not need
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);

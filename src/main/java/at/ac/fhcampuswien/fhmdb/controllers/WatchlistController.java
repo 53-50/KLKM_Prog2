@@ -82,26 +82,6 @@ public class WatchlistController implements Initializable {
         System.out.println("WatchlistController initialized");
     }
 
-/*
-    private void loadWatchlist() {
-        try {
-            List<WatchlistMovieEntity> entries = watchlistRepository.getWatchlist();
-            // 1) ObservableList mit den gleichen Typen
-            ObservableList<WatchlistMovieEntity> items =
-                    FXCollections.observableArrayList(entries);
-            // 2) Items setzen
-            watchlistListView.setItems(items);
-            // 3) CellFactory liefert ListCell<WatchlistMovieEntity>
-            watchlistListView.setCellFactory(
-                    lv -> new WatchlistCell(removeFromWatchlistClick)
-            );
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-    }
-
- */
-
     @FXML
     public void onHomeButtonClick(ActionEvent ev) throws IOException {
         Parent homeRoot = FXMLLoader.load(
@@ -110,37 +90,4 @@ public class WatchlistController implements Initializable {
         homeButton.getScene().setRoot(homeRoot);
     }
 
-    /*
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<WatchlistMovieEntity> watchlist = new ArrayList<>();
-        try {
-            watchlistRepository = new WatchlistRepository();
-            watchlist = watchlistRepository.getWatchlist();
-
-            MovieRepository movieRepository = new MovieRepository();
-            List<MovieEntity> movies = new ArrayList<>();
-
-            for(WatchlistMovieEntity movie : watchlist) {
-                movies.add(movieRepository.getMovie(movie.getApiId()));
-            }
-
-            observableWatchlist.addAll(movies);
-            watchlistView.setItems(observableWatchlist);
-            watchlistView.setCellFactory(movieListView -> new WatchlistCell(RemoveFromWatchlistClicked));
-
-        } catch (DatabaseException | SQLException e) {
-            DialogWindow dialog = new DialogWindow("Database Error", "Could not read movies from DB");
-            dialog.show();
-            e.printStackTrace();
-        }
-
-        if(watchlist.size() == 0) {
-            watchlistView.setPlaceholder(new javafx.scene.control.Label("Watchlist is empty"));
-        }
-
-        System.out.println("WatchlistController initialized");
-    }
-
-     */
 }

@@ -61,8 +61,6 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         });
     }
 
-
-
     private VBox getDetails() {
         VBox details = new VBox();
 
@@ -81,8 +79,6 @@ public class WatchlistCell extends ListCell<MovieEntity> {
 
         return details;
     }
-
-
 
     protected void updateItem(MovieEntity movieEntity, boolean empty) {
         super.updateItem(movieEntity, empty);
