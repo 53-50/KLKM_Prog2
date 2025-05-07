@@ -18,12 +18,6 @@ public class WatchlistRepository {
         }
     }
 
-    // get all movies that are in the watchlist
-    public List<WatchlistMovieEntity> getWatchlist() throws SQLException {
-        return dao.queryForAll();
-    }
-
-    /* Verbesserte Fehlerbehandlung: SQLException wird abgefangen und in eine eigene DatabaseException übersetzt um UI Layer vom DB Layer zu trennen
     public List<WatchlistMovieEntity> getWatchlist() throws DatabaseException {
         try {
             return dao.queryForAll();
@@ -31,7 +25,6 @@ public class WatchlistRepository {
             throw new DatabaseException("Error reading watchlist: " + e.getMessage());
         }
     }
-    */
 
 
     // add movie to the watchlist - used when working with UI or domain model Movie

@@ -19,11 +19,6 @@ public class MovieRepository {
         }
     }
 
-    public List<MovieEntity> getAllMovies() throws SQLException {
-        return dao.queryForAll();
-    }
-
-    /*Verbesserte Fehlerbehandlung: SQLException wird abgefangen und in eine eigene DatabaseException übersetzt um UI Layer vom DB Layer zu trennen
     public List<MovieEntity> getAllMovies() throws DatabaseException {
         try {
             return dao.queryForAll();
@@ -31,7 +26,7 @@ public class MovieRepository {
             throw new DatabaseException("Error while reading movies" + e);
         }
     }
-    */
+
 
     public void addAllMovies(List<Movie> movies) {
         // counter for the manually ID

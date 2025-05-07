@@ -75,8 +75,10 @@ public class HomeController implements Initializable {
             setupUI();
 
             System.out.println("Initialization complete");
-        } catch (Exception e) {
-            System.err.println("Initialization failed: " + e.getMessage());
+        } catch (MovieAPIException | DatabaseException e) {
+            e.printStackTrace();
+            showError("Initialization failed: " + e.getMessage());
+        } catch (SQLException e) {
             e.printStackTrace();
             showError("Initialization failed: " + e.getMessage());
         }
