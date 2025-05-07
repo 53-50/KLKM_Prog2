@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.api.MovieAPIException;
 import at.ac.fhcampuswien.fhmdb.data.*;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.DialogWindow;
@@ -82,7 +83,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void loadMovies() throws SQLException, IOException {
+    private void loadMovies() throws MovieAPIException, SQLException {
         System.out.println("Loading movies...");
         List<Movie> apiMovies = MovieAPI.fetchAllMovies();
         System.out.println("Fetched " + apiMovies.size() + " movies from API");
