@@ -71,8 +71,6 @@ public class WatchlistController implements Initializable {
             DialogWindow dialog = new DialogWindow("Database Error", "Could not read movies from DB");
             dialog.show();
             e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         if(watchlist.size() == 0) {

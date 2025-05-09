@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.fhmdb.data.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +34,12 @@ public class FhmdbApplication extends Application {
             DatabaseManager.closeConnectionSource();
         } catch (DatabaseException e) {
             e.printStackTrace();
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Failed to close the database connection");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 

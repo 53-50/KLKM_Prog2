@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.api.MovieAPIException;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class MovieAPITest {
     }
 
     @Test
-    void check_if_ApiCall_Returns_Response() throws IOException {
+    void check_if_ApiCall_Returns_Response() throws MovieAPIException {
         List<Movie> response = MovieAPI.fetchAllMovies();
 
         assertNotNull(response, "The API-Response is null.");

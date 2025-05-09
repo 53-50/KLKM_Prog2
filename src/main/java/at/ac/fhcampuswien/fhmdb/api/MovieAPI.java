@@ -68,13 +68,13 @@ public class MovieAPI {
         return url.toString();
     }
 
-    public static List<Movie> fetchAllMovies() throws IOException {
+    public static List<Movie> fetchAllMovies() throws MovieAPIException {
         return fetchAllMovies(null, null, null, null);
     }
 
     // Get a URL - This program downloads a URL and prints its contents as List<Movie>
     // https://square.github.io/okhttp/
-    public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) {
+    public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) throws MovieAPIException {
         // build the link together with different parameters
         String URL = buildURL(query,genre, releaseYear, ratingFrom);
 
@@ -107,14 +107,12 @@ public class MovieAPI {
             return Arrays.asList(movies);
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new MovieAPIException(e.getMessage());
         }
-        // if something goes wrong return an empty list
-        return new ArrayList<>();
     }
 
 
-    public Movie fetchMovieByID(UUID id) {
+    public Movie fetchMovieByID(UUID id) throws MovieAPIException {
         // build the link together with the ID
         String URL = buildURL(id);
 
@@ -134,11 +132,7 @@ public class MovieAPI {
             return gson.fromJson(responseBody, Movie.class);
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new MovieAPIException(e.getMessage());
         }
-        // if something goes wrong return null
-        return null;
-
     }
-
 }
