@@ -61,23 +61,27 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        watchlistRepo = new WatchlistRepository();
+        watchlistRepo = new WatchlistRepository(); //repo for watchlist -> loadMovies
 
         try {
+            //DEBUG
             System.out.println("Initializing HomeController...");
 
-            // Repository Initialization
+            // Repository Initialization - one for movies, one for watchlist
             movieRepository = new MovieRepository();
             watchlistRepository = new WatchlistRepository();
+            //DEBUG
             System.out.println("Repositories initialized");
 
-            // Load movies
+            // Load movies - from API and DB and watchlistHanlder
             loadMovies();
 
-            // UI Setup
+            // UI Setup - ListView, Buttons, Placeholders
             setupUI();
 
+            //DEBUG
             System.out.println("Initialization complete");
+
         } catch (MovieAPIException | DatabaseException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -86,13 +90,14 @@ public class HomeController implements Initializable {
     }
 
     private void loadMovies() throws MovieAPIException, SQLException {
+        //DEBUG
         System.out.println("Loading movies...");
 
         //getting movies from API
         List<Movie> apiMovies = MovieAPI.fetchAllMovies();
         System.out.println("Fetched " + apiMovies.size() + " movies from API");
 
-        //saves movies to database
+        //if new movies, save them to DB
         if (!apiMovies.isEmpty()) {
             movieRepository.addAllMovies(apiMovies);
             System.out.println("Movies saved to database");
@@ -106,6 +111,7 @@ public class HomeController implements Initializable {
         ClickEventHandler<Movie> addToWatchlist = m -> { //anonymous class using ClickHandler
             try {
                 int count = watchlistRepo.addToWatchlist(m);
+                //if count == 1 movie is new, else movie is already in watchlist
                 String msg = count == 1
                         ? m.getTitle() + " was added to watchlist." //if count == 1
                         : m.getTitle() + " is already in watchlist."; // else
@@ -117,12 +123,17 @@ public class HomeController implements Initializable {
             }
         };
 
+        //ListView for custom MovieCell
         movieListView.setCellFactory(lv -> new MovieCell(addToWatchlist));
 
-        //sorting movies descending
+        //convert entities in domaine-objects and put them into a list
         List<Movie> movies = MovieEntity.toMovies(entities);
+        //internal list for logic
         setMovies(movies);
+        //List which is seen in  UI
         setMovieList(movies);
+
+        //sort movies descending
         sortMoviesDescending();
 
 

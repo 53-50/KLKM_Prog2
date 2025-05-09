@@ -87,7 +87,6 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         details.getChildren().add(rating);
         details.getChildren().add(length);
 
-
         return details;
     }
 
@@ -103,8 +102,8 @@ public class WatchlistCell extends ListCell<MovieEntity> {
             title.setText(movieEntity.getTitle());
             description.setText(
                     movieEntity.getDescription() != null
-                            ? movieEntity.getDescription()
-                            : "No description available"
+                            ? movieEntity.getDescription() //if desc != null -> getDescription
+                            : "No description available" //else "no description available"
             );
 
             description.setMaxWidth(this.getScene().getWidth() - 30);

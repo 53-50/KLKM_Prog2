@@ -44,33 +44,33 @@ public class WatchlistController implements Initializable {
     //Initialize
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<WatchlistMovieEntity> watchlist = new ArrayList<>();
+        List<WatchlistMovieEntity> watchlist = new ArrayList<>(); //initialize empty list
+
         try {
-            watchlistRepository = new WatchlistRepository();
-            watchlist = watchlistRepository.getWatchlist();
+            watchlistRepository = new WatchlistRepository(); // initialize instance of repository
+            watchlist = watchlistRepository.getWatchlist(); //read watchlist from DB
 
-            MovieRepository movieRepository = new MovieRepository();
-            List<MovieEntity> movies = new ArrayList<>();
+            MovieRepository movieRepository = new MovieRepository(); //new repo
+            List<MovieEntity> movies = new ArrayList<>(); // list for movie-entities
 
-            for(WatchlistMovieEntity movie : watchlist) {
+            for(WatchlistMovieEntity movie : watchlist) { //for each movie-entity, load and add to list
                 movies.add(movieRepository.getMovie(movie.getApiId()));
             }
 
-            observableWatchlist.addAll(movies);
-            watchlistListView.setItems(observableWatchlist);
+            observableWatchlist.addAll(movies); //adds to observable
+            watchlistListView.setItems(observableWatchlist); // observableList as data for listView
             watchlistListView.setCellFactory(movieListView -> new WatchlistCell(RemoveFromWatchlistClicked));
+            //^ how cells in ListView will be rendered, incl. remove button
 
-        } catch (DatabaseException e) {
+        } catch (DatabaseException e) { //catch exception
             DialogWindow dialog = new DialogWindow("Database Error", "Could not read movies from DB");
             dialog.show();
             e.printStackTrace();
         }
 
-        if(watchlist.size() == 0) {
+        if(watchlist.isEmpty()) { //if list is empty, show placeholder text
             watchlistListView.setPlaceholder(new javafx.scene.control.Label("Watchlist is empty"));
         }
-
-        System.out.println("WatchlistController initialized");
     }
 
     @FXML

@@ -85,23 +85,24 @@ public class MovieCell extends ListCell<Movie> {
         }
 
         protected void updateItem(Movie item, boolean empty) {
+        //Logic from ListCell (import)
             super.updateItem(item, empty);
 
-            if (empty || item == null) {
-                setGraphic(null);
-                setText(null);
+            if (empty || item == null) { //empty/null-cells will be set back
+                setGraphic(null); // no graphic node
+                setText(null); // no text
                 return;
             } else {
-                this.getStyleClass().add("movie-cell");
-                title.setText(item.getTitle());
+                this.getStyleClass().add("movie-cell"); //css
+                title.setText(item.getTitle()); // title label of movies
                 detail.setText(
-                        item.getDescription() != null
+                        item.getDescription() != null //if description is here
                         ? item.getDescription()
-                        : "No Description"
+                        : "No Description" //else
                 );
             }
 
-            String genres = item.getGenres()
+            String genres = item.getGenres() //
                     .stream()
                     .map(Enum::toString)
                     .collect(Collectors.joining(", "));
