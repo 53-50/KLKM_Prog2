@@ -65,6 +65,7 @@ public class DatabaseManager {
             movieDao = DaoManager.createDao(conn, MovieEntity.class);
         }
         return movieDao;
+
     }
 
 
