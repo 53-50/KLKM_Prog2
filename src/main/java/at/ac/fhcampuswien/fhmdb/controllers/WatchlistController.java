@@ -16,7 +16,6 @@ import javafx.scene.Parent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,27 +27,21 @@ public class WatchlistController implements Initializable {
     @FXML private JFXListView<MovieEntity> watchlistListView;
 
     private WatchlistRepository watchlistRepository;
-    private MovieRepository movieRepository;
     protected ObservableList<MovieEntity> observableWatchlist = FXCollections.observableArrayList();
 
-
-
-    private final ClickEventHandler RemoveFromWatchlistClicked = (o) -> {
-        if (o instanceof MovieEntity) {
-            MovieEntity movieEntity = (MovieEntity) o;
-
-            try {
-                WatchlistRepository watchlistRepository = new WatchlistRepository();
-                watchlistRepository.removeFromWatchlist(movieEntity.getApiId());
-                observableWatchlist.remove(movieEntity);
-            } catch (DatabaseException e) {
-                DialogWindow dialog = new DialogWindow("Database Error", "Could not remove movie from watchlist");
-                dialog.show();
-                e.printStackTrace();
-            }
+    //Remove Entity Function
+    private final ClickEventHandler<MovieEntity> RemoveFromWatchlistClicked = movieEntity -> {
+        try {
+            watchlistRepository.removeFromWatchlist(movieEntity.getApiId());
+            observableWatchlist.remove(movieEntity);
+        } catch (DatabaseException e) {
+            new DialogWindow("Database Error", "Could not remove movie from watchlist").show();
+            e.printStackTrace();
         }
     };
 
+
+    //Initialize
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<WatchlistMovieEntity> watchlist = new ArrayList<>();

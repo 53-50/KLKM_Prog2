@@ -27,7 +27,6 @@ public class MovieCell extends ListCell<Movie> {
     public MovieCell(ClickEventHandler<Movie> addWatchlistClickHandler) {
         super();
         detailBtn.setStyle("-fx-background-color: #f5c518;");
-        // set margin of detailBtn
         HBox.setMargin(detailBtn, new Insets(0, 10, 0, 10));
         watchlistBtn.setStyle("-fx-background-color: #f5c518;");
         title.getStyleClass().add("text-yellow");
@@ -36,9 +35,6 @@ public class MovieCell extends ListCell<Movie> {
         genre.setStyle("-fx-font-style: italic");
         layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
         title.setMaxWidth(Double.MAX_VALUE);
-        //detailBtn.setMaxWidth(Double.MAX_VALUE);
-
-        // layout
         title.fontProperty().set(title.getFont().font(20));
         detail.setWrapText(true);
         layout.setPadding(new Insets(10));

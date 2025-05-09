@@ -2,7 +2,10 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPIException;
-import at.ac.fhcampuswien.fhmdb.data.*;
+import at.ac.fhcampuswien.fhmdb.data.DatabaseException;
+import at.ac.fhcampuswien.fhmdb.data.MovieEntity;
+import at.ac.fhcampuswien.fhmdb.data.MovieRepository;
+import at.ac.fhcampuswien.fhmdb.data.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.DialogWindow;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
@@ -16,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class HomeController implements Initializable {
     //watchlist + homelist buttons
     @FXML private JFXButton homeButton;
     @FXML private JFXListView<Movie> movieListView;
-    @FXML private JFXButton watchlistButton;  // passend zum neuen fx:id TODO
+    @FXML private JFXButton watchlistButton;
 
     //gets all Movies without filter
     public List<Movie> allMovies;
@@ -59,7 +61,6 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // in initialize():
         watchlistRepo = new WatchlistRepository();
 
         try {
@@ -79,10 +80,8 @@ public class HomeController implements Initializable {
             System.out.println("Initialization complete");
         } catch (MovieAPIException | DatabaseException e) {
             e.printStackTrace();
-            showError("Initialization failed: " + e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
-            showError("Initialization failed: " + e.getMessage());
         }
     }
 
@@ -104,12 +103,12 @@ public class HomeController implements Initializable {
         System.out.println("Loaded " + entities.size() + " movies from database");
 
         //Adding to watchlist when watchlist-click
-        ClickEventHandler<Movie> addToWatchlist = m -> {
+        ClickEventHandler<Movie> addToWatchlist = m -> { //anonymous class using ClickHandler
             try {
                 int count = watchlistRepo.addToWatchlist(m);
                 String msg = count == 1
-                        ? m.getTitle() + " was added to watchlist."
-                        : m.getTitle() + " is already in watchlist.";
+                        ? m.getTitle() + " was added to watchlist." //if count == 1
+                        : m.getTitle() + " is already in watchlist."; // else
                 new DialogWindow("Watchlist", msg).show();
             } catch (DatabaseException e) {
                 new DialogWindow("Database error",
@@ -339,27 +338,8 @@ public class HomeController implements Initializable {
 
         return moviesInRange;
     }
-//-------------------------------------   Info Services -------------------------------------------------------//
-
-    private void showError(String message) { //TODO do not need
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Error");
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-}
-
-    private void showInfo(String message) { //TODO do not need
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 
 //-------------------------------------   Watchlist Services -------------------------------------------------------//
-
 
     @FXML
     private void onWatchlistButtonClick(ActionEvent ev) throws IOException {
@@ -379,120 +359,3 @@ public class HomeController implements Initializable {
     }
 
 }
-
-/*
-        // 1) Repository-Init
-        try {
-            System.out.println("HomeController Start");
-
-            movieRepository     = new MovieRepository();
-            watchlistRepository = new WatchlistRepository();
-        } catch (DatabaseException e) {
-            showError("Datenbank konnte nicht initialisiert werden:\n" + e.getMessage());
-            return;
-        }
-
-        List<Movie> apiMovies = new ArrayList<>();
-        try {
-            apiMovies = MovieAPI.fetchAllMovies();
-            if(!apiMovies.isEmpty()) {
-                movieRepository.addAllMovies(apiMovies);
-            }
-        } catch (IOException e) {
-            System.err.println("Error initializing movies " + e.getMessage());
-            apiMovies = new ArrayList<>();
-        }
-
-     try {
-         List<MovieEntity> entities = movieRepository.getAllMovies();
-         List<Movie> movies = MovieEntity.toMovies(entities);
-         setMovies(movies);
-         setMovieList(movies);
-         sortMoviesDescending();
-     } catch (SQLException e) {
-         showError("Error" + e.getMessage());
-     }
-
-     movieListView.setItems(observableMovies);
-     movieListView.setCellFactory(lv -> new MovieCell(addToWatchlistClick));
-
-     /*
-        // lade aus DB – egal ob API neu oder leerer Fallback
-        List<MovieEntity> entities;
-        try {
-            entities = movieRepository.getAllMovies();
-        } catch (SQLException se) {
-            entities = Collections.emptyList();
-        }
-        List<Movie> movies = MovieEntity.toMovies(entities);
-
-        // in die ListView stecken
-        setMovies(movies);
-        setMovieList(movies);
-        sortMoviesDescending();
-        movieListView.setItems(observableMovies);
-        movieListView.setCellFactory(lv -> new MovieCell(addToWatchlistClick));
-
-
-
-        // genre filter text + data
-        genreComboBox.setPromptText("Filter by Genre");
-        genreComboBox.getItems().addAll(Movie.Genre.values()); //addToWatchlist Genres to ComboBox
-
-        //releaseYear filter text + data
-        releaseYearComboBox.setPromptText("Filter by Release Year");
-
-        //creates Array for years 1900 to 2025
-        Integer[] years = new Integer[126];
-        for (int i = 0; i < years.length; i++) {
-            years[i] = 1900 + i;
-        }
-
-        //creates dropdown menu
-        releaseYearComboBox.getItems().addAll(years);
-
-        // rating filter text + data
-        ratingComboBox.setPromptText("Filter by Rating");
-
-        //crates array from 0-10
-        Integer[] ratings = new Integer[11];
-        for (int i = 0; i < ratings.length; i++) {
-            ratings[i] = i;
-        }
-
-        //ratings in dropbox
-        ratingComboBox.getItems().addAll(ratings);
-
-
-        // ------------------------------------  EVENT HANDLER:   ------------------------------------------ //
-
-        // Sort button:
-        sortBtn.setOnAction(actionEvent -> {
-            if(sortBtn.getText().equals("Sort (asc)")) {
-
-                // sort observableMovies ascending
-                sortMoviesAscending();
-                sortBtn.setText("Sort (desc)");
-            } else {
-                // sort observableMovies descending
-                sortMoviesDescending();
-                sortBtn.setText("Sort (asc)");
-            }
-        });
-
-        // Search Button:
-        searchBtn.setOnAction(actionEvent -> applyFilter());
-
-        //Genre Dropdown:
-        genreComboBox.setOnAction(actionEvent -> applyFilter());
-
-        //ReleaseYear Dropdown:
-        releaseYearComboBox.setOnAction(actionEvent -> applyFilter());
-
-        //Rating Dropdown:
-        ratingComboBox.setOnAction(actionEvent -> applyFilter());
-
-        //Delete Button:
-        deleteBtn.setOnAction(actionEvent -> deleteFilter());
-    }
-    */

@@ -45,8 +45,6 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
         header.setAlignment(Pos.CENTER_LEFT);
-        header.setHgrow(title, Priority.ALWAYS);
-        header.setHgrow(detailBtn, Priority.ALWAYS);
 
         title.setMaxWidth(Double.MAX_VALUE);
 
@@ -99,7 +97,6 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         if (empty || movieEntity == null) {
             setGraphic(null);
             setText(null);
-            return;
         } else {
             this.getStyleClass().add("movie-cell");
 
