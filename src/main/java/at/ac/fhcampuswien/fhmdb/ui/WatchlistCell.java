@@ -13,29 +13,41 @@ import javafx.scene.paint.Color;
 import java.util.stream.Collectors;
 
 public class WatchlistCell extends ListCell<MovieEntity> {
+
     private final Label title = new Label();
     private final Label description = new Label();
     private final Label genre = new Label();
+
     private final JFXButton detailBtn = new JFXButton("Show Details");
     private final JFXButton removeBtn = new JFXButton("Remove");
-    private final HBox header = new HBox(title, detailBtn, removeBtn);
-    private final VBox layout = new VBox(header, description, genre);
-    private boolean collapsedDetails = true;
+
+    private final HBox header = new HBox(title, detailBtn, removeBtn); //horizontal container for title and buttons
+    private final VBox layout = new VBox(header, description, genre);  //vertical container for movie cell-view
+
+    private boolean collapsedDetails = true; //hides details view
 
     public WatchlistCell(ClickEventHandler<MovieEntity> removeFromWatchlistClick) {
+
         super();
+
         // color scheme
         detailBtn.setStyle("-fx-background-color: #f5c518;");
-        HBox.setMargin(detailBtn, new Insets(0, 10, 0, 10));
         removeBtn.setStyle("-fx-background-color: #f5c518;");
+
+        HBox.setMargin(detailBtn, new Insets(0, 10, 0, 10));
+
         title.getStyleClass().add("text-yellow");
         description.getStyleClass().add("text-white");
         genre.getStyleClass().add("text-white");
+
         genre.setStyle("-fx-font-style: italic");
+
         layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
+
         header.setAlignment(Pos.CENTER_LEFT);
         header.setHgrow(title, Priority.ALWAYS);
         header.setHgrow(detailBtn, Priority.ALWAYS);
+
         title.setMaxWidth(Double.MAX_VALUE);
 
         // layout
@@ -61,6 +73,7 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         });
     }
 
+    //builds detail box
     private VBox getDetails() {
         VBox details = new VBox();
 
