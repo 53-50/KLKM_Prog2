@@ -86,7 +86,6 @@ public class MovieRepository {
         }
     }
 
-    // should it just get the first movie? without input how should it work?
     public MovieEntity getMovie() {
         try {
             List<MovieEntity> movies = dao.queryForAll();
