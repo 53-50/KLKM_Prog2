@@ -19,6 +19,7 @@ public class DatabaseManager {
     private static final String password = "";
     // ConnectionSource connects the program with the database
     private static ConnectionSource conn;
+    // Data Access Object – provides methods to save, delete, find, ... Data
     private static Dao<MovieEntity, Long> movieDao;
     private static Dao<WatchlistMovieEntity, Long> watchlistDao;
     private static DatabaseManager instance;
@@ -50,7 +51,7 @@ public class DatabaseManager {
     }
 
 
-    // DAO (Date Acces Object) - get DAO for movies
+    // DAO (Date Acces Object) - get DAO for movies to use SQL Operations
     public static Dao<WatchlistMovieEntity, Long> getWatchlistDao() throws SQLException {
         if (watchlistDao == null) {
             watchlistDao = DaoManager.createDao(conn, WatchlistMovieEntity.class);
