@@ -50,7 +50,6 @@ public class DatabaseManager {
         }
     }
 
-
     // DAO (Date Acces Object) - get DAO for movies to use SQL Operations
     public static Dao<WatchlistMovieEntity, Long> getWatchlistDao() throws SQLException {
         if (watchlistDao == null) {
@@ -67,7 +66,6 @@ public class DatabaseManager {
         return movieDao;
 
     }
-
 
     // get singleton database instance
     public static DatabaseManager getInstance() throws DatabaseException {

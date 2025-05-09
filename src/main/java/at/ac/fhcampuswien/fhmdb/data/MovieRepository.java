@@ -27,7 +27,6 @@ public class MovieRepository {
         }
     }
 
-
     public void addAllMovies(List<Movie> movies) {
         // counter for the manually ID
         int count = 0;

@@ -204,6 +204,29 @@ public class HomeController implements Initializable {
 
     }
 
+
+//-------------------------------------   Watchlist Services -------------------------------------------------------//
+
+    @FXML
+    private void onWatchlistButtonClick(ActionEvent ev) throws IOException {
+        Parent watchlistRoot = FXMLLoader.load(
+                getClass().getResource("/at/ac/fhcampuswien/fhmdb/watchlist.fxml")
+        );
+        // switching to watchlist scene-root
+        watchlistButton.getScene().setRoot(watchlistRoot);
+    }
+
+    @FXML
+    private void onHomeButtonClick(ActionEvent ev) throws IOException {
+        Parent homeRoot = FXMLLoader.load(
+                getClass().getResource("/at/ac/fhcampuswien/fhmdb/home-view.fxml")
+        );
+        homeButton.getScene().setRoot(homeRoot);
+    }
+
+
+    //-------------------------------------   Other Services -------------------------------------------------------//
+
     //set movies
     public void setMovies(List<Movie> movies) {
         allMovies = movies;
@@ -350,23 +373,5 @@ public class HomeController implements Initializable {
         return moviesInRange;
     }
 
-//-------------------------------------   Watchlist Services -------------------------------------------------------//
-
-    @FXML
-    private void onWatchlistButtonClick(ActionEvent ev) throws IOException {
-        Parent watchlistRoot = FXMLLoader.load(
-                getClass().getResource("/at/ac/fhcampuswien/fhmdb/watchlist.fxml")
-        );
-        // switching to watchlist scene-root
-        watchlistButton.getScene().setRoot(watchlistRoot);
-    }
-
-    @FXML
-    private void onHomeButtonClick(ActionEvent ev) throws IOException {
-        Parent homeRoot = FXMLLoader.load(
-                getClass().getResource("/at/ac/fhcampuswien/fhmdb/home-view.fxml")
-        );
-        homeButton.getScene().setRoot(homeRoot);
-    }
 
 }

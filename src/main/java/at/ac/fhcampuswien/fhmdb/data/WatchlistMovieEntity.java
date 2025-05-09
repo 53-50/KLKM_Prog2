@@ -2,7 +2,7 @@ package at.ac.fhcampuswien.fhmdb.data;
 
 import com.j256.ormlite.field.DatabaseField;
 
-public class WatchlistMovieEntity { //TODO - in watchlist.db muss auch die ID gespeichert werden, aktuell nur APIid gespeichert
+public class WatchlistMovieEntity {
     // (is a MovieEntity) - 1:1 Relation
 
     //@DatabaseField(generatedId = true)
