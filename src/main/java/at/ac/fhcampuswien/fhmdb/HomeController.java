@@ -28,6 +28,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import at.ac.fhcampuswien.fhmdb.sort.SortContext;
+import at.ac.fhcampuswien.fhmdb.sort.UnsortedState;
+import at.ac.fhcampuswien.fhmdb.sort.AscendingSortState;
+import at.ac.fhcampuswien.fhmdb.sort.DescendingSortState;
+
+
 public class HomeController implements Initializable {
 
     @FXML public JFXButton searchBtn;
@@ -52,6 +58,8 @@ public class HomeController implements Initializable {
     //connections to database-sources
     private MovieRepository movieRepository;
     private WatchlistRepository watchlistRepository;
+
+    private SortContext sortContext = new SortContext();
 
     // ganz oben im Controller:
     private WatchlistRepository watchlistRepo;
@@ -134,8 +142,11 @@ public class HomeController implements Initializable {
         setMovieList(movies);
 
         //sort movies descending
-        sortMoviesDescending();
+        //sortMoviesDescending();
 
+        sortContext.setState(new UnsortedState());
+        List<Movie> sorted = sortContext.sort(movies);
+        setMovieList(sorted);
 
     }
 
@@ -175,7 +186,7 @@ public class HomeController implements Initializable {
 
         // Sort button:
         sortBtn.setOnAction(actionEvent -> {
-            if(sortBtn.getText().equals("Sort (asc)")) {
+            /*if(sortBtn.getText().equals("Sort (asc)")) {
 
                 // sort observableMovies ascending
                 sortMoviesAscending();
@@ -184,7 +195,15 @@ public class HomeController implements Initializable {
                 // sort observableMovies descending
                 sortMoviesDescending();
                 sortBtn.setText("Sort (asc)");
+            }*/
+            if (sortContext.getState() instanceof UnsortedState || sortContext.getState() instanceof DescendingSortState) {
+                sortContext.setState(new AscendingSortState());
+                sortBtn.setText("Sort (desc)");
+            } else {
+                sortContext.setState(new DescendingSortState());
+                sortBtn.setText("Sort (asc)");
             }
+            updateObservableList(new ArrayList<>(observableMovies));
         });
 
         // Search Button:
@@ -291,20 +310,22 @@ public class HomeController implements Initializable {
 
     //updating UI list
     private void updateObservableList(List<Movie> filteredMovies) {
-        observableMovies.setAll(filteredMovies);
+        List<Movie> sorted = sortContext.sort(filteredMovies);
+        observableMovies.setAll(sorted);
+        //observableMovies.setAll(filteredMovies);
     }
 
     //method to sort movies - ascending
-    public void sortMoviesAscending(){
+    /*public void sortMoviesAscending(){
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle));
         allMovies.sort(Comparator.comparing(Movie::getTitle));
-    }
+    }*/
 
     //method to sort movies - descending
-    public void sortMoviesDescending() {
+    /*public void sortMoviesDescending() {
         FXCollections.sort(observableMovies, Comparator.comparing(Movie::getTitle).reversed());
         allMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
-    }
+    }*/
 
     //method to get most popular actor
     public String getMostPopularActor (List<Movie> movies) {
