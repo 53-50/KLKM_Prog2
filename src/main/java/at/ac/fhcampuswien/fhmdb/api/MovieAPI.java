@@ -31,7 +31,7 @@ public class MovieAPI {
     private static final String BASE_URL = "https://prog2.fh-campuswien.ac.at/movies";
     private final static OkHttpClient client = new OkHttpClient();
 
-    public static String buildURL(String query, Movie.Genre genre, String releaseYear, String ratingFrom) {
+    /*public static String buildURL(String query, Movie.Genre genre, String releaseYear, String ratingFrom) {
         StringBuilder url = new StringBuilder(BASE_URL);
 
         if ( (query != null && !query.isEmpty()) ||
@@ -57,7 +57,7 @@ public class MovieAPI {
         }
 
         return url.toString();
-    }
+    }*/
 
     // when API gets called by ID
     private static String buildURL(UUID id) {
@@ -76,7 +76,13 @@ public class MovieAPI {
     // https://square.github.io/okhttp/
     public static List<Movie> fetchAllMovies(String query, Movie.Genre genre, String releaseYear, String ratingFrom) throws MovieAPIException {
         // build the link together with different parameters
-        String URL = buildURL(query,genre, releaseYear, ratingFrom);
+        // String URL = buildURL(query,genre, releaseYear, ratingFrom);
+        String URL = new MovieAPIRequestBuilder(BASE_URL)
+                .query(query)
+                .genre(genre != null ? genre.name() : null)
+                .releaseYear(releaseYear)
+                .ratingFrom(ratingFrom)
+                .build();
 
         // generating a new HTTP-Request
         Request request = new Request.Builder()
