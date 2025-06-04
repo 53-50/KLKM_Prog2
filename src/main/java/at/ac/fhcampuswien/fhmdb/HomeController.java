@@ -69,15 +69,16 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        watchlistRepo = new WatchlistRepository(); //repo for watchlist -> loadMovies
+        watchlistRepo = WatchlistRepository.getInstance(); //repo for watchlist -> loadMovies -> now singleton instance of repository
 
         try {
             //DEBUG
             System.out.println("Initializing HomeController...");
 
             // Repository Initialization - one for movies, one for watchlist
-            movieRepository = new MovieRepository();
-            watchlistRepository = new WatchlistRepository();
+            movieRepository = MovieRepository.getInstance(); //now singleton instance of repository
+            watchlistRepository = WatchlistRepository.getInstance(); //now singleton instance of repository
+
             //DEBUG
             System.out.println("Repositories initialized");
 

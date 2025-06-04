@@ -54,7 +54,7 @@ public class MovieCell extends ListCell<Movie> {
 
         watchlistBtn.setOnMouseClicked(mouseEvent -> {
             addWatchlistClickHandler.onClick(getItem());
-            watchlistBtn.setText("Added to Watchlist");
+            //watchlistBtn.setText("Added to Watchlist");
         });
     }
 

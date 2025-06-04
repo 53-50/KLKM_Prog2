@@ -8,16 +8,26 @@ import java.util.List;
 
 public class WatchlistRepository {
 
-    //dao = object, that allows access to database table -> WME = type of saved object; Long = type of primary key
-    Dao<WatchlistMovieEntity, Long> dao;
+    //Singleton-instance
+    private static WatchlistRepository instance = null;
 
-   //Constructor to get dao-instance
-    public WatchlistRepository() throws DatabaseException {
+    //dao = object, that allows access to database table -> WME = type of saved object; Long = type of primary key
+    private final Dao<WatchlistMovieEntity, Long> dao;
+
+   //Constructor to get dao-instance -> made private to prevent external instancing
+    private WatchlistRepository() throws DatabaseException {
         try {
             this.dao = DatabaseManager.getInstance().getWatchlistDao();
         } catch (Exception e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+    public static synchronized WatchlistRepository getInstance(){
+        if (instance==null){
+            instance = new WatchlistRepository();
+        }
+        return instance;
     }
 
     //reads all movies from watchlist database

@@ -47,6 +47,7 @@ public class WatchlistCell extends ListCell<MovieEntity> {
         header.setAlignment(Pos.CENTER_LEFT);
 
         title.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(title, Priority.ALWAYS);
 
         // layout
         title.fontProperty().set(title.getFont().font(20));

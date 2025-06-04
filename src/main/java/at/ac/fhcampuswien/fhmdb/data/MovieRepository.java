@@ -8,15 +8,26 @@ import java.util.List;
 
 public class MovieRepository {
 
-    // DAO - Data Access Object
-    private Dao<MovieEntity, Long> dao;
+    //Singleton-Instanz
+    private static MovieRepository instance = null;
 
-    public MovieRepository() throws DatabaseException {
+    // DAO - Data Access Object
+    private final Dao<MovieEntity, Long> dao;
+
+    // made private to prevent external instancing
+    private MovieRepository() throws DatabaseException {
         try {
             this.dao = DatabaseManager.getInstance().getMovieDao();
         } catch (Exception e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+    public static synchronized MovieRepository getInstance(){
+        if (instance==null){
+            instance = new MovieRepository();
+        }
+        return instance;
     }
 
     public List<MovieEntity> getAllMovies() throws DatabaseException {
