@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.ObserverInterfaces.WatchlistObserver;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPIException;
 import at.ac.fhcampuswien.fhmdb.data.DatabaseException;
@@ -34,7 +35,7 @@ import at.ac.fhcampuswien.fhmdb.sort.AscendingSortState;
 import at.ac.fhcampuswien.fhmdb.sort.DescendingSortState;
 
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, WatchlistObserver {
 
     @FXML public JFXButton searchBtn;
     @FXML public TextField searchField;
@@ -70,6 +71,7 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         watchlistRepo = WatchlistRepository.getInstance(); //repo for watchlist -> loadMovies -> now singleton instance of repository
+        watchlistRepo.addObserver(this);
 
         try {
             //DEBUG
@@ -116,7 +118,7 @@ public class HomeController implements Initializable {
         List<MovieEntity> entities = movieRepository.getAllMovies();
         System.out.println("Loaded " + entities.size() + " movies from database");
 
-        //Adding to watchlist when watchlist-click
+        /*Adding to watchlist when watchlist-click ----------------> ersetzt durch Observer pattern anbei
         ClickEventHandler<Movie> addToWatchlist = m -> { //anonymous class using ClickHandler
             try {
                 int count = watchlistRepo.addToWatchlist(m);
@@ -128,6 +130,14 @@ public class HomeController implements Initializable {
             } catch (DatabaseException e) {
                 new DialogWindow("Database error",
                         "Couldn't be added to watchlist.").show();
+                e.printStackTrace();
+            }
+        };*/
+
+        ClickEventHandler<Movie> addToWatchlist = m -> {
+            try {
+                watchlistRepo.addToWatchlist(m);  // only calls repository
+            } catch (DatabaseException e) {
                 e.printStackTrace();
             }
         };
@@ -394,6 +404,14 @@ public class HomeController implements Initializable {
 
         return moviesInRange;
     }
+//------------------------------------Observer Pattern ------------------------------------------------//
 
+    @Override
+    public void update(String message) {
+    // UI-Aktualisierungen immer über Platform.runLater!
+    javafx.application.Platform.runLater(() -> {
+        new DialogWindow("Watchlist Update", message).show();
+    });
+}
 
 }

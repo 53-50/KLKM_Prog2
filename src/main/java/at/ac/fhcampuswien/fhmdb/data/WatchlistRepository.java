@@ -1,18 +1,22 @@
 package at.ac.fhcampuswien.fhmdb.data;
 
+import at.ac.fhcampuswien.fhmdb.ObserverInterfaces.WatchlistObservable;
+import at.ac.fhcampuswien.fhmdb.ObserverInterfaces.WatchlistObserver;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class WatchlistRepository {
+public class WatchlistRepository implements WatchlistObservable {
 
     //Singleton-instance
     private static WatchlistRepository instance = null;
 
     //dao = object, that allows access to database table -> WME = type of saved object; Long = type of primary key
     private final Dao<WatchlistMovieEntity, Long> dao;
+    private final List<WatchlistObserver> observers = new ArrayList<>();
 
    //Constructor to get dao-instance -> made private to prevent external instancing
     private WatchlistRepository() throws DatabaseException {
@@ -39,6 +43,22 @@ public class WatchlistRepository {
         }
     }
 
+    @Override
+    public void addObserver(WatchlistObserver observer){
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(WatchlistObserver observer){
+        observers.remove(observer);
+    }
+
+    public void notifyObserver(String message){
+        for (WatchlistObserver o : observers){
+            o.update(message);
+        }
+    }
+
 
     // add movie to the watchlist - used when working with UI or domain model Movie
     public int addToWatchlist(WatchlistMovieEntity movie) throws DatabaseException {
@@ -46,9 +66,11 @@ public class WatchlistRepository {
             // Check if movie already exists by API ID
             List<WatchlistMovieEntity> existing = dao.queryForEq("apiId", movie.getApiId());
             if (!existing.isEmpty()) {
+                notifyObserver("Film is already in watchlist.");
                 return 0; //already exists - no action
             }
             dao.create(movie);
+            notifyObserver("Film was added to watchlist.");
             return 1; //successfully added
         } catch (SQLException se) {
             throw new DatabaseException("Error adding to watchlist: " + se.getMessage());

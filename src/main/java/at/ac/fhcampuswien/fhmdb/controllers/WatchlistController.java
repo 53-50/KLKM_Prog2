@@ -47,10 +47,10 @@ public class WatchlistController implements Initializable {
         List<WatchlistMovieEntity> watchlist = new ArrayList<>(); //initialize empty list
 
         try {
-            watchlistRepository = new WatchlistRepository(); // initialize instance of repository
+            watchlistRepository = WatchlistRepository.getInstance(); // initialize instance of repository
             watchlist = watchlistRepository.getWatchlist(); //read watchlist from DB
 
-            MovieRepository movieRepository = new MovieRepository(); //new repo
+            MovieRepository movieRepository = MovieRepository.getInstance(); //new repo
             List<MovieEntity> movies = new ArrayList<>(); // list for movie-entities
 
             for(WatchlistMovieEntity movie : watchlist) { //for each movie-entity, load and add to list
