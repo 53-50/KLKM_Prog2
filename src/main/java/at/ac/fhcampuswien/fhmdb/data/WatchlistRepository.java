@@ -45,7 +45,9 @@ public class WatchlistRepository implements WatchlistObservable {
 
     @Override
     public void addObserver(WatchlistObserver observer){
-        observers.add(observer);
+        if(!observers.contains(observer)){
+            observers.add(observer);
+        }
     }
 
     @Override

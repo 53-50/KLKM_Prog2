@@ -10,7 +10,8 @@ public class DialogWindow {
     public DialogWindow(String title, String msg){
         dialog = new Dialog<>();
         dialog.setTitle(title);
-        dialog.setContentText(msg);
+        dialog.setHeaderText(title);
+        dialog.getDialogPane().setContent(new javafx.scene.control.Label(msg));
 
         ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(type);

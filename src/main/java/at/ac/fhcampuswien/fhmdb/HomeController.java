@@ -8,6 +8,10 @@ import at.ac.fhcampuswien.fhmdb.data.MovieEntity;
 import at.ac.fhcampuswien.fhmdb.data.MovieRepository;
 import at.ac.fhcampuswien.fhmdb.data.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.sort.AscendingSortState;
+import at.ac.fhcampuswien.fhmdb.sort.DescendingSortState;
+import at.ac.fhcampuswien.fhmdb.sort.SortContext;
+import at.ac.fhcampuswien.fhmdb.sort.UnsortedState;
 import at.ac.fhcampuswien.fhmdb.ui.DialogWindow;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
@@ -28,11 +32,6 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import at.ac.fhcampuswien.fhmdb.sort.SortContext;
-import at.ac.fhcampuswien.fhmdb.sort.UnsortedState;
-import at.ac.fhcampuswien.fhmdb.sort.AscendingSortState;
-import at.ac.fhcampuswien.fhmdb.sort.DescendingSortState;
 
 
 public class HomeController implements Initializable, WatchlistObserver {
@@ -293,7 +292,8 @@ public class HomeController implements Initializable, WatchlistObserver {
         Integer selectedRating = ratingComboBox.getValue();
         List<Movie> filteredMovies = filterMovies(query, selectedGenre, selectedYear, selectedRating);
 
-        //System.out.println("Debugging - filtered movies: " + filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
+        //System.out.println("Debugging - filtered movies: " +
+        // filteredMovies.stream().map(Movie::getTitle).collect(Collectors.joining(", ")));
 
         //update UI-list with filtered movies
         updateObservableList(filteredMovies); //-> API relevant (exercise 2)
