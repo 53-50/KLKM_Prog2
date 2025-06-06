@@ -16,6 +16,7 @@ public class FhmdbApplication extends Application {
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("/at/ac/fhcampuswien/fhmdb/home-view.fxml"));
+            fxmlLoader.setControllerFactory(new MyFactory());
             Scene scene = new Scene(fxmlLoader.load(), 890, 620);
             scene.getStylesheets().add(Objects.requireNonNull(FhmdbApplication.class.getResource("styles.css")).toExternalForm());
             stage.setTitle("FHMDb");

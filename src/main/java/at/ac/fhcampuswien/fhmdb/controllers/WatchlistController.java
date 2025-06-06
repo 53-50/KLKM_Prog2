@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.controllers;
 
 import at.ac.fhcampuswien.fhmdb.ClickEventHandler;
+import at.ac.fhcampuswien.fhmdb.MyFactory;
 import at.ac.fhcampuswien.fhmdb.data.*;
 import at.ac.fhcampuswien.fhmdb.ui.DialogWindow;
 import at.ac.fhcampuswien.fhmdb.ui.WatchlistCell;
@@ -28,6 +29,18 @@ public class WatchlistController implements Initializable {
 
     private WatchlistRepository watchlistRepository;
     protected ObservableList<MovieEntity> observableWatchlist = FXCollections.observableArrayList();
+
+    public static int instanceCountWatchList = 0;
+
+    public WatchlistController() {
+        //empty HomeController Constructor for the MyFactory() Class
+
+        //DEBUGGING - if it appears once it's correct
+        System.out.println("WatchlistController wurde erzeugt");
+        instanceCountWatchList++;
+        System.out.println("WatchlistController Instance: " + instanceCountWatchList);
+
+    }
 
     //Remove Entity Function
     private final ClickEventHandler<MovieEntity> RemoveFromWatchlistClicked = movieEntity -> {
@@ -75,9 +88,12 @@ public class WatchlistController implements Initializable {
 
     @FXML
     public void onHomeButtonClick(ActionEvent ev) throws IOException {
-        Parent homeRoot = FXMLLoader.load(
+        FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/at/ac/fhcampuswien/fhmdb/home-view.fxml")
         );
+        loader.setControllerFactory(new MyFactory());
+        Parent homeRoot = loader.load();
+
         homeButton.getScene().setRoot(homeRoot);
     }
 

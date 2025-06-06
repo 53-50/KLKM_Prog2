@@ -107,7 +107,9 @@ public class WatchlistCell extends ListCell<MovieEntity> {
                             : "No description available" //else "no description available"
             );
 
-            description.setMaxWidth(this.getScene().getWidth() - 30);
+            if (this.getScene() != null) {
+                description.setMaxWidth(this.getScene().getWidth() - 30);
+            }
 
             String genres = movieEntity.getGenres()
                     .stream()

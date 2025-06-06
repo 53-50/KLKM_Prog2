@@ -65,6 +65,8 @@ public class HomeController implements Initializable, WatchlistObserver {
     // ganz oben im Controller:
     private WatchlistRepository watchlistRepo;
 
+    public static int instanceCount = 0;
+
 
     //initializes repos, loads movies, stages UI
     @Override
@@ -98,6 +100,16 @@ public class HomeController implements Initializable, WatchlistObserver {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public HomeController() {
+        //empty HomeController Constructor for the MyFactory() Class
+
+        //DEBUGGING - if it appears once it's correct
+        System.out.println("HomeController wurde erzeugt");
+        instanceCount++;
+        System.out.println("HomeController Instance: " + instanceCount);
+
     }
 
     private void loadMovies() throws MovieAPIException, SQLException {
@@ -239,18 +251,23 @@ public class HomeController implements Initializable, WatchlistObserver {
 
     @FXML
     private void onWatchlistButtonClick(ActionEvent ev) throws IOException {
-        Parent watchlistRoot = FXMLLoader.load(
+        FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/at/ac/fhcampuswien/fhmdb/watchlist.fxml")
         );
-        // switching to watchlist scene-root
+        loader.setControllerFactory(new MyFactory());
+        Parent watchlistRoot = loader.load();
+
         watchlistButton.getScene().setRoot(watchlistRoot);
     }
 
     @FXML
     private void onHomeButtonClick(ActionEvent ev) throws IOException {
-        Parent homeRoot = FXMLLoader.load(
+        FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/at/ac/fhcampuswien/fhmdb/home-view.fxml")
         );
+        loader.setControllerFactory(new MyFactory());
+        Parent homeRoot = loader.load();
+
         homeButton.getScene().setRoot(homeRoot);
     }
 
